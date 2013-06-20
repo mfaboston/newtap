@@ -156,7 +156,18 @@
 		[Analytics trackAction:@"bad-code" forStop:[NSString stringWithFormat:@"<%@>", stopCode]];
 		
 		// Alert user
-		NSString *message = @"Stop [code] is not available on this tour. Please return to the list of available tours and select a different tour.";
+		NSString *message;
+        NSString *cancelButtonTitle;
+        message = [tourController stopNotFoundUserMessage];
+        cancelButtonTitle = [tourController stopNotFoundContinueButtonMessage];
+        if (! message) {
+            message = @"Stop [code] is not available on this tour. Please return to the list of available tours and select a different tour.";
+        }
+        if (! cancelButtonTitle) {
+            cancelButtonTitle = @"OK";
+        }
+        
+        
 		xmlNodePtr keypadInvalidCodeNode = [TourMLUtils getLocalizationInDocument:[tourController tourDoc] withName:@"KeypadInvalidCode"];
 		if (keypadInvalidCodeNode) {
 			char* keypadInvalidCodeChars = (char*)xmlNodeGetContent(keypadInvalidCodeNode);
@@ -168,7 +179,7 @@
 							  initWithTitle:nil
 							  message:message
 							  delegate:nil
-							  cancelButtonTitle:@"OK"
+							  cancelButtonTitle:cancelButtonTitle
 							  otherButtonTitles:nil];
         [alert show];
         [alert release];

@@ -17,6 +17,12 @@
 
 @synthesize tourBundle, tourDoc;
 
+- (NSString*) stopNotFoundUserMessage {
+    return(@"MWK Testing: This stop was not found for this tour");
+}
+- (NSString*) stopNotFoundContinueButtonMessage {
+    return(@"OK");
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -38,5 +38,6 @@
 - (BOOL)loadStop:(BaseStop *)stop animated:(BOOL)animated;
 - (void)showHelpButtonAnimated:(BOOL)animated;
 - (void)hideHelpButtonAnimated:(BOOL)animated;
-
+- (NSString*)stopNotFoundUserMessage;
+- (NSString*)stopNotFoundContinueButtonMessage;
 @end
