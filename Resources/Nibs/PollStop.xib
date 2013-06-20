@@ -66,13 +66,13 @@
 						<int key="IBUINumberOfLines">0</int>
 						<int key="IBUITextAlignment">1</int>
 						<int key="IBUILineBreakMode">0</int>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="87458818">
+						<object class="IBUIFontDescription" key="IBUIFontDescription" id="743987539">
 							<string key="name">Helvetica-Bold</string>
 							<string key="family">Helvetica</string>
 							<int key="traits">2</int>
 							<double key="pointSize">24</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="704070442">
+						<object class="NSFont" key="IBUIFont" id="840332713">
 							<string key="NSName">Helvetica-Bold</string>
 							<double key="NSSize">24</double>
 							<int key="NSfFlags">16</int>
@@ -102,8 +102,8 @@
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">submit-btn.png</string>
 						</object>
-						<reference key="IBUIFontDescription" ref="87458818"/>
-						<reference key="IBUIFont" ref="704070442"/>
+						<reference key="IBUIFontDescription" ref="743987539"/>
+						<reference key="IBUIFont" ref="840332713"/>
 					</object>
 					<object class="IBUIPickerView" id="916829405">
 						<reference key="NSNextResponder" ref="191373211"/>
