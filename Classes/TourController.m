@@ -18,10 +18,18 @@
 @synthesize tourBundle, tourDoc;
 
 - (NSString*) stopNotFoundUserMessage {
-    return(@"MWK Testing: This stop was not found for this tour");
+    NSString * res = [TourMLUtils getLocalizationInDocumentAsString:tourDoc withName:@"StopNotFoundUserMessage"];
+    if (! res) {
+        res = @"MWK Testing: This stop was not found for this tour";
+    }
+    return(res);
 }
 - (NSString*) stopNotFoundContinueButtonMessage {
-    return(@"OK");
+    NSString * res = [TourMLUtils getLocalizationInDocumentAsString:tourDoc withName:@"StopNotFoundContinueButtonMessage"];
+    if (! res) {
+        res = @"OK";
+    }
+    return(res);
 }
 - (void)viewDidLoad
 {

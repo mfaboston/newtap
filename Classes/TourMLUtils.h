@@ -27,8 +27,11 @@
 // Check if an language exists in the tour document and return it
 + (xmlNodePtr)getLanguageInDocument:(xmlDocPtr)document;
 
-// Check if a localization exits in the tour document and return it
+// Check if a localization exists in the tour document and return it
 + (xmlNodePtr)getLocalizationInDocument:(xmlDocPtr)document withName:(NSString *)name;
+
+// Extension: Actually get it as an NSString
++ (NSString*)getLocalizationInDocumentAsString:(xmlDocPtr)document withName:(NSString *)name;
 
 // Check if a code exists in the tour document and return the stop element
 + (xmlNodePtr)getStopInDocument:(xmlDocPtr)document withCode:(NSString *)code;

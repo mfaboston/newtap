@@ -75,6 +75,15 @@
 	return stop;
 }
 
++ (NSString*)getLocalizationInDocumentAsString:(xmlDocPtr)document withName:(NSString *)name {
+    xmlNodePtr res = [self getLocalizationInDocument:document withName:name];
+    char* resChars = (char*)xmlNodeGetContent(res);
+    NSString * message = [NSString stringWithUTF8String:resChars];
+    free(resChars);
+    return message;
+}
+
+
 + (xmlNodePtr)getStopInDocument:(xmlDocPtr)document withCode:(NSString *)code
 {
 	xmlXPathObjectPtr xpathObj = [TourMLUtils executeXPathQuery:[NSString stringWithFormat:@"/TourML:Tour/*[@code='%@']", code] againstDocument:document];
