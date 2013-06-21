@@ -108,9 +108,11 @@ static CoreDataManager *sharedUpdatedCoreDataManager = nil;
 	NSManagedObjectContext *managedObjectContext = [[CoreDataManager sharedManager] managedObjectContext];
 	NSFetchRequest *request = [[[NSFetchRequest alloc] init] autorelease];
 	[request setEntity:[NSEntityDescription entityForName:@"Tour" inManagedObjectContext:managedObjectContext]];
-//	[request setSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"sortWeight" ascending:YES], 
-//														  [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES], 
-//														  nil]];
+
+	// This was commented out
+    [request setSortDescriptors:[NSArray arrayWithObjects:[NSSortDescriptor sortDescriptorWithKey:@"sortWeight" ascending:YES],
+														  [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES],
+														  nil]];
 	NSArray *results = [managedObjectContext executeFetchRequest:request error:nil];
 	if (!results || ![results count]) {
 		return nil;

@@ -117,6 +117,7 @@ enum {
 		[tours release];
 	}
 	tours = [[NSMutableArray alloc] init];
+    NSLog(@"UpdateController#getToursFromCoreData: %d", [coreDataTours count]);
 	for (NSUInteger i = 0; i < [coreDataTours count]; i++)
 	{
 		NSMutableDictionary *tourLookup = [[NSMutableDictionary alloc] init];
@@ -150,6 +151,32 @@ enum {
 			[availableTours addObject:updatableTour];
 		}
 	}
+    NSLog(@"available Tours Before count %d", [availableTours count]);
+    availableTours = [NSMutableArray arrayWithArray:[availableTours sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        Tour * tour1 = (Tour*) obj1;
+        Tour * tour2 = (Tour*) obj2;
+        NSNumber * w1 = tour1.sortWeight;
+        if (! w1) {
+            w1 = @999;
+        }
+        NSNumber * w2 = tour2.sortWeight;
+        if (! w2) {
+            w2 = @999;
+        }
+        return [w1 compare:w2];
+//        NSNumber * w1 = tour1.sortWeight;
+//        NSNumber * w2 = tour2.sortWeight;
+//        if ([w1 isEqualToNumber:w2]) {
+//            return NSOrderedSame;
+//        } else if ([w1 integerValue] < [w2 integerValue]) {
+//            return NSOrderedAscending;
+//        } else {
+//            return NSOrderedDescending;
+//        }
+    }]];
+    [availableTours retain];
+    NSLog(@"available Tours After count %d", [availableTours count]);
+
 	[toursView reloadData];
 }
 
@@ -378,6 +405,7 @@ enum {
 			break;
 		}
 		case 1: {
+//            NSLog(@"%@ ; %d", availableTours, indexPath.row);
 			ToursXMLTour *xml = [availableTours objectAtIndex:[indexPath row]];
 			[[cell textLabel] setText:[xml title]];
 			[[cell detailTextLabel] setText:[NSString stringWithFormat:@"Updated on %@", [xml updatedDate]]];
