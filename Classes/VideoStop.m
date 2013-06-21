@@ -68,14 +68,17 @@
 											   object:[moviePlayerController moviePlayer]];
 	
 	// Present the controller modally since MPMoviePlayerController doesn't auto-takeover anymore
-	TourController *tourController = [(TapAppDelegate*)[[UIApplication sharedApplication] delegate] currentTourController];
-	if ([tourController parentViewController]) {
-		[tourController presentMoviePlayerViewControllerAnimated:moviePlayerController];
-	}
-	else {
-		SplashController *splashController = (SplashController *)[[(TapAppDelegate *)[[UIApplication sharedApplication] delegate] menuController] modalViewController];
-		[splashController presentMoviePlayerViewControllerAnimated:moviePlayerController];
-	}
+//	TourController *tourController = [(TapAppDelegate*)[[UIApplication sharedApplication] delegate] currentTourController];
+//	if ([tourController parentViewController]) {
+//		[tourController presentMoviePlayerViewControllerAnimated:moviePlayerController];
+//	}
+//	else {
+//		SplashController *splashController = (SplashController *)[[(TapAppDelegate *)[[UIApplication sharedApplication] delegate] menuController] modalViewController];
+//		[splashController presentMoviePlayerViewControllerAnimated:moviePlayerController];
+//	}
+    [[(TapAppDelegate*)[[UIApplication sharedApplication] delegate] currentTourController] presentMoviePlayerViewControllerAnimated:moviePlayerController];
+    
+    
 	[[moviePlayerController moviePlayer] play];
 	[moviePlayerController release];
 	
