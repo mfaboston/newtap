@@ -168,13 +168,17 @@
         }
         
         
-		xmlNodePtr keypadInvalidCodeNode = [TourMLUtils getLocalizationInDocument:[tourController tourDoc] withName:@"KeypadInvalidCode"];
-		if (keypadInvalidCodeNode) {
-			char* keypadInvalidCodeChars = (char*)xmlNodeGetContent(keypadInvalidCodeNode);
-			message = [NSString stringWithUTF8String:keypadInvalidCodeChars];
-			free(keypadInvalidCodeChars);
-		}
-		message = [message stringByReplacingOccurrencesOfString:@"[code]" withString:stopCode];
+//		xmlNodePtr keypadInvalidCodeNode = [TourMLUtils getLocalizationInDocument:[tourController tourDoc] withName:@"KeypadInvalidCode"];
+//        NSLog(@"Message is %@", message);
+//		if (keypadInvalidCodeNode) {
+//			char* keypadInvalidCodeChars = (char*)xmlNodeGetContent(keypadInvalidCodeNode);
+//			message = [NSString stringWithUTF8String:keypadInvalidCodeChars];
+//			free(keypadInvalidCodeChars);
+//		}
+        NSLog(@"Message is %@", message);
+        if ([message rangeOfString:@"[code]"].location != NSNotFound) {
+            message = [message stringByReplacingOccurrencesOfString:@"[code]" withString:stopCode];
+        }
 		UIAlertView *alert = [[UIAlertView alloc]
 							  initWithTitle:nil
 							  message:message

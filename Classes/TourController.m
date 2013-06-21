@@ -20,7 +20,8 @@
 - (NSString*) stopNotFoundUserMessage {
     NSString * res = [TourMLUtils getLocalizationInDocumentAsString:tourDoc withName:@"StopNotFoundUserMessage"];
     if (! res) {
-        res = @"MWK Testing: This stop was not found for this tour";
+//        res = @"MWK Testing: Stop [code] was not found for this tour";
+        res = @"Stop [code] is not available on this tour. Please return to the list of available tours and select a different tour.";
     }
     return(res);
 }

@@ -294,7 +294,7 @@ enum {
 - (NSString *)stringForFileSize:(NSInteger)bytes
 {
 	if (bytes < 1024) {
-        return [NSString stringWithFormat:@"%ldB", bytes];
+        return [NSString stringWithFormat:@"%d", bytes];
     }
 	if (bytes < (1024.0 * 1024.0 * 0.1)) {
 		return [NSString stringWithFormat:@"%0.1fKB", (float)bytes / 1024.0];

@@ -78,8 +78,11 @@
 + (NSString*)getLocalizationInDocumentAsString:(xmlDocPtr)document withName:(NSString *)name {
     xmlNodePtr res = [self getLocalizationInDocument:document withName:name];
     char* resChars = (char*)xmlNodeGetContent(res);
-    NSString * message = [NSString stringWithUTF8String:resChars];
-    free(resChars);
+    NSString * message = NULL;
+    if (resChars != nil) {
+        message = [NSString stringWithUTF8String:resChars];
+        //        free(resChars);
+    }
     return message;
 }
 
