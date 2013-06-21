@@ -15,7 +15,7 @@
 
 @implementation SplashController
 
-@synthesize player;
+@synthesize player, backToMenuButton;
 
 - (void)viewDidLoad
 {
@@ -30,6 +30,12 @@
 		[titleLabel setText:[NSString stringWithUTF8String:titleChars]];
 		free(titleChars);
 	}
+    
+    NSString * backToMenuText = [TourMLUtils getLocalizationInDocumentAsString:tourDoc withName:@"BackToMenuButtonLabel"];
+    if (backToMenuText) {
+        [self.backToMenuButton setTitle:backToMenuText forState:UIControlStateNormal];
+    } // otherwise, leave it as-is in the XIB
+    
 	
     // Set image
 	xmlNodePtr imageNode = [TourMLUtils getImageInDocument:tourDoc];

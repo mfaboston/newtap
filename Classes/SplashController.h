@@ -27,14 +27,16 @@
 	IBOutlet UIView *welcomeView;
 	IBOutlet UIButton *welcomeButton;
 	UIImageView *welcomeDisclosureView;
+    
+    IBOutlet UIButton *backToMenuButton;
 	
 	IBOutlet UIImageView *splashImage;
 }
 
 @property (nonatomic, retain) AVAudioPlayer *player;
+@property (nonatomic, retain) UIButton * backToMenuButton;
 
 - (IBAction)backTouchUpInside:(UIButton *)sender;
 - (IBAction)enterTouchUpInside:(UIButton *)sender;
 - (IBAction)welcomeTouchUpInside:(UIButton *)sender;
-
 @end
