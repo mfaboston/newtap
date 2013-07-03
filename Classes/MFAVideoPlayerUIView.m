@@ -12,11 +12,22 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
+    NSLog(@"Frame initting is %f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
     }
     return self;
+}
+
++ (Class)layerClass {
+    return [AVPlayerLayer class];
+}
+- (AVPlayer*)player {
+    return [(AVPlayerLayer *)[self layer] player];
+}
+- (void)setPlayer:(AVPlayer *)player {
+    [(AVPlayerLayer *)[self layer] setPlayer:player];
 }
 
 /*

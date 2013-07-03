@@ -5,6 +5,7 @@
 #import "SplashController.h"
 #import "StopGroupController.h"
 #import "TapAppDelegate.h"
+#import "MFAVideoPlayerControllerViewController.h"
 
 @implementation VideoStop
 
@@ -59,14 +60,36 @@
 	NSURL *videoURL = [NSURL fileURLWithPath:videoPath];
 	
 	// Create new view controller
-	LandscapeMoviePlayerViewController *moviePlayerController = [[LandscapeMoviePlayerViewController alloc] initWithContentURL:videoURL];
+    if (NO) {
+        LandscapeMoviePlayerViewController *moviePlayerController = [[LandscapeMoviePlayerViewController alloc] initWithContentURL:videoURL];
 	
-	// Add finished observer
-	[[NSNotificationCenter defaultCenter] addObserver:self
+        // Add finished observer
+        [[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(moviePlayBackDidFinish:)
 												 name:MPMoviePlayerPlaybackDidFinishNotification
 											   object:[moviePlayerController moviePlayer]];
-	
+        [[(TapAppDelegate*)[[UIApplication sharedApplication] delegate] currentTourController] presentMoviePlayerViewControllerAnimated:moviePlayerController];
+        [[moviePlayerController moviePlayer] play];
+        [moviePlayerController release];
+	} else {
+        // New Player
+        MFAVideoPlayerControllerViewController * mfaVidController = [[MFAVideoPlayerControllerViewController alloc] init];
+        mfaVidController.fileUrl = videoURL;
+        [mfaVidController loadAssetFromFile:NULL];
+
+        [[(TapAppDelegate*)[[UIApplication sharedApplication] delegate] currentTourController] presentModalViewController:mfaVidController animated:NO];
+
+        
+//        UIViewController * topController = [(TapAppDelegate*)[[UIApplication sharedApplication] delegate] currentTourController];
+//        UIView * topView = topController.view;
+//        [topView setWantsLayer:YES];
+
+//        [topView addSubview:mfaVidController.view];
+//        [topView addSubview:mfaVidController.view];
+
+    }
+    
+    
 	// Present the controller modally since MPMoviePlayerController doesn't auto-takeover anymore
 //	TourController *tourController = [(TapAppDelegate*)[[UIApplication sharedApplication] delegate] currentTourController];
 //	if ([tourController parentViewController]) {
@@ -76,11 +99,8 @@
 //		SplashController *splashController = (SplashController *)[[(TapAppDelegate *)[[UIApplication sharedApplication] delegate] menuController] modalViewController];
 //		[splashController presentMoviePlayerViewControllerAnimated:moviePlayerController];
 //	}
-    [[(TapAppDelegate*)[[UIApplication sharedApplication] delegate] currentTourController] presentMoviePlayerViewControllerAnimated:moviePlayerController];
     
     
-	[[moviePlayerController moviePlayer] play];
-	[moviePlayerController release];
 	
 	// Retain self to stay around for moviePlayBackDidFinish
 	[self retain];

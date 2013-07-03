@@ -13,7 +13,10 @@
 #import <libxml/xpath.h>
 #import <libxml/xpathInternals.h>
 
-#define UPDATER_URL @"http://mfa-newmedia/drupal-6.17/all-tours"
+//#define UPDATER_URL @"http://mfa-newmedia/drupal-6.17/all-tours"
+#define UPDATER_URL @"http://localhost:3001/all-tours.xml"
+#define UPDATER_HOST @"http://localhost:3001"
+
 //#define UPDATER_URL @"http://10.10.12.73/tours.xml"
 //#define UPDATER_URL @"http://192.168.1.2/tours.xml"
 

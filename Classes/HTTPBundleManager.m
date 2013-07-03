@@ -77,6 +77,7 @@
 
 - (void)retrieveOrUpdateBundle:(NSString *)theBundleName withTourML:(NSURL *)tourMLUrl startingWithFile:(NSUInteger)file
 {
+    NSLog(@"HTTPBundleManager#retrieveOrUpdateBundle");
 	quickUpdate = NO;
 	skipToFile = file;
 	[self setBundleName:theBundleName];
@@ -90,6 +91,7 @@
 
 - (void)retrieveOrUpdateBundle:(NSString *)theBundleName withFiles:(NSMutableArray *)files
 {
+    
 	quickUpdate = YES;
 	currentFile = skipToFile = 0;
 	totalFiles = [files count];
@@ -202,6 +204,7 @@
 	if (skipToFile > 0) {
 		[updatableFiles removeObjectsInRange:NSMakeRange(0, skipToFile - 2)];
 	}
+    NSLog(@"OK!!! updatableFiles count is %d", [updatableFiles count]);
 	[self retrieveNextFile];
 }
 
@@ -233,6 +236,7 @@
 			xmlNodePtr sourceNode = sourceNodes->nodeTab[i];
 			char *sourceChars = (char*)xmlNodeGetContent(sourceNode);
 			NSString *sourceString = [NSString stringWithUTF8String:sourceChars];
+            NSLog(@"Hey! %@", [sourceString lastPathComponent]);
 			xmlNodeSetContent(sourceNode, (xmlChar*)[[NSString stringWithFormat:@"files/%@", [sourceString lastPathComponent]] UTF8String]);
 			free(sourceChars);
 		}
@@ -312,7 +316,17 @@
 	currentFile++;
 	retries = 0;
 	NSString *fullPath = [[updatableFiles objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-	[[self httpRequest] retrieveFile:[NSURL URLWithString:[fullPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
+    NSURL * url = [NSURL URLWithString:[fullPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSLog(@"URL is %@", url);
+    
+    // MWKrom: OK, the URL is clearly not a full URL with hostname at this point. Unsure what's going on.
+    // Let's transform it into the URL we know it needs to be
+    NSString * newUrlString = [NSString stringWithFormat:@"%@/%@.bundle/%@", UPDATER_HOST, bundleName, fullPath];
+    url = [NSURL URLWithString:[newUrlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSLog(@"URL is NOW %@", url);
+    
+    
+	[[self httpRequest] retrieveFile:url];
 	if ([delegate respondsToSelector:@selector(bundleManager:didStartUpdatingFile:fileNumber:outOf:)]) {
 		[delegate bundleManager:self 
 		   didStartUpdatingFile:[NSString stringWithFormat:@"/%@.bundle/files/%@", bundleName, [fullPath lastPathComponent]] 
