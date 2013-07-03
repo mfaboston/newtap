@@ -12,30 +12,23 @@
 
 - (NSComparisonResult)sortWeightCompare:(Tour *)otherTour
 {
-	// if both sort weights are nil, sort by title
-	if ([self sortWeight] == nil &&
-		[otherTour sortWeight] == nil) {
-		return [[self title] compare:[otherTour title]];
-	}
+    
+    NSNumber * aSortWeight = [self sortWeight];
+    if (! aSortWeight) {
+        aSortWeight = @999;
+    }
+    NSNumber * bSortWeight = [otherTour sortWeight];
+    if (! bSortWeight) {
+        bSortWeight = @999;
+    }
+    
+    NSLog(@"SortWeight: %@ %@", aSortWeight, bSortWeight);
 	
-	// if either is nil, sort the nil value down
-	if ([self sortWeight] == nil) {
-		return NSOrderedDescending;
-	}
-	if ([otherTour sortWeight] == nil) {
-		return NSOrderedAscending;
-	}
-	
-	// if both sort weights are set and differ, sort accordingly
-	if ([self sortWeight] < [otherTour sortWeight]) {
-		return NSOrderedAscending;
-	}
-	if ([self sortWeight] > [otherTour sortWeight]) {
-		return NSOrderedDescending;
-	}
-	
-	// default to title
-	return [[self title] compare:[otherTour title]];
+    if ([aSortWeight isEqualToNumber:bSortWeight]) {
+        return [[self title] compare:[otherTour title]];
+    } else {
+        return [aSortWeight compare:bSortWeight];
+    }
 }
 
 @end
