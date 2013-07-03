@@ -15,14 +15,14 @@
     
     NSNumber * aSortWeight = [self sortWeight];
     if (! aSortWeight) {
-        aSortWeight = @999;
+        aSortWeight = @99999;
     }
     NSNumber * bSortWeight = [otherTour sortWeight];
     if (! bSortWeight) {
-        bSortWeight = @999;
+        bSortWeight = @99999;
     }
     
-    NSLog(@"SortWeight: %@ %@", aSortWeight, bSortWeight);
+    //    NSLog(@"SortWeight: %@ %@", aSortWeight, bSortWeight);
 	
     if ([aSortWeight isEqualToNumber:bSortWeight]) {
         return [[self title] compare:[otherTour title]];
