@@ -60,7 +60,12 @@
 	NSURL *videoURL = [NSURL fileURLWithPath:videoPath];
 	
 	// Create new view controller
-    if (NO) {
+    
+    BOOL useOriginalPlayer = YES;
+    NSString * ext = [[videoSrc lastPathComponent] pathExtension];
+    useOriginalPlayer =  (![ext isEqualToString:@"mov"]);
+    
+    if (useOriginalPlayer) {
         LandscapeMoviePlayerViewController *moviePlayerController = [[LandscapeMoviePlayerViewController alloc] initWithContentURL:videoURL];
 	
         // Add finished observer

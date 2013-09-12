@@ -9,6 +9,9 @@
 #import "UpdaterDataProvider.h"
 #import "ToursXMLParser.h"
 
+#define kMfaGuideAllToursFileName @"all-tours"
+
+
 enum {
 	kLatestRequest = 1,
 	kTourMLRequest = 2
@@ -34,12 +37,31 @@ enum {
 	[super dealloc];
 }
 
+
++ (NSString *)getUpdaterAllToursUrl {
+    return [NSString stringWithFormat:@"%@/%@", [self getUpdaterHostname], kMfaGuideAllToursFileName];
+}
+
++ (NSString *)getUpdaterHostname {
+    // return UPDATER_HOST;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize]; // pick up any changes
+    NSString * hostname = [defaults stringForKey:@"hostname"];
+    NSLog(@"Found Hostname: %@", hostname);
+    return hostname;
+    
+}
+
+
 #pragma mark -
 #pragma mark Requests
 
 - (void)getLatest
 {
-	NSURLRequest *urlRequest = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:UPDATER_URL]];
+//    NSLog(@"UpdaterDataProvier#getLatest: %@", UPDATER_URL);
+    NSString * updaterUrl = [UpdaterDataProvider getUpdaterAllToursUrl];
+    NSLog(@"UpdaterDataProvider#getLatest: %@", updaterUrl);
+	NSURLRequest *urlRequest = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:updaterUrl]];
 	urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
 	if (urlConnection) {
 		currentRequest = kLatestRequest;
@@ -50,6 +72,7 @@ enum {
 
 - (void)getTourML:(NSURL *)tourMLUrl
 {
+    NSLog(@"UpdaterDataProvider#getTourML");
 	NSURLRequest *urlRequest = [[NSURLRequest alloc] initWithURL:tourMLUrl];
 	urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
 	if (urlConnection) {

@@ -13,7 +13,7 @@
 - (id)initWithFrame:(CGRect)frame
 {
     NSLog(@"Frame initting is %f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame:CGRectMake(0.0f, 0.0f, 480.0f, 320.0f)];
     if (self) {
         // Initialization code
     }

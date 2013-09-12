@@ -23,6 +23,15 @@ static void *AVPlayerDemoPlaybackViewControllerStatusObservationContext = &AVPla
 static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext;
 
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+	if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+		toInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+		return YES;
+	}
+	return NO;
+}
+
 - (void)syncUI {
     if ((self.player.currentItem != nil) &&
         ([self.player.currentItem status] == AVPlayerItemStatusReadyToPlay)) {
@@ -247,8 +256,15 @@ NSString * const kCurrentItemKey	= @"currentItem";
 //                [self initScrubberTimer];
 //                
 //                [self enableScrubber];
-//                [self enablePlayerButtons];
-                [player play];
+                if (! self.playerView) {
+                    self.playerView = [MFAVideoPlayerUIView new];
+                    self.playerView.player = player;
+                    player.closedCaptionDisplayEnabled = YES;
+                    [self.view addSubview:self.playerView];
+//                    [self enablePlayerButtons];
+                    [player play];
+                }
+                
             }
                 break;
                 

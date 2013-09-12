@@ -34,6 +34,9 @@
 		8BE419840FBDB9E500EE1396 /* BaseStop.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE419830FBDB9E500EE1396 /* BaseStop.m */; };
 		8BE419870FBDBF9200EE1396 /* StopGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE419860FBDBF9200EE1396 /* StopGroup.m */; };
 		8BF9F85D0FCECCCB00F2764D /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BF9F85C0FCECCCB00F2764D /* Entitlements.plist */; };
+		CE2B161E17C966A800813B3E /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2B161D17C966A800813B3E /* Security.framework */; };
+		CE2B162017C966B900813B3E /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2B161F17C966B900813B3E /* CoreFoundation.framework */; };
+		CE2B162217C9681D00813B3E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CE2B162117C9681D00813B3E /* Settings.bundle */; };
 		CE2B3593177520D1000E1649 /* MFAVideoPlayerUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2B3592177520D0000E1649 /* MFAVideoPlayerUIView.m */; };
 		CE2B359617752158000E1649 /* MFAVideoPlayerControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2B359517752157000E1649 /* MFAVideoPlayerControllerViewController.m */; };
 		D00E8170125518270087BD0B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D00E816F125518270087BD0B /* AVFoundation.framework */; };
@@ -174,6 +177,9 @@
 		8BE419860FBDBF9200EE1396 /* StopGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StopGroup.m; sourceTree = "<group>"; };
 		8BF9F85C0FCECCCB00F2764D /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE2B161D17C966A800813B3E /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		CE2B161F17C966B900813B3E /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		CE2B162117C9681D00813B3E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		CE2B3591177520D0000E1649 /* MFAVideoPlayerUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFAVideoPlayerUIView.h; sourceTree = "<group>"; };
 		CE2B3592177520D0000E1649 /* MFAVideoPlayerUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MFAVideoPlayerUIView.m; sourceTree = "<group>"; };
 		CE2B359417752157000E1649 /* MFAVideoPlayerControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFAVideoPlayerControllerViewController.h; sourceTree = "<group>"; };
@@ -295,6 +301,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE2B162017C966B900813B3E /* CoreFoundation.framework in Frameworks */,
+				CE2B161E17C966A800813B3E /* Security.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */,
@@ -335,6 +343,8 @@
 		29B97314FDCFA39411CA2CEA /* Tap */ = {
 			isa = PBXGroup;
 			children = (
+				CE2B161F17C966B900813B3E /* CoreFoundation.framework */,
+				CE2B161D17C966A800813B3E /* Security.framework */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -365,6 +375,7 @@
 				8B56A4B20F7932E4006675F9 /* Default.png */,
 				D0207144141E924F00E6F6C0 /* Icon.png */,
 				8D1107310486CEB800E47090 /* Info.plist */,
+				CE2B162117C9681D00813B3E /* Settings.bundle */,
 				D0EC043E13D8A02D000A95DA /* Tours.xcdatamodeld */,
 			);
 			name = Resources;
@@ -726,6 +737,7 @@
 				D0F82535127B6D7000C490E6 /* click.aif in Resources */,
 				D0F82536127B6D7000C490E6 /* error.aif in Resources */,
 				D0207145141E924F00E6F6C0 /* Icon.png in Resources */,
+				CE2B162217C9681D00813B3E /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -796,10 +808,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Tap_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "MFA Guide";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -813,10 +826,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Tap_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "MFA Guide";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -849,10 +863,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Tap_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "MFA Guide";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Distribution;
 		};

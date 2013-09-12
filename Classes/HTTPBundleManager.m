@@ -321,7 +321,7 @@
     
     // MWKrom: OK, the URL is clearly not a full URL with hostname at this point. Unsure what's going on.
     // Let's transform it into the URL we know it needs to be
-    NSString * newUrlString = [NSString stringWithFormat:@"%@/%@.bundle/%@", UPDATER_HOST, bundleName, fullPath];
+    NSString * newUrlString = [NSString stringWithFormat:@"%@/%@.bundle/%@", [UpdaterDataProvider getUpdaterHostname], bundleName, fullPath];
     url = [NSURL URLWithString:[newUrlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     NSLog(@"URL is NOW %@", url);
     
@@ -334,6 +334,7 @@
 						  outOf:totalFiles];
 	}
 }
+
 
 - (void)retryFile
 {

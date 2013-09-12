@@ -261,7 +261,7 @@ enum {
 		[[cell progressView] setHidden:NO];
 		[[cell progressView] setProgress:(float)fileNumber / (float)totalFiles];
 		[[cell fileCount] setHidden:NO];
-		[[cell fileCount] setText:[NSString stringWithFormat:@"%lu / %lu", fileNumber, totalFiles]];
+		[[cell fileCount] setText:[NSString stringWithFormat:@"%d / %d", fileNumber, totalFiles]];
 	}
 }
 

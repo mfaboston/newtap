@@ -89,15 +89,31 @@
 		
 		// Set up image
 		NSBundle *tourBundle = [((TourController*)[self navigationController]) tourBundle];
+        
+        NSLog(@"%@ ::: %@ / %@ / %@", headerImageSrc, [headerImageSrc lastPathComponent], [[headerImageSrc lastPathComponent] stringByDeletingPathExtension], [headerImageSrc stringByDeletingLastPathComponent]
+              );
+        
 		NSString *imagePath = [tourBundle pathForResource:[[headerImageSrc lastPathComponent] stringByDeletingPathExtension]
 												   ofType:[[headerImageSrc lastPathComponent] pathExtension]
 											  inDirectory:[headerImageSrc stringByDeletingLastPathComponent]];
+        NSLog(@"Loading image at %@", imagePath);
 		imageView = [[TapDetectingImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:imagePath]];
 		[imageView setDelegate:self];
 		
 		// Calculate image scale
 		CGFloat scale = scrollView.frame.size.width / imageView.image.size.width;
-		
+        
+
+        
+        BOOL experimental = YES;
+        if (experimental) {
+            scale = 1.0f;
+        }
+        
+
+        
+        NSLog(@"Scale from %f / %f", scrollView.frame.size.width, imageView.image.size.width);
+        NSLog(@"Scale is %f", scale);
 		// Setup scroll view
 		if (self.view.frame.size.height - imageView.image.size.height * scale >= tableHeight) {
 			[scrollView setFrame:CGRectMake(0, 0, scrollView.frame.size.width, imageView.image.size.height * scale)];

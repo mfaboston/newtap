@@ -36,6 +36,8 @@
 - (void)getLatest;
 - (void)getTourML:(NSURL *)tourMLUrl;
 - (void)cancel;
++ (NSString*) getUpdaterAllToursUrl;
++ (NSString*) getUpdaterHostname;
 
 @end
 
