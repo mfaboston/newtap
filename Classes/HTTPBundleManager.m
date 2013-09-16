@@ -317,13 +317,24 @@
 	retries = 0;
 	NSString *fullPath = [[updatableFiles objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSURL * url = [NSURL URLWithString:[fullPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSLog(@"URL is %@", url);
+    NSLog(@"URL is %@", [url absoluteString]);
     
-    // MWKrom: OK, the URL is clearly not a full URL with hostname at this point. Unsure what's going on.
+    
+    // MWKrom: OK, [in development] the URL is clearly not a full URL with hostname at this point. Unsure what's going on.
     // Let's transform it into the URL we know it needs to be
-    NSString * newUrlString = [NSString stringWithFormat:@"%@/%@.bundle/%@", [UpdaterDataProvider getUpdaterHostname], bundleName, fullPath];
-    url = [NSURL URLWithString:[newUrlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSLog(@"URL is NOW %@", url);
+    BOOL developmentRequiredURLModification = NO;
+    
+    // MWKrom: Why a difference between Prod/MFA, and development here?
+    NSString * absUrl = [url absoluteString];
+    if (! [[[absUrl substringToIndex:4] lowercaseString] isEqualToString:@"http"]) {
+        developmentRequiredURLModification = YES;
+    }
+    
+    if (developmentRequiredURLModification) {
+        NSString * newUrlString = [NSString stringWithFormat:@"%@/%@.bundle/%@", [UpdaterDataProvider getUpdaterHostname], bundleName, fullPath];
+        url = [NSURL URLWithString:[newUrlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        NSLog(@"URL is NOW %@", url);
+    }
     
     
 	[[self httpRequest] retrieveFile:url];
