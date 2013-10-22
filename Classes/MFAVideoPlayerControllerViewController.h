@@ -34,7 +34,9 @@
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *mPlayButton;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *mStopButton;
 @property (nonatomic, retain) IBOutlet UISlider* mScrubber;
+@property (retain, nonatomic) IBOutlet UIBarButtonItem *mCCButton;
 
+- (IBAction)toggleCC:(id)sender;
 
 
 - (IBAction)loadAssetFromFile:sender;

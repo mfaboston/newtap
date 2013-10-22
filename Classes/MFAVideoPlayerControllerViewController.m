@@ -27,6 +27,9 @@ NSString * const kCurrentItemKey	= @"currentItem";
 - (void)observeValueForKeyPath:(NSString*) path ofObject:(id)object change:(NSDictionary*)change context:(void*)context;
 - (void)prepareToPlayAsset:(AVURLAsset *)asset withKeys:(NSArray *)requestedKeys;
 - (void)initScrubberTimer;
+- (IBAction)beginScrubbing:(id)sender;
+- (IBAction)endScrubbing:(id)sender;
+- (IBAction)scrub:(id)sender;
 @end
 
 
@@ -43,7 +46,7 @@ NSString * const kCurrentItemKey	= @"currentItem";
 
 @implementation MFAVideoPlayerControllerViewController
 
-@synthesize fileUrl, mPlayer, mPlayerItem, mPlaybackView, mToolbar, mPlayButton, mStopButton, mScrubber;
+@synthesize fileUrl, mPlayer, mPlayerItem, mPlaybackView, mToolbar, mPlayButton, mStopButton, mCCButton, mScrubber;
 
 
 
@@ -193,6 +196,7 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 //    [self.mScrubber setValue:0.0];
 }
 
+
 - (IBAction)loadAssetFromFile:sender {
     
     
@@ -314,19 +318,6 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
     return;
 }
 
-- (IBAction)play:sender {
-   	/* If we are at the end of the movie, we must seek to the beginning first
-     before starting playback. */
-	if (YES == seekToZeroBeforePlay)
-	{
-		seekToZeroBeforePlay = NO;
-		[self.mPlayer seekToTime:kCMTimeZero];
-	}
-    
-	[self.mPlayer play];
-	
-    [self showStopButton];
-}
 
 
 - (void)playerItemDidReachEnd:(NSNotification *)notification {
@@ -510,9 +501,12 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 	}
 }
 
+
+
 - (BOOL)isScrubbing
 {
-	return mRestoreAfterScrubbingRate != 0.f;
+	NSLog(@"Scrubbing");
+    return mRestoreAfterScrubbingRate != 0.f;
 }
 
 -(void)enableScrubber
@@ -527,7 +521,8 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 
 
 
-
+#pragma mark -
+#pragma mark Movie sContorls
 
 - (void)handleSwipe:(UISwipeGestureRecognizer *)gestureRecognizer
 {
@@ -554,7 +549,7 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 		{
 			[UIView animateWithDuration:0.2f animations:
              ^{
-                 [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+                 [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
              } completion:
              ^(BOOL finished)
              {
@@ -593,12 +588,38 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 	}
 }
 
+
+
+
+
 - (IBAction)pause:(id)sender
 {
-	NSLog(@"Pause");
     [self.player pause];
     [self showPlayButton];
 }
+
+
+- (IBAction)play:sender {
+   	/* If we are at the end of the movie, we must seek to the beginning first
+     before starting playback. */
+	if (YES == seekToZeroBeforePlay)
+	{
+		seekToZeroBeforePlay = NO;
+		[self.mPlayer seekToTime:kCMTimeZero];
+	}
+    
+	[self.mPlayer play];
+	
+    [self showStopButton];
+}
+
+- (IBAction)toggleCC:(id)sender
+{
+	NSLog(@"ToggleCC");
+}
+
+
+
 
 
 
@@ -678,16 +699,8 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 
 - (id)init
 {
-//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-//    {
-//        return [self initWithNibName:@"AVPlayerDemoPlaybackView-iPad" bundle:nil];
-//	}
-//    else
-//    {
-        return [self initWithNibName:@"MFAVideoPlayer" bundle:nil];
-//	}
+    return [self initWithNibName:@"MFAVideoPlayer" bundle:nil];
 }
-
 
 
 - (void)viewDidLoad
@@ -710,7 +723,7 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
     UIBarButtonItem *scrubberItem = [[UIBarButtonItem alloc] initWithCustomView:self.mScrubber];
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
-    self.mToolbar.items = [NSArray arrayWithObjects:self.mPlayButton, flexItem, scrubberItem, nil];
+    self.mToolbar.items = [NSArray arrayWithObjects:self.mPlayButton, flexItem, scrubberItem, flexItem, self.mCCButton, nil];
     
     
 	[self initScrubberTimer];
@@ -731,15 +744,13 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 
 
 - (void)dealloc {
-    [playerView release];
-//    [_mPlayBackView release];
+
     [super dealloc];
 }
 - (void)viewDidUnload {
-//    [Player release];
-//    Player = nil;
     [playerView release];
     playerView = nil;;
+    [self setMCCButton:nil];
     [super viewDidUnload];
 }
 @end
