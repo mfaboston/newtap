@@ -57,23 +57,14 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 
 
 
-
-
-
-
-
-
-
-
-
-//- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-//{
-//	if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-//		toInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
-//		return YES;
-//	}
-//	return NO;
-//}
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+	if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+		toInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+		return YES;
+	}
+	return NO;
+}
 
 //- (void)syncUI {
 //    if ((self.player.currentItem != nil) &&
@@ -262,13 +253,13 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 	/* AVPlayerItem "status" property value observer. */
 	if (context == AVPlayerDemoPlaybackViewControllerStatusObservationContext)
 	{
-		[self syncPlayPauseButtons];
+//		[self syncPlayPauseButtons];
         
         AVPlayerStatus status = [[change objectForKey:NSKeyValueChangeNewKey] integerValue];
         switch (status)
         {
-            /* Indicates that the status of the player is not yet known because
-             it has not tried to load new media resources for playback */
+                /* Indicates that the status of the player is not yet known because
+                 it has not tried to load new media resources for playback */
             case AVPlayerStatusUnknown:
             {
                 [self removePlayerTimeObserver];
@@ -326,11 +317,11 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 - (IBAction)play:sender {
    	/* If we are at the end of the movie, we must seek to the beginning first
      before starting playback. */
-//	if (YES == seekToZeroBeforePlay)
-//	{
-//		seekToZeroBeforePlay = NO;
-//		[self.mPlayer seekToTime:kCMTimeZero];
-//	}
+	if (YES == seekToZeroBeforePlay)
+	{
+		seekToZeroBeforePlay = NO;
+		[self.mPlayer seekToTime:kCMTimeZero];
+	}
     
 	[self.mPlayer play];
 	
@@ -748,9 +739,7 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 //    [Player release];
 //    Player = nil;
     [playerView release];
-    playerView = nil;
-    [self setPlayerView:nil];
-    [self setMPlayBackView:nil];
+    playerView = nil;;
     [super viewDidUnload];
 }
 @end
