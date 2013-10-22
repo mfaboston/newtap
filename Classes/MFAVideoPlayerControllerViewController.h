@@ -10,19 +10,37 @@
 #import <AVFoundation/AVFoundation.h>
 #import "MFAVideoPlayerUIView.h"
 
+
+@class AVPlayer;
+@class MFAVideoPlayerUIView;
+
 @interface MFAVideoPlayerControllerViewController : UIViewController
+{
+    id mTimeObserver;
+    float mRestoreAfterScrubbingRate;
+
+    IBOutlet MFAVideoPlayerUIView *playerView;
+    BOOL seekToZeroBeforePlay;
+}
+
 
 @property (nonatomic, retain) NSURL * fileUrl;
 
-@property (nonatomic, retain) AVPlayer *player;
-@property (nonatomic, retain) AVPlayerItem *playerItem;
-//@property (nonatomic, weak) IBOutlet MFAVideoPlayerUIView *playerView;
-//@property (nonatomic, weak) IBOutlet UIButton *playButton;
-@property (nonatomic, retain) IBOutlet MFAVideoPlayerUIView *playerView;
-@property (nonatomic, retain) IBOutlet UIButton *playButton;
+@property (nonatomic, retain) AVPlayerItem * mPlayerItem;
+@property (readwrite, retain, setter=setPlayer:, getter=player) AVPlayer* mPlayer;
+@property (retain, nonatomic) IBOutlet MFAVideoPlayerUIView *mPlaybackView;
+
+@property (nonatomic, retain) IBOutlet UIToolbar *mToolbar;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *mPlayButton;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *mStopButton;
+@property (nonatomic, retain) IBOutlet UISlider* mScrubber;
+
+
+
 - (IBAction)loadAssetFromFile:sender;
-- (IBAction)play:sender;
-- (void)syncUI;
+- (IBAction)play:(id)sender;
+- (IBAction)pause:(id)sender;
+//- (void)syncUI;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
                         change:(NSDictionary *)change context:(void *)context;
 
