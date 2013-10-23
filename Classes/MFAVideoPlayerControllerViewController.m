@@ -236,6 +236,7 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
                 
                 [self enableScrubber];
                 [self enablePlayerButtons];
+                [mPlayer play];
             }
                 break;
                 
@@ -282,74 +283,6 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 		[super observeValueForKeyPath:path ofObject:object change:change context:context];
 	}
 }
-
-
-//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
-//                        change:(NSDictionary *)change context:(void *)context {
-//    
-//	/* AVPlayerItem "status" property value observer. */
-//	if (context == AVPlayerDemoPlaybackViewControllerStatusObservationContext)
-//	{
-//		[self syncPlayPauseButtons];
-//        
-//        AVPlayerStatus status = [[change objectForKey:NSKeyValueChangeNewKey] integerValue];
-//        switch (status)
-//        {
-//                /* Indicates that the status of the player is not yet known because
-//                 it has not tried to load new media resources for playback */
-//            case AVPlayerStatusUnknown:
-//            {
-//                [self removePlayerTimeObserver];
-//                [self syncScrubber];
-//                
-//                [self disableScrubber];
-//                [self disablePlayerButtons];
-//            }
-//                break;
-//                
-//            case AVPlayerStatusReadyToPlay:
-//            {
-//                /* Once the AVPlayerItem becomes ready to play, i.e.
-//                 [playerItem status] == AVPlayerItemStatusReadyToPlay,
-//                 its duration can be fetched from the item. */
-//                
-//                [self initScrubberTimer];
-//                [self enableScrubber];
-//                [self enablePlayerButtons];
-//
-//                
-////                if (! self.playerView) {
-////                    self.playerView = [MFAVideoPlayerUIView new];
-////                  self.playerView.player = player;
-////                 player.closedCaptionDisplayEnabled = YES;
-////                    [self.view addSubview:self.playerView];
-////                    [self enablePlayerButtons];
-////                  [player play];
-////                }
-//                
-//            }
-//            break;
-//                
-//            case AVPlayerStatusFailed:
-//            {
-//                AVPlayerItem *playerItem = (AVPlayerItem *)object;
-//                [self assetFailedToPrepareForPlayback:playerItem.error];
-//            }
-//            break;
-//        }
-//	}
-//    else if (context == &ItemStatusContext) {
-//        dispatch_async(dispatch_get_main_queue(),
-//                       ^{
-//                           [self syncUI];
-//                       });
-//        return;
-//    } else {
-//        [super observeValueForKeyPath:keyPath ofObject:object
-//                           change:change context:context];
-//    }
-//    return;
-//}
 
 
 - (void)playerItemDidReachEnd:(NSNotification *)notification {
@@ -651,9 +584,6 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
     [mPlayer pause];
     [[self presentingViewController] dismissViewControllerAnimated:YES completion:NULL];
 }
-
-
-
 
 
 
