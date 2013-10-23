@@ -7,36 +7,29 @@
 //
 
 #import "MFAVideoPlayerUIView.h"
+#import <AVFoundation/AVFoundation.h>
 
 @implementation MFAVideoPlayerUIView
 
-- (id)initWithFrame:(CGRect)frame
-{
-    NSLog(@"Frame initting is %f %f %f %f", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
-    self = [super initWithFrame:CGRectMake(0.0f, 0.0f, 480.0f, 320.0f)];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
 
 + (Class)layerClass {
     return [AVPlayerLayer class];
 }
+
 - (AVPlayer*)player {
     return [(AVPlayerLayer *)[self layer] player];
 }
+
 - (void)setPlayer:(AVPlayer *)player {
     [(AVPlayerLayer *)[self layer] setPlayer:player];
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+/* Specifies how the video is displayed within a player layer’s bounds.
+ (AVLayerVideoGravityResizeAspect is default) */
+- (void)setVideoFillMode:(NSString *)fillMode
 {
-    // Drawing code
+	AVPlayerLayer *playerLayer = (AVPlayerLayer*)[self layer];
+	playerLayer.videoGravity = fillMode;
 }
-*/
 
 @end

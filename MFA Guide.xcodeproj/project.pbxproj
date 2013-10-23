@@ -127,6 +127,8 @@
 		D0FBED4C125A532600621E9C /* audio-pause-up.png in Resources */ = {isa = PBXBuildFile; fileRef = D0FBED4A125A532600621E9C /* audio-pause-up.png */; };
 		D0FBED6F125A5A7500621E9C /* audio-play-down.png in Resources */ = {isa = PBXBuildFile; fileRef = D0FBED6D125A5A7500621E9C /* audio-play-down.png */; };
 		D0FBED70125A5A7500621E9C /* audio-play-up.png in Resources */ = {isa = PBXBuildFile; fileRef = D0FBED6E125A5A7500621E9C /* audio-play-up.png */; };
+		D30DC5DC1815A9090000D1D4 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D30DC5DB1815A9090000D1D4 /* CoreMedia.framework */; };
+		D30DC5E51815BC250000D1D4 /* MFAVideoPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = D30DC5E41815BC250000D1D4 /* MFAVideoPlayer.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -294,6 +296,8 @@
 		D0FBED4A125A532600621E9C /* audio-pause-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "audio-pause-up.png"; path = "Resources/Images/audio-pause-up.png"; sourceTree = "<group>"; };
 		D0FBED6D125A5A7500621E9C /* audio-play-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "audio-play-down.png"; path = "Resources/Images/audio-play-down.png"; sourceTree = "<group>"; };
 		D0FBED6E125A5A7500621E9C /* audio-play-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "audio-play-up.png"; path = "Resources/Images/audio-play-up.png"; sourceTree = "<group>"; };
+		D30DC5DB1815A9090000D1D4 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		D30DC5E41815BC250000D1D4 /* MFAVideoPlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MFAVideoPlayer.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -301,6 +305,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D30DC5DC1815A9090000D1D4 /* CoreMedia.framework in Frameworks */,
 				CE2B162017C966B900813B3E /* CoreFoundation.framework in Frameworks */,
 				CE2B161E17C966A800813B3E /* Security.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
@@ -343,8 +348,7 @@
 		29B97314FDCFA39411CA2CEA /* Tap */ = {
 			isa = PBXGroup;
 			children = (
-				CE2B161F17C966B900813B3E /* CoreFoundation.framework */,
-				CE2B161D17C966A800813B3E /* Security.framework */,
+				D30DC5DB1815A9090000D1D4 /* CoreMedia.framework */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -384,6 +388,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE2B161F17C966B900813B3E /* CoreFoundation.framework */,
+				CE2B161D17C966A800813B3E /* Security.framework */,
 				8BD6398C0FDFEA1D00A3E1FC /* AudioToolbox.framework */,
 				D00E816F125518270087BD0B /* AVFoundation.framework */,
 				D069D8741247EB2500A86662 /* CFNetwork.framework */,
@@ -475,6 +481,7 @@
 				D069D8451247E66A00A86662 /* Updater.xib */,
 				D03C240612664B1D00C22A9C /* UpdaterCell.xib */,
 				D07FD69E1241B4F000A42251 /* WebStop.xib */,
+				D30DC5E41815BC250000D1D4 /* MFAVideoPlayer.xib */,
 			);
 			name = Nibs;
 			sourceTree = "<group>";
@@ -738,6 +745,7 @@
 				D0F82536127B6D7000C490E6 /* error.aif in Resources */,
 				D0207145141E924F00E6F6C0 /* Icon.png in Resources */,
 				CE2B162217C9681D00813B3E /* Settings.bundle in Resources */,
+				D30DC5E51815BC250000D1D4 /* MFAVideoPlayer.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -839,6 +847,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Museum of Fine Arts, Boston";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -848,7 +857,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-D__IPHONE_OS_VERSION_MIN_REQUIRED=040100";
 				OTHER_LDFLAGS = "-lxml2";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A0DA5F08-B821-4423-AC7E-78625B9C1B50";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Distribution;
@@ -876,7 +885,9 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_ENTITLEMENTS = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Robert Brecher (2C96L7ZE9A)";
+				"CODE_SIGN_ENTITLEMENTS[sdk=*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -885,7 +896,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-D__IPHONE_OS_VERSION_MIN_REQUIRED=040100";
 				OTHER_LDFLAGS = "-lxml2";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D6463E46-38C4-4BF1-B287-AA5B1A6963F3";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -895,6 +906,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Museum of Fine Arts, Boston";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -904,7 +916,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-D__IPHONE_OS_VERSION_MIN_REQUIRED=040100";
 				OTHER_LDFLAGS = "-lxml2";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Release;
