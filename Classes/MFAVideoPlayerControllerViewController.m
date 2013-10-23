@@ -45,12 +45,8 @@ NSString * const kCurrentItemKey	= @"currentItem";
 
 @implementation MFAVideoPlayerControllerViewController
 
-@synthesize fileUrl, mPlayer, mPlayerItem, mPlaybackView, mToolbar, mPlayButton, mStopButton, mCCButton, mScrubber;
+@synthesize fileUrl, mPlayer, mPlayerItem, mPlaybackView, mToolbar, mPlayButton, mStopButton, mCCButton, mScrubber, mDoneButton;
 
-
-
-
-static const NSString *ItemStatusContext;
 
 static void *AVPlayerDemoPlaybackViewControllerRateObservationContext = &AVPlayerDemoPlaybackViewControllerRateObservationContext;
 static void *AVPlayerDemoPlaybackViewControllerStatusObservationContext = &AVPlayerDemoPlaybackViewControllerStatusObservationContext;
@@ -651,6 +647,11 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
     }
 }
 
+- (IBAction)goAwayPlayer:(id)sender {
+    [mPlayer pause];
+    [[self presentingViewController] dismissViewControllerAnimated:YES completion:NULL];
+}
+
 
 
 
@@ -782,7 +783,7 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
     UIBarButtonItem *scrubberItem = [[UIBarButtonItem alloc] initWithCustomView:self.mScrubber];
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
-    self.mToolbar.items = [NSArray arrayWithObjects:self.mPlayButton, flexItem, scrubberItem, flexItem, self.mCCButton, nil];
+    self.mToolbar.items = [NSArray arrayWithObjects:self.mPlayButton, flexItem, scrubberItem, flexItem, self.mCCButton,flexItem, flexItem, self.mDoneButton, nil];
     
     
 	[self initScrubberTimer];
@@ -801,14 +802,18 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 
 
 
-- (void)dealloc {
 
+
+- (void)dealloc {
     [super dealloc];
 }
+
 - (void)viewDidUnload {
     [playerView release];
     playerView = nil;;
+    mPlayer=nil;
     [self setMCCButton:nil];
+    [self setMDoneButton:nil];
     [super viewDidUnload];
 }
 @end

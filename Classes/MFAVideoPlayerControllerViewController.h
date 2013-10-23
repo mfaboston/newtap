@@ -35,14 +35,16 @@
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *mStopButton;
 @property (nonatomic, retain) IBOutlet UISlider* mScrubber;
 @property (retain, nonatomic) IBOutlet UIBarButtonItem *mCCButton;
+@property (retain, nonatomic) IBOutlet UIBarButtonItem *mDoneButton;
 
 - (IBAction)toggleCC:(id)sender;
+- (IBAction)goAwayPlayer:(id)sender;
 
 
 - (IBAction)loadAssetFromFile:sender;
 - (IBAction)play:(id)sender;
 - (IBAction)pause:(id)sender;
-//- (void)syncUI;
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
                         change:(NSDictionary *)change context:(void *)context;
 

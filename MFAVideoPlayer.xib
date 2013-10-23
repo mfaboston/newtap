@@ -2,10 +2,10 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1552</int>
-		<string key="IBDocument.SystemVersion">12F45</string>
+		<string key="IBDocument.SystemVersion">13A603</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.40</string>
-		<string key="IBDocument.HIToolboxVersion">626.00</string>
+		<string key="IBDocument.AppKitVersion">1265</string>
+		<string key="IBDocument.HIToolboxVersion">695.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			<string key="NS.object.0">2083</string>
@@ -46,8 +46,9 @@
 						<reference key="NSNextKeyView" ref="553677785"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">2</int>
-							<bytes key="NSRGB">MC44NjI3NDUxNjU4IDAuMzA5ODAzOTMyOSAwLjI2NjY2NjY4MDYAA</bytes>
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MCAwIDAAA</bytes>
+							<string key="IBUIColorCocoaTouchKeyPath">darkTextColor</string>
 						</object>
 						<object class="IBUIScreenMetrics" key="IBUISimulatedDestinationMetrics" id="975379318">
 							<string key="IBUISimulatedSizeMetricsClass">IBUIScreenMetrics</string>
@@ -74,7 +75,6 @@
 						<string key="NSFrame">{{0, 276}, {568, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -111,10 +111,9 @@
 			<object class="IBUISlider" id="348651438">
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
-				<string key="NSFrameSize">{372, 23}</string>
+				<string key="NSFrameSize">{257, 23}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<bool key="IBUIOpaque">NO</bool>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -135,9 +134,14 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUISystemItemIdentifier">18</int>
 			</object>
-			<object class="IBUIBarButtonItem" id="1058326484">
+			<object class="IBUIBarButtonItem" id="547905513">
 				<string key="IBUITitle">CC</string>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+			</object>
+			<object class="IBUIBarButtonItem" id="641886476">
+				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+				<int key="IBUIStyle">1</int>
+				<int key="IBUISystemItemIdentifier">0</int>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -194,9 +198,17 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">mCCButton</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="1058326484"/>
+						<reference key="destination" ref="547905513"/>
 					</object>
 					<int key="connectionID">36</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">mDoneButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="641886476"/>
+					</object>
+					<int key="connectionID">48</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -271,10 +283,18 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">toggleCC:</string>
-						<reference key="source" ref="1058326484"/>
+						<reference key="source" ref="547905513"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">38</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">goAwayPlayer:</string>
+						<reference key="source" ref="641886476"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">50</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -341,8 +361,14 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">35</int>
-						<reference key="object" ref="1058326484"/>
+						<reference key="object" ref="547905513"/>
 						<reference key="parent" ref="0"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">47</int>
+						<reference key="object" ref="641886476"/>
+						<reference key="parent" ref="0"/>
+						<string key="objectName">DoneButton</string>
 					</object>
 				</array>
 			</object>
@@ -359,13 +385,14 @@
 				<string key="26.CustomClassName">MFAVideoPlayerUIView</string>
 				<string key="26.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="35.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="47.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">46</int>
+			<int key="maxID">50</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -375,6 +402,8 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="beginScrubbing:">id</string>
 						<string key="endScrubbing:">id</string>
+						<string key="goAwayMFA:">id</string>
+						<string key="goAwayPlayer:">id</string>
 						<string key="loadAssetFromFile:">id</string>
 						<string key="pause:">id</string>
 						<string key="play:">id</string>
@@ -388,6 +417,14 @@
 						</object>
 						<object class="IBActionInfo" key="endScrubbing:">
 							<string key="name">endScrubbing:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="goAwayMFA:">
+							<string key="name">goAwayMFA:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="goAwayPlayer:">
+							<string key="name">goAwayPlayer:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="loadAssetFromFile:">
@@ -413,6 +450,7 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="mCCButton">UIBarButtonItem</string>
+						<string key="mDoneButton">UIBarButtonItem</string>
 						<string key="mPlayButton">UIBarButtonItem</string>
 						<string key="mPlaybackView">MFAVideoPlayerUIView</string>
 						<string key="mScrubber">UISlider</string>
@@ -423,6 +461,10 @@
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="mCCButton">
 							<string key="name">mCCButton</string>
+							<string key="candidateClassName">UIBarButtonItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="mDoneButton">
+							<string key="name">mDoneButton</string>
 							<string key="candidateClassName">UIBarButtonItem</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="mPlayButton">
