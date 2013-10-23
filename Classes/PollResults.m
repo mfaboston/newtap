@@ -61,7 +61,7 @@
 	xmlChar *xpathExpr = (xmlChar*)[countXPath UTF8String];
 	xpathObj = xmlXPathEvalExpression(xpathExpr, xpathCtx);
     if(xpathObj == NULL) {
-        NSLog(@"Unable to evaluate xpath expression: %@", xpathExpr);
+        NSLog(@"Unable to evaluate xpath expression: %s", xpathExpr);
 		xmlXPathFreeContext(xpathCtx);
         return 0;
     }
@@ -181,7 +181,7 @@
         NSString *txt = [NSString stringWithFormat:@"%.0f%% %@", percent * 100, [answers objectAtIndex:idx]];
 		[[cell textLabel] setText:txt];
 		[[cell textLabel] setBackgroundColor:[UIColor clearColor]];
-		NSLog(@"%@", [cell bounds]);
+		//NSLog(@"%@", [cell bounds]);
         
         // Add a chart bar to the background
         CGRect chartBarFrame = CGRectMake([[cell contentView] frame].origin.x,
