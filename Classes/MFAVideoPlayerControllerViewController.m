@@ -84,7 +84,6 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 			[self assetFailedToPrepareForPlayback:error];
 			return;
 		}
-		/* If you are also implementing -[AVAsset cancelLoading], add your code here to bail out properly in the case of cancellation. */
 	}
     
     /* Use the AVAsset playable property to detect whether the asset can be played. */
@@ -101,7 +100,6 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
         
         /* Display the error to the user. */
         [self assetFailedToPrepareForPlayback:assetCannotBePlayedError];
-        
         return;
     }
 	
@@ -111,7 +109,6 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
     if (self.mPlayerItem)
     {
         /* Remove existing player item key value observers and notifications. */
-        
         [self.mPlayerItem removeObserver:self forKeyPath:kStatusKey];
 		
         [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -286,7 +283,8 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 
 
 - (void)playerItemDidReachEnd:(NSNotification *)notification {
-      [self.player seekToTime:kCMTimeZero];
+    [self.player seekToTime:kCMTimeZero];
+    [self goAwayPlayer];
 }
 
 
@@ -580,7 +578,12 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
     }
 }
 
-- (IBAction)goAwayPlayer:(id)sender {
+- (IBAction)doneTap:(id)sender {
+    [self goAwayPlayer];
+}
+
+
+- (void)goAwayPlayer {
     [mPlayer pause];
     [[self presentingViewController] dismissViewControllerAnimated:YES completion:NULL];
 }

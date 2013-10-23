@@ -38,8 +38,7 @@
 @property (retain, nonatomic) IBOutlet UIBarButtonItem *mDoneButton;
 
 - (IBAction)toggleCC:(id)sender;
-- (IBAction)goAwayPlayer:(id)sender;
-
+- (IBAction)doneTap:(id)sender;
 
 - (IBAction)loadAssetFromFile:sender;
 - (IBAction)play:(id)sender;
