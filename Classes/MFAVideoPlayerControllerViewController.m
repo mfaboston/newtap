@@ -668,6 +668,7 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 	[self initScrubberTimer];
 	[self syncPlayPauseButtons];
 	[self syncScrubber];
+    [self performSelector:@selector(toogleToolbars) withObject:nil afterDelay:1.5];
     
     [super viewDidLoad];
 }
