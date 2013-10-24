@@ -40,6 +40,7 @@
 		return;
 	}
 	[self setRemoteUrl:fileUrl];
+   // NSLog(@"HTTPRequest:fileUrl is %@", fileUrl);
 	NSURLRequest *request = [[NSURLRequest alloc] initWithURL:fileUrl];
 	if (urlConnection) {
 		[urlConnection cancel];
@@ -73,7 +74,7 @@
 	if ([response isMemberOfClass:[NSHTTPURLResponse class]] && [(NSHTTPURLResponse *)response statusCode] != 200) {
 		[connection cancel];
 		if ([delegate respondsToSelector:@selector(httpRequest:didFailWithError:)]) {
-			NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@: HTTP Status Code: %ld", remoteUrl, [(NSHTTPURLResponse *)response statusCode]], NSLocalizedDescriptionKey, remoteUrl, NSURLErrorFailingURLErrorKey, nil];
+			NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@: HTTP Status Code: %ld", remoteUrl, (long)[((NSHTTPURLResponse *)response) statusCode]], NSLocalizedDescriptionKey, remoteUrl, NSURLErrorFailingURLErrorKey, nil];
 			NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:[(NSHTTPURLResponse *)response statusCode] userInfo:dict];
 			[delegate httpRequest:self didFailWithError:error];
 		}

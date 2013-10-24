@@ -17,13 +17,13 @@
 	NSString *reqUrl = [NSString stringWithFormat:ANALYTICS_URL_FORMAT,
 						stop,
 						action,
-						time(NULL),
-						[device uniqueIdentifier],
+						(int)time(NULL),
+						@"", // deprecated [device uniqueIdentifier],
 						[device name]];
 	reqUrl = (NSString*)CFURLCreateStringByAddingPercentEscapes(NULL, (CFStringRef)reqUrl, NULL, NULL, kCFStringEncodingUTF8);
 	[reqUrl autorelease];
 	
-    NSLog(@"Tracking analytics: action=%@ stop=%@ time=%ld device_uuid=%@ device_name=%@", action, stop, time(NULL), [device uniqueIdentifier], [device name]);
+ //   NSLog(@"Tracking analytics: action=%@ stop=%@ time=%ld device_uuid=%@ device_name=%@", action, stop, time(NULL), [device uniqueIdentifier], [device name]);
 //	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:reqUrl]
 //											 cachePolicy:NSURLRequestReloadIgnoringCacheData
 //										 timeoutInterval:5];
