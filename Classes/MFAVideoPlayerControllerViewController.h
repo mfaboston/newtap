@@ -39,6 +39,7 @@
 
 - (IBAction)toggleCC:(id)sender;
 - (IBAction)doneTap:(id)sender;
+- (IBAction)tapMFAPlayer:(id)sender;
 
 - (IBAction)loadAssetFromFile:sender;
 - (IBAction)play:(id)sender;

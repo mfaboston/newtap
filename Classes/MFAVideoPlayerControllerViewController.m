@@ -479,70 +479,6 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 #pragma mark -
 #pragma mark Movie sContorls
 
-- (void)handleSwipe:(UISwipeGestureRecognizer *)gestureRecognizer
-{
-    
-    NSLog(@"SWIPE!!!!!!!!!!!!!");
-    UIView* view = [self view];
-	UISwipeGestureRecognizerDirection direction = [gestureRecognizer direction];
-	CGPoint location = [gestureRecognizer locationInView:view];
-	
-	if (location.y < CGRectGetMidY([view bounds]))
-	{
-		if (direction == UISwipeGestureRecognizerDirectionUp)
-		{
-			[UIView animateWithDuration:0.2f animations:
-             ^{
-                 [[self navigationController] setNavigationBarHidden:YES animated:YES];
-             } completion:
-             ^(BOOL finished)
-             {
-                 [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-             }];
-		}
-		if (direction == UISwipeGestureRecognizerDirectionDown)
-		{
-			[UIView animateWithDuration:0.2f animations:
-             ^{
-                 [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-             } completion:
-             ^(BOOL finished)
-             {
-                 [[self navigationController] setNavigationBarHidden:NO animated:YES];
-             }];
-		}
-	}
-	else
-	{
-		if (direction == UISwipeGestureRecognizerDirectionDown)
-		{
-            if (![self.mToolbar isHidden])
-			{
-				[UIView animateWithDuration:0.2f animations:
-                 ^{
-                     [self.mToolbar setTransform:CGAffineTransformMakeTranslation(0.f, CGRectGetHeight([self.mToolbar bounds]))];
-                 } completion:
-                 ^(BOOL finished)
-                 {
-                     [self.mToolbar setHidden:YES];
-                 }];
-			}
-		}
-		else if (direction == UISwipeGestureRecognizerDirectionUp)
-		{
-            if ([self.mToolbar isHidden])
-			{
-				[self.mToolbar setHidden:NO];
-				
-				[UIView animateWithDuration:0.2f animations:
-                 ^{
-                     [self.mToolbar setTransform:CGAffineTransformIdentity];
-                 } completion:^(BOOL finished){}];
-			}
-		}
-	}
-}
-
 
 
 
@@ -570,7 +506,6 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 
 - (IBAction)toggleCC:(id)sender
 {
-	NSLog(@"ToggleCC");
     if(mPlayer.isClosedCaptionDisplayEnabled){
         mPlayer.closedCaptionDisplayEnabled = NO;
     } else {
@@ -580,6 +515,29 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 
 - (IBAction)doneTap:(id)sender {
     [self goAwayPlayer];
+}
+
+- (IBAction)tapMFAPlayer:(id)sender {
+    [self toogleToolbars];
+}
+
+-(void) toogleToolbars{
+    if (![self.mToolbar isHidden]){
+        
+        [UIView animateWithDuration:0.35f animations:
+         ^{
+             [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+             [self.mToolbar setTransform:CGAffineTransformMakeTranslation(0.f, CGRectGetHeight([self.mToolbar bounds]))];
+             [self.mToolbar setHidden:YES];
+         }completion:^(BOOL finished){}];
+    } else{
+        [UIView animateWithDuration:0.35f animations:
+         ^{
+             [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+             [self.mToolbar setTransform:CGAffineTransformIdentity];
+             [self.mToolbar setHidden:NO];
+         } completion:^(BOOL finished){}];
+    }
 }
 
 
@@ -700,24 +658,12 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 {
     
     [self setPlayer:nil];
-    
-	UIView* view  = [self view];
-    
-	UISwipeGestureRecognizer* swipeUpRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
-	[swipeUpRecognizer setDirection:UISwipeGestureRecognizerDirectionUp];
-	[view addGestureRecognizer:swipeUpRecognizer];
-	[swipeUpRecognizer release];
-	
-	UISwipeGestureRecognizer* swipeDownRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
-	[swipeDownRecognizer setDirection:UISwipeGestureRecognizerDirectionDown];
-	[view addGestureRecognizer:swipeDownRecognizer];
-	[swipeDownRecognizer release];
-    
+
+
     UIBarButtonItem *scrubberItem = [[UIBarButtonItem alloc] initWithCustomView:self.mScrubber];
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     self.mToolbar.items = [NSArray arrayWithObjects:self.mPlayButton, flexItem, scrubberItem, flexItem, self.mCCButton,flexItem, flexItem, self.mDoneButton, nil];
-    
     
 	[self initScrubberTimer];
 	[self syncPlayPauseButtons];
