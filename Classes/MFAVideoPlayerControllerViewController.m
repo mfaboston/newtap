@@ -663,6 +663,12 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
     UIBarButtonItem *scrubberItem = [[UIBarButtonItem alloc] initWithCustomView:self.mScrubber];
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
+    MPVolumeView *_volumeView = [ [MPVolumeView alloc] init];
+    [_volumeView setShowsVolumeSlider:YES];
+    [_volumeView setShowsRouteButton:NO];
+    [_volumeView sizeToFit];
+    [self.view addSubview:_volumeView];
+    
     self.mToolbar.items = [NSArray arrayWithObjects:self.mPlayButton, flexItem, scrubberItem, flexItem, self.mCCButton,flexItem, flexItem, self.mDoneButton, nil];
     
 	[self initScrubberTimer];
