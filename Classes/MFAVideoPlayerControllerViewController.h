@@ -37,10 +37,12 @@
 @property (nonatomic, retain) IBOutlet UISlider* mScrubber;
 @property (retain, nonatomic) IBOutlet UIBarButtonItem *mCCButton;
 @property (retain, nonatomic) IBOutlet UIBarButtonItem *mDoneButton;
+@property (retain, nonatomic) IBOutlet UIBarButtonItem *mRestart;
 
 - (IBAction)toggleCC:(id)sender;
 - (IBAction)doneTap:(id)sender;
 - (IBAction)tapMFAPlayer:(id)sender;
+- (IBAction)restartVideo:(id)sender;
 
 - (IBAction)loadAssetFromFile:sender;
 - (IBAction)play:(id)sender;

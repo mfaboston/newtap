@@ -77,6 +77,7 @@
 						<string key="NSFrame">{{0, 276}, {568, 44}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -116,6 +117,7 @@
 				<string key="NSFrameSize">{257, 23}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
+				<reference key="NSNextKeyView"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<bool key="IBUIOpaque">NO</bool>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -144,6 +146,10 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUIStyle">1</int>
 				<int key="IBUISystemItemIdentifier">0</int>
+			</object>
+			<object class="IBUIBarButtonItem" id="481405396">
+				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+				<int key="IBUISystemItemIdentifier">19</int>
 			</object>
 			<object class="IBUITapGestureRecognizer" id="998298754"/>
 		</array>
@@ -212,6 +218,14 @@
 						<reference key="destination" ref="641886476"/>
 					</object>
 					<int key="connectionID">48</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">mRestart</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="481405396"/>
+					</object>
+					<int key="connectionID">57</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -317,6 +331,14 @@
 					</object>
 					<int key="connectionID">55</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">restartVideo:</string>
+						<reference key="source" ref="481405396"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">58</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -397,6 +419,12 @@
 						<reference key="object" ref="998298754"/>
 						<reference key="parent" ref="0"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">56</int>
+						<reference key="object" ref="481405396"/>
+						<reference key="parent" ref="0"/>
+						<string key="objectName">restart</string>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -414,13 +442,14 @@
 				<string key="35.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="47.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="52.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="56.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">55</int>
+			<int key="maxID">58</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -434,6 +463,7 @@
 						<string key="loadAssetFromFile:">id</string>
 						<string key="pause:">id</string>
 						<string key="play:">id</string>
+						<string key="restartVideo:">id</string>
 						<string key="scrub:">id</string>
 						<string key="tapMFAPlayer:">id</string>
 						<string key="toggleCC:">id</string>
@@ -463,6 +493,10 @@
 							<string key="name">play:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="restartVideo:">
+							<string key="name">restartVideo:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="scrub:">
 							<string key="name">scrub:</string>
 							<string key="candidateClassName">id</string>
@@ -481,6 +515,7 @@
 						<string key="mDoneButton">UIBarButtonItem</string>
 						<string key="mPlayButton">UIBarButtonItem</string>
 						<string key="mPlaybackView">MFAVideoPlayerUIView</string>
+						<string key="mRestart">UIBarButtonItem</string>
 						<string key="mScrubber">UISlider</string>
 						<string key="mStopButton">UIBarButtonItem</string>
 						<string key="mToolbar">UIToolbar</string>
@@ -502,6 +537,10 @@
 						<object class="IBToOneOutletInfo" key="mPlaybackView">
 							<string key="name">mPlaybackView</string>
 							<string key="candidateClassName">MFAVideoPlayerUIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="mRestart">
+							<string key="name">mRestart</string>
+							<string key="candidateClassName">UIBarButtonItem</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="mScrubber">
 							<string key="name">mScrubber</string>

@@ -45,7 +45,7 @@ NSString * const kCurrentItemKey	= @"currentItem";
 
 @implementation MFAVideoPlayerControllerViewController
 
-@synthesize fileUrl, mPlayer, mPlayerItem, mPlaybackView, mToolbar, mPlayButton, mStopButton, mCCButton, mScrubber, mDoneButton;
+@synthesize fileUrl, mPlayer, mPlayerItem, mPlaybackView, mToolbar, mPlayButton, mStopButton, mCCButton, mScrubber, mDoneButton, mRestart;
 
 
 static void *AVPlayerDemoPlaybackViewControllerRateObservationContext = &AVPlayerDemoPlaybackViewControllerRateObservationContext;
@@ -504,6 +504,14 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
     [self showStopButton];
 }
 
+- (IBAction)restartVideo:sender{
+    NSLog(@"Restart Video");
+    
+    CMTime newTime = CMTimeMakeWithSeconds(0.2, 1);
+    [mPlayer seekToTime:newTime];
+}
+
+
 - (IBAction)toggleCC:(id)sender
 {
     if(mPlayer.isClosedCaptionDisplayEnabled){
@@ -669,7 +677,7 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
     [_volumeView sizeToFit];
     [self.view addSubview:_volumeView];
     
-    self.mToolbar.items = [NSArray arrayWithObjects:self.mPlayButton, flexItem, scrubberItem, flexItem, self.mCCButton,flexItem, flexItem, self.mDoneButton, nil];
+    self.mToolbar.items = [NSArray arrayWithObjects:self.mPlayButton, flexItem, scrubberItem, flexItem, self.mCCButton,flexItem, self.mRestart, flexItem, self.mDoneButton, nil];
     
 	[self initScrubberTimer];
 	[self syncPlayPauseButtons];
@@ -700,6 +708,7 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
     mPlayer=nil;
     [self setMCCButton:nil];
     [self setMDoneButton:nil];
+    [self setMRestart:nil];
     [super viewDidUnload];
 }
 @end
