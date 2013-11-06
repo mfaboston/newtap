@@ -45,7 +45,7 @@ NSString * const kCurrentItemKey	= @"currentItem";
 
 @implementation MFAVideoPlayerControllerViewController
 
-@synthesize fileUrl, mPlayer, mPlayerItem, mPlaybackView, mToolbar, mPlayButton, mStopButton, mCCButton, mScrubber, mDoneButton, mRestart;
+@synthesize fileUrl, mPlayer, mPlayerItem, mPlaybackView, mToolbar, mSecondaryToolbar, mPlayButton, mStopButton, mCCButton, mScrubber, mDoneButton, mRestart;
 
 
 static void *AVPlayerDemoPlaybackViewControllerRateObservationContext = &AVPlayerDemoPlaybackViewControllerRateObservationContext;
@@ -294,17 +294,17 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 /* Show the stop button in the movie player controller. */
 -(void)showStopButton
 {
-    NSMutableArray *toolbarItems = [NSMutableArray arrayWithArray:[self.mToolbar items]];
-    [toolbarItems replaceObjectAtIndex:0 withObject:self.mStopButton];
-    self.mToolbar.items = toolbarItems;
+    NSMutableArray *toolbarItems = [NSMutableArray arrayWithArray:[self.mSecondaryToolbar items]];
+    [toolbarItems replaceObjectAtIndex:4 withObject:self.mStopButton];
+    self.mSecondaryToolbar.items = toolbarItems;
 }
 
 /* Show the play button in the movie player controller. */
 -(void)showPlayButton
 {
-    NSMutableArray *toolbarItems = [NSMutableArray arrayWithArray:[self.mToolbar items]];
-    [toolbarItems replaceObjectAtIndex:0 withObject:self.mPlayButton];
-    self.mToolbar.items = toolbarItems;
+    NSMutableArray *toolbarItems = [NSMutableArray arrayWithArray:[self.mSecondaryToolbar items]];
+    [toolbarItems replaceObjectAtIndex:4 withObject:self.mPlayButton];
+    self.mSecondaryToolbar.items = toolbarItems;
 }
 
 /* If the media is playing, show the stop button; otherwise, show the play button. */
@@ -522,6 +522,7 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 }
 
 - (IBAction)doneTap:(id)sender {
+    NSLog(@"DONE TAPPED");
     [self goAwayPlayer];
 }
 
@@ -530,22 +531,22 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 }
 
 -(void) toogleToolbars{
-    if (![self.mToolbar isHidden]){
-        
-        [UIView animateWithDuration:0.35f animations:
-         ^{
-             [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-             [self.mToolbar setTransform:CGAffineTransformMakeTranslation(0.f, CGRectGetHeight([self.mToolbar bounds]))];
-             [self.mToolbar setHidden:YES];
-         }completion:^(BOOL finished){}];
-    } else{
-        [UIView animateWithDuration:0.35f animations:
-         ^{
-             [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
-             [self.mToolbar setTransform:CGAffineTransformIdentity];
-             [self.mToolbar setHidden:NO];
-         } completion:^(BOOL finished){}];
-    }
+//    if (![self.mToolbar isHidden]){
+//        
+//        [UIView animateWithDuration:0.35f animations:
+//         ^{
+//             [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+//             [self.mToolbar setTransform:CGAffineTransformMakeTranslation(0.f, CGRectGetHeight([self.mToolbar bounds]))];
+//             [self.mToolbar setHidden:YES];
+//         }completion:^(BOOL finished){}];
+//    } else{
+//        [UIView animateWithDuration:0.35f animations:
+//         ^{
+//             [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+//             [self.mToolbar setTransform:CGAffineTransformIdentity];
+//             [self.mToolbar setHidden:NO];
+//         } completion:^(BOOL finished){}];
+//    }
 }
 
 
@@ -675,9 +676,11 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
     [_volumeView setShowsVolumeSlider:YES];
     [_volumeView setShowsRouteButton:NO];
     [_volumeView sizeToFit];
-    [self.view addSubview:_volumeView];
+    [self.mVolumeBox addSubview:_volumeView];
     
-    self.mToolbar.items = [NSArray arrayWithObjects:self.mPlayButton, flexItem, scrubberItem, flexItem, self.mCCButton,flexItem, self.mRestart, flexItem, self.mDoneButton, nil];
+    self.mToolbar.items = [NSArray arrayWithObjects:self.mDoneButton, flexItem, scrubberItem, flexItem,  nil];
+    
+    self.mSecondaryToolbar.items = [NSArray arrayWithObjects:flexItem, flexItem, self.mRestart, flexItem, self.mPlayButton,  flexItem, self.mCCButton,flexItem, flexItem, nil];
     
 	[self initScrubberTimer];
 	[self syncPlayPauseButtons];
@@ -699,6 +702,9 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 
 
 - (void)dealloc {
+    [_mVolumeSlider release];
+    [_mSecondary release];
+    [_mVolumeBox release];
     [super dealloc];
 }
 
@@ -709,6 +715,9 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
     [self setMCCButton:nil];
     [self setMDoneButton:nil];
     [self setMRestart:nil];
+    [self setMVolumeSlider:nil];
+    [self setMSecondary:nil];
+    [self setMVolumeBox:nil];
     [super viewDidUnload];
 }
 @end
