@@ -527,10 +527,12 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 }
 
 - (IBAction)tapMFAPlayer:(id)sender {
-    [self toogleToolbars];
+    [self toggleToolbars];
+    NSLog(@"TAPPPPPP");
 }
 
--(void) toogleToolbars{
+-(void) toggleToolbars{
+      NSLog(@"TOGGEL");
 //    if (![self.mToolbar isHidden]){
 //        
 //        [UIView animateWithDuration:0.35f animations:
@@ -672,7 +674,7 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
     UIBarButtonItem *scrubberItem = [[UIBarButtonItem alloc] initWithCustomView:self.mScrubber];
     UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
-    MPVolumeView *_volumeView = [ [MPVolumeView alloc] init];
+    MPVolumeView *_volumeView = [ [MPVolumeView alloc] initWithFrame: self.mVolumeBox.bounds];
     [_volumeView setShowsVolumeSlider:YES];
     [_volumeView setShowsRouteButton:NO];
     [_volumeView sizeToFit];
@@ -685,7 +687,7 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 	[self initScrubberTimer];
 	[self syncPlayPauseButtons];
 	[self syncScrubber];
-    [self performSelector:@selector(toogleToolbars) withObject:nil afterDelay:1.5];
+    [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:1.5];
     
     [super viewDidLoad];
 }
@@ -702,7 +704,6 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 
 
 - (void)dealloc {
-    [_mVolumeSlider release];
     [_mSecondary release];
     [_mVolumeBox release];
     [super dealloc];
@@ -715,7 +716,6 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
     [self setMCCButton:nil];
     [self setMDoneButton:nil];
     [self setMRestart:nil];
-    [self setMVolumeSlider:nil];
     [self setMSecondary:nil];
     [self setMVolumeBox:nil];
     [super viewDidUnload];

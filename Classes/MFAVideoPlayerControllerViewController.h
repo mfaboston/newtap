@@ -41,7 +41,6 @@
 @property (retain, nonatomic) IBOutlet UIBarButtonItem *mCCButton;
 @property (retain, nonatomic) IBOutlet UIBarButtonItem *mDoneButton;
 @property (retain, nonatomic) IBOutlet UIBarButtonItem *mRestart;
-@property (retain, nonatomic) IBOutlet UISlider *mVolumeSlider;
 @property (retain, nonatomic) IBOutlet UIView *mSecondary;
 @property (retain, nonatomic) IBOutlet UIView *mVolumeBox;
 
