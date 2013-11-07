@@ -437,6 +437,7 @@ enum {
 - (void)updaterDidFailToRetrieveToursXML:(Updater *)updater
 {
 	[self addToConsole:@"Failed to retrieve tours.xml"];
+    [self addToConsole:[NSString stringWithFormat:@"tours.xml URL: %@", [UpdaterDataProvider getUpdaterAllToursUrl]]];
 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error with tours.xml" 
 														message:@"Failed to retrieve tours.xml, would you like to try again?" 
 													   delegate:self 

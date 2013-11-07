@@ -51,7 +51,7 @@
 	}
 	
 	// Setup buttons
-	xmlNodePtr showKeypadTextNode = [TourMLUtils getLocalizationInDocument:tourDoc withName:@"KeypadEnterButton"];
+	xmlNodePtr showKeypadTextNode = [TourMLUtils getLocalizationInDocument:tourDoc withName:@"ShowKeypad"];
 	if (showKeypadTextNode) {
 		char* showKeypadTextChars = (char*)xmlNodeGetContent(showKeypadTextNode);
 		[enterButton setTitle:[NSString stringWithUTF8String:showKeypadTextChars] forState:UIControlStateNormal];
