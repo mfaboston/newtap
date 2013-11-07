@@ -33,6 +33,7 @@
 
 @property (nonatomic, retain) IBOutlet UIToolbar *mToolbar;
 @property (retain, nonatomic) IBOutlet UIToolbar *mSecondaryToolbar;
+@property (retain, nonatomic) IBOutlet UIView *mSecondaryBox;
 
 
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *mPlayButton;

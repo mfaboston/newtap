@@ -52,7 +52,7 @@ static void *AVPlayerDemoPlaybackViewControllerRateObservationContext = &AVPlaye
 static void *AVPlayerDemoPlaybackViewControllerStatusObservationContext = &AVPlayerDemoPlaybackViewControllerStatusObservationContext;
 static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext;
 
-
+UITapGestureRecognizer *tap;
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
@@ -533,22 +533,27 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 
 -(void) toggleToolbars{
       NSLog(@"TOGGEL");
-//    if (![self.mToolbar isHidden]){
-//        
-//        [UIView animateWithDuration:0.35f animations:
-//         ^{
-//             [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-//             [self.mToolbar setTransform:CGAffineTransformMakeTranslation(0.f, CGRectGetHeight([self.mToolbar bounds]))];
-//             [self.mToolbar setHidden:YES];
-//         }completion:^(BOOL finished){}];
-//    } else{
-//        [UIView animateWithDuration:0.35f animations:
-//         ^{
-//             [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
-//             [self.mToolbar setTransform:CGAffineTransformIdentity];
-//             [self.mToolbar setHidden:NO];
-//         } completion:^(BOOL finished){}];
-//    }
+    if (![self.mToolbar isHidden]){
+        [UIView animateWithDuration:0.35f animations:
+         ^{
+             [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+             [self.mToolbar setTransform:CGAffineTransformMakeTranslation(0.f, CGRectGetHeight([self.mToolbar bounds]))];
+             [self.mSecondaryBox setTransform:CGAffineTransformMakeTranslation(0.f, CGRectGetHeight([self.mSecondaryBox bounds]))];
+             [self.mToolbar setHidden:YES];
+             
+             [self.view addGestureRecognizer:tap];
+         }completion:^(BOOL finished){tap.enabled = YES;}];
+    } else{
+        [UIView animateWithDuration:0.35f animations:
+         ^{
+             [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+             [self.mToolbar setTransform:CGAffineTransformIdentity];
+             [self.mSecondaryBox setTransform:CGAffineTransformIdentity];
+             [self.mToolbar setHidden:NO];
+             [self.mSecondaryBox setHidden:NO];
+            
+         } completion:^(BOOL finished){ tap.enabled = NO; }];
+    }
 }
 
 
@@ -687,6 +692,12 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 	[self initScrubberTimer];
 	[self syncPlayPauseButtons];
 	[self syncScrubber];
+    
+    
+   tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(toggleToolbars)];
+    
     [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:1.5];
     
     [super viewDidLoad];
@@ -706,6 +717,7 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
 - (void)dealloc {
     [_mSecondary release];
     [_mVolumeBox release];
+    [_mSecondaryBox release];
     [super dealloc];
 }
 
@@ -718,6 +730,7 @@ static void *AVPlayerDemoPlaybackViewControllerCurrentItemObservationContext = &
     [self setMRestart:nil];
     [self setMSecondary:nil];
     [self setMVolumeBox:nil];
+    [self setMSecondaryBox:nil];
     [super viewDidUnload];
 }
 @end
