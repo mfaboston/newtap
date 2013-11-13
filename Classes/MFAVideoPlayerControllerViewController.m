@@ -516,16 +516,17 @@ UITapGestureRecognizer *tap;
 }
 - (IBAction)toggleCC:(id)sender
 {
-    if(mPlayer.isClosedCaptionDisplayEnabled){
-        mPlayer.closedCaptionDisplayEnabled = NO;
-//      mCCButton.tintColor = [UIColor redColor] ;
-    } else {
-       mPlayer.closedCaptionDisplayEnabled = YES;
-//         mCCButton.tintColor = [UIColor redColor] ;
-    }
+    BOOL new_enabled = (! mPlayer.isClosedCaptionDisplayEnabled);
+    mPlayer.closedCaptionDisplayEnabled = new_enabled;
+    [[self applicationDelegate] setCCInDefaults:new_enabled];
+//    if(mPlayer.isClosedCaptionDisplayEnabled){
+//        mPlayer.closedCaptionDisplayEnabled = NO;
+//    } else {
+//       mPlayer.closedCaptionDisplayEnabled = YES;
+//    }
 }
 
-- (IBAction)doneTap:(id)sender {
+- (IBAction)doneTap:(id)sender{
     [self goAwayPlayer];
 }
 
@@ -703,7 +704,7 @@ UITapGestureRecognizer *tap;
                                    action:@selector(toggleToolbars)];
     
     [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:5.0];
-    
+    self.mPlayer.closedCaptionDisplayEnabled  = [[self applicationDelegate] ccFromDefaults];
     [super viewDidLoad];
 }
 
