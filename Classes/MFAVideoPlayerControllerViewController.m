@@ -516,19 +516,19 @@ UITapGestureRecognizer *tap;
 {
     if(mPlayer.isClosedCaptionDisplayEnabled){
         mPlayer.closedCaptionDisplayEnabled = NO;
+//      mCCButton.tintColor = [UIColor redColor] ;
     } else {
        mPlayer.closedCaptionDisplayEnabled = YES;
+//         mCCButton.tintColor = [UIColor redColor] ;
     }
 }
 
 - (IBAction)doneTap:(id)sender {
-    NSLog(@"DONE TAPPED");
     [self goAwayPlayer];
 }
 
 - (IBAction)tapMFAPlayer:(id)sender {
     [self toggleToolbars];
-    NSLog(@"TAPPPPPP");
 }
 
 -(void) toggleToolbars{
@@ -537,11 +537,11 @@ UITapGestureRecognizer *tap;
         [UIView animateWithDuration:0.35f animations:
          ^{
              [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-             [self.mToolbar setTransform:CGAffineTransformMakeTranslation(0.f, CGRectGetHeight([self.mToolbar bounds]))];
-             [self.mSecondaryBox setTransform:CGAffineTransformMakeTranslation(0.f, CGRectGetHeight([self.mSecondaryBox bounds]))];
+             [self.mToolbar setTransform:CGAffineTransformMakeTranslation(0.f, -CGRectGetHeight([self.mToolbar bounds]))];
+             [self.mSecondaryBox setTransform:CGAffineTransformMakeTranslation(0.f, CGRectGetHeight([self.mSecondaryBox bounds])+10.0)];
              [self.mToolbar setHidden:YES];
-             
              [self.view addGestureRecognizer:tap];
+             
          }completion:^(BOOL finished){tap.enabled = YES;}];
     } else{
         [UIView animateWithDuration:0.35f animations:
@@ -552,6 +552,8 @@ UITapGestureRecognizer *tap;
              [self.mToolbar setHidden:NO];
              [self.mSecondaryBox setHidden:NO];
             
+              [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:5.0];
+             
          } completion:^(BOOL finished){ tap.enabled = NO; }];
     }
 }
@@ -698,7 +700,7 @@ UITapGestureRecognizer *tap;
                                    initWithTarget:self
                                    action:@selector(toggleToolbars)];
     
-    [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:1.5];
+    [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:5.0];
     
     [super viewDidLoad];
 }
