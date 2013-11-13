@@ -129,6 +129,7 @@
 		D0FBED70125A5A7500621E9C /* audio-play-up.png in Resources */ = {isa = PBXBuildFile; fileRef = D0FBED6E125A5A7500621E9C /* audio-play-up.png */; };
 		D30DC5DC1815A9090000D1D4 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D30DC5DB1815A9090000D1D4 /* CoreMedia.framework */; };
 		D30DC5E51815BC250000D1D4 /* MFAVideoPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = D30DC5E41815BC250000D1D4 /* MFAVideoPlayer.xib */; };
+		D353A9CE18341E0900EF856F /* backtomenu.png in Resources */ = {isa = PBXBuildFile; fileRef = D353A9CD18341E0900EF856F /* backtomenu.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -298,6 +299,7 @@
 		D0FBED6E125A5A7500621E9C /* audio-play-up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "audio-play-up.png"; path = "Resources/Images/audio-play-up.png"; sourceTree = "<group>"; };
 		D30DC5DB1815A9090000D1D4 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		D30DC5E41815BC250000D1D4 /* MFAVideoPlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MFAVideoPlayer.xib; sourceTree = "<group>"; };
+		D353A9CD18341E0900EF856F /* backtomenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = backtomenu.png; path = Resources/Images/backtomenu.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -415,6 +417,7 @@
 		8BD9A2540FC195E5001E97D9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D353A9CD18341E0900EF856F /* backtomenu.png */,
 				D07C34CB125C03B40059632B /* audio-handle.png */,
 				D0FBED49125A532600621E9C /* audio-pause-down.png */,
 				D0FBED4A125A532600621E9C /* audio-pause-up.png */,
@@ -746,6 +749,7 @@
 				D0207145141E924F00E6F6C0 /* Icon.png in Resources */,
 				CE2B162217C9681D00813B3E /* Settings.bundle in Resources */,
 				D30DC5E51815BC250000D1D4 /* MFAVideoPlayer.xib in Resources */,
+				D353A9CE18341E0900EF856F /* backtomenu.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
