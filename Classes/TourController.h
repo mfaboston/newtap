@@ -39,5 +39,6 @@
 - (void)showHelpButtonAnimated:(BOOL)animated;
 - (void)hideHelpButtonAnimated:(BOOL)animated;
 - (NSString*)stopNotFoundUserMessage;
+- (NSString*)showKeypadUserMessage;
 - (NSString*)stopNotFoundContinueButtonMessage;
 @end

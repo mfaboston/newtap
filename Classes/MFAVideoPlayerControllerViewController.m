@@ -8,7 +8,7 @@
 
 #import "MFAVideoPlayerControllerViewController.h"
 #import "MFAVideoPlayerUIView.h"
-
+#import "TapAppDelegate.h"
 
 NSString * const kTracksKey         = @"tracks";
 NSString * const kPlayableKey		= @"playable";
@@ -511,7 +511,9 @@ UITapGestureRecognizer *tap;
     [mPlayer seekToTime:newTime];
 }
 
-
+- (TapAppDelegate *) applicationDelegate {
+    return (TapAppDelegate*)[[UIApplication sharedApplication] delegate];
+}
 - (IBAction)toggleCC:(id)sender
 {
     if(mPlayer.isClosedCaptionDisplayEnabled){

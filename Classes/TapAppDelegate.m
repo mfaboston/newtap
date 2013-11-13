@@ -51,6 +51,23 @@ enum {
     [super dealloc];
 }
 
+#define kClosedCaptionsDefaultsKey @"closed_captions"
+#define kClosedCaptionsYesValue @"y"
+
+- (void) setCCInDefaults:(BOOL)cc {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:(cc ? kClosedCaptionsYesValue : @"n") forKey:kClosedCaptionsDefaultsKey];
+};
+- (BOOL) ccFromDefaults {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString * ccAsString = [defaults stringForKey:kClosedCaptionsDefaultsKey];
+    if (ccAsString) {
+        return([ccAsString isEqualToString:kClosedCaptionsYesValue]);
+    } else {
+        return NO;
+    }
+}
+
 #pragma mark -
 #pragma mark UI Sound Effects
 

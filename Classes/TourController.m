@@ -25,6 +25,13 @@
     }
     return(res);
 }
+- (NSString*) showKeypadUserMessage {
+    NSString * res = [TourMLUtils getLocalizationInDocumentAsString:tourDoc withName:@"ShowKeypad"];
+    if (! res) {
+        res = @"Find an Artwork";
+    }
+    return(res);
+}
 - (NSString*) stopNotFoundContinueButtonMessage {
     NSString * res = [TourMLUtils getLocalizationInDocumentAsString:tourDoc withName:@"StopNotFoundContinueButtonMessage"];
     if (! res) {
