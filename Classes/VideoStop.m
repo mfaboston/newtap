@@ -63,7 +63,7 @@
     
     BOOL useOriginalPlayer = YES;
     NSString * ext = [[videoSrc lastPathComponent] pathExtension];
-    useOriginalPlayer =  (![ext isEqualToString:@"mov"]);
+    useOriginalPlayer =  (!([ext isEqualToString:@"mov"] || [ext isEqualToString:@"m4v"]));
     
     if (useOriginalPlayer) {
         LandscapeMoviePlayerViewController *moviePlayerController = [[LandscapeMoviePlayerViewController alloc] initWithContentURL:videoURL];

@@ -51,4 +51,8 @@
 - (BOOL)loadTourWithBundleName:(NSString *)bundleName;
 - (void)closeTourAndShowUpdater;
 
+- (void) setCCInDefaults:(BOOL)cc;
+- (BOOL) ccFromDefaults;
+
+
 @end
