@@ -74,10 +74,19 @@
 #pragma mark UIViewController
 
 - (void)viewDidLoad
-{	
+{
+
+    self.navigationItem.backBarButtonItem =
+    [[[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                      style:UIBarButtonItemStyleBordered
+                                     target:nil
+                                     action:nil] autorelease];
+
+    
 	// Calculate table height
 	UIImage *background = [UIImage imageNamed:@"table-cell-bg.png"];
 	NSInteger numberOfStops = [[self stopGroup] numberOfStops];
+    NSLog(@"NumberofStops is %d", numberOfStops);
 	CGFloat tableHeight = numberOfStops	* background.size.height;
 	
 	// Set up header image, try portrait image first but get landscape image if portrait isn't available

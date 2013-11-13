@@ -69,10 +69,22 @@
 - (UINavigationItem *)navigationItem
 {	
 	UINavigationItem *theNavigationItem = [[[UINavigationItem alloc] initWithTitle:[self title]] autorelease];
+
 	UIBarButtonItem *backButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"keypad-back-icon.png"] style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
+    backButton = [[[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                      style:UIBarButtonItemStyleBordered
+                                     target:nil
+                                     action:nil] autorelease];
+
 	[theNavigationItem setBackBarButtonItem:backButton];
 	UIBarButtonItem *homeButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"keypad-home-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(returnToMenu)] autorelease];
-	[theNavigationItem setLeftBarButtonItem:homeButton];
+
+	homeButton = [[[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                    style:UIBarButtonItemStyleBordered
+                                                                   target:self
+                                                                   action:@selector(returnToMenu)] autorelease];
+    
+    [theNavigationItem setLeftBarButtonItem:homeButton];
 	return theNavigationItem;
 }
 
