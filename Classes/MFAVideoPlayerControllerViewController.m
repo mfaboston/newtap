@@ -8,7 +8,7 @@
 
 #import "MFAVideoPlayerControllerViewController.h"
 #import "MFAVideoPlayerUIView.h"
-
+#import "TapAppDelegate.h"
 
 NSString * const kTracksKey         = @"tracks";
 NSString * const kPlayableKey		= @"playable";
@@ -511,14 +511,19 @@ UITapGestureRecognizer *tap;
     [mPlayer seekToTime:newTime];
 }
 
-
+- (TapAppDelegate *) applicationDelegate {
+    return (TapAppDelegate*)[[UIApplication sharedApplication] delegate];
+}
 - (IBAction)toggleCC:(id)sender
 {
-    if(mPlayer.isClosedCaptionDisplayEnabled){
-        mPlayer.closedCaptionDisplayEnabled = NO;
-    } else {
-       mPlayer.closedCaptionDisplayEnabled = YES;
-    }
+    BOOL new_enabled = (! mPlayer.isClosedCaptionDisplayEnabled);
+    mPlayer.closedCaptionDisplayEnabled = new_enabled;
+    [[self applicationDelegate] setCCInDefaults:new_enabled];
+//    if(mPlayer.isClosedCaptionDisplayEnabled){
+//        mPlayer.closedCaptionDisplayEnabled = NO;
+//    } else {
+//       mPlayer.closedCaptionDisplayEnabled = YES;
+//    }
 }
 
 - (IBAction)doneTap:(id)sender {
@@ -699,7 +704,7 @@ UITapGestureRecognizer *tap;
                                    action:@selector(toggleToolbars)];
     
     [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:1.5];
-    
+    self.mPlayer.closedCaptionDisplayEnabled  = [[self applicationDelegate] ccFromDefaults];
     [super viewDidLoad];
 }
 
