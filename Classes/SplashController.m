@@ -15,7 +15,7 @@
 
 @implementation SplashController
 
-@synthesize player, backToMenuButton;
+@synthesize player, backToMenuButton, helpBG, helpButton;
 
 - (void)viewDidLoad
 {
@@ -30,6 +30,7 @@
 		[titleLabel setText:[NSString stringWithUTF8String:titleChars]];
 		free(titleChars);
 	}
+    
     
     NSString * backToMenuText = [TourMLUtils getLocalizationInDocumentAsString:tourDoc withName:@"BackToMenuButtonLabel"];
     if (backToMenuText) {
@@ -99,21 +100,24 @@
 	
 	[enterBackgroundView release];
 	[welcomeBackgroundView release];
-	
+	[helpBG release];
+    
 	// Add help
-	UIImageView *helpBg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"help-bg.png"]];
-	[helpBg setUserInteractionEnabled:NO];
-	[helpBg setFrame:CGRectMake(0, self.view.frame.size.height - helpBg.frame.size.height, helpBg.frame.size.width, helpBg.frame.size.height)];
-	[[self view] addSubview:helpBg];
-	UIButton *helpButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	UIImage *helpButtonUp = [UIImage imageNamed:@"help-button-up.png"];
-	[helpButton setImage:helpButtonUp forState:UIControlStateNormal];
-	[helpButton setImage:[UIImage imageNamed:@"help-button-down.png"] forState:UIControlStateHighlighted];
-	[helpButton setFrame:CGRectMake(277.0 / 320.0 * helpBg.frame.size.width, helpBg.frame.origin.y + 6.0 / 35.0 * helpBg.frame.size.height, helpButtonUp.size.width, helpButtonUp.size.height)];
-	[helpButton addTarget:self action:@selector(helpTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
-	[[self view] addSubview:helpButton];
-	[helpBg release];
+//	UIImageView *helpBg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"help-bg.png"]];
+//	[helpBg setUserInteractionEnabled:NO];
+//	[helpBg setFrame:CGRectMake(0, self.view.frame.size.height - helpBg.frame.size.height, helpBg.frame.size.width, helpBg.frame.size.height)];
+//	[[self view] addSubview:helpBg];
+//    
+//	UIButton *helpButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//	UIImage *helpButtonUp = [UIImage imageNamed:@"help-button-up.png"];
+//	[helpButton setImage:helpButtonUp forState:UIControlStateNormal];
+//	[helpButton setImage:[UIImage imageNamed:@"help-button-down.png"] forState:UIControlStateHighlighted];
+//	[helpButton setFrame:CGRectMake(277.0 / 320.0 * helpBg.frame.size.width, helpBg.frame.origin.y + 6.0 / 35.0 * helpBg.frame.size.height, helpButtonUp.size.width, helpButtonUp.size.height)];
+//	[helpButton addTarget:self action:@selector(helpTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+//	[[self view] addSubview:helpButton];
+//	
 	
+    
 	// Set sponsor image
 	xmlNodePtr sponsorImageNode = [TourMLUtils getSponsorImageInDocument:tourDoc];
 	if (sponsorImageNode) {
@@ -138,6 +142,10 @@
 
 - (void)viewDidUnload
 {
+    [helpBG release];
+    helpBG = nil;
+    [helpButton release];
+    helpButton = nil;
     [super viewDidUnload];
 }
 
@@ -153,7 +161,9 @@
 	[welcomeView release];
 	[welcomeButton release];
 	[welcomeDisclosureView release];
-	[splashImage release];
+//    [helpButton release];
+    [splashImage release];
+//    [helpBG release];
     [super dealloc];
 }
 
@@ -167,7 +177,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-	if (player) {
+    if (player) {
 		[player stop];
 	}
 }
@@ -259,7 +269,7 @@
 	}
 }
 
-- (void)helpTouchUpInside:(UIButton *)sender
+- (IBAction)helpTouchUpInside:(UIButton *)sender
 {	
 	TourController *tourController = [(TapAppDelegate*)[[UIApplication sharedApplication] delegate] currentTourController];	
 	xmlNodePtr stopNode = [TourMLUtils getStopInDocument:[tourController tourDoc] withCode:TOUR_HELP_STOP];
