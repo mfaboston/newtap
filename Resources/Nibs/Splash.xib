@@ -192,7 +192,7 @@
 					<object class="IBUIButton" id="143516742">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{4, 425}, {95, 35}}</string>
+						<string key="NSFrame">{{4, 425}, {127, 35}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="422661005"/>
@@ -201,8 +201,12 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">3</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
+						<double key="IBUIContentEdgeInsets.top">7</double>
+						<double key="IBUIContentEdgeInsets.bottom">0.0</double>
+						<double key="IBUIContentEdgeInsets.left">7</double>
+						<double key="IBUIContentEdgeInsets.right">0.0</double>
 						<int key="IBUILineBreakMode">1</int>
-						<string key="IBUINormalTitle">  Back to Menu</string>
+						<string key="IBUINormalTitle">        Back to Menu</string>
 						<reference key="IBUIHighlightedTitleColor" ref="95977568"/>
 						<reference key="IBUINormalTitleColor" ref="233682629"/>
 						<object class="NSColor" key="IBUINormalTitleShadowColor">
@@ -669,7 +673,7 @@
 			</object>
 			<object class="NSArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>{93, 35}</string>
+				<string>{128, 35}</string>
 				<string>{320, 35}</string>
 				<string>{37, 28}</string>
 				<string>{238, 46}</string>
