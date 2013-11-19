@@ -519,11 +519,12 @@ UITapGestureRecognizer *tap;
     BOOL new_enabled = (! mPlayer.isClosedCaptionDisplayEnabled);
     mPlayer.closedCaptionDisplayEnabled = new_enabled;
     [[self applicationDelegate] setCCInDefaults:new_enabled];
-//    if(mPlayer.isClosedCaptionDisplayEnabled){
-//        mPlayer.closedCaptionDisplayEnabled = NO;
-//    } else {
-//       mPlayer.closedCaptionDisplayEnabled = YES;
-//    }
+    
+    if(new_enabled){
+        self.mCCButton.tintColor = [UIColor blueColor];
+    } else {
+        self.mCCButton.tintColor = [UIColor clearColor];
+    }
 }
 
 - (IBAction)doneTap:(id)sender{
