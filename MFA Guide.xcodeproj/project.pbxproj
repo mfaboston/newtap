@@ -130,6 +130,8 @@
 		D30DC5DC1815A9090000D1D4 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D30DC5DB1815A9090000D1D4 /* CoreMedia.framework */; };
 		D30DC5E51815BC250000D1D4 /* MFAVideoPlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = D30DC5E41815BC250000D1D4 /* MFAVideoPlayer.xib */; };
 		D353A9CE18341E0900EF856F /* backtomenu.png in Resources */ = {isa = PBXBuildFile; fileRef = D353A9CD18341E0900EF856F /* backtomenu.png */; };
+		D3F83DB0184004E6004EC292 /* icon30.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F83DAE184004E6004EC292 /* icon30.png */; };
+		D3F83DB1184004E6004EC292 /* icon30@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3F83DAF184004E6004EC292 /* icon30@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -300,6 +302,8 @@
 		D30DC5DB1815A9090000D1D4 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		D30DC5E41815BC250000D1D4 /* MFAVideoPlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MFAVideoPlayer.xib; sourceTree = "<group>"; };
 		D353A9CD18341E0900EF856F /* backtomenu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = backtomenu.png; path = Resources/Images/backtomenu.png; sourceTree = "<group>"; };
+		D3F83DAE184004E6004EC292 /* icon30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon30.png; path = Resources/Images/icon30.png; sourceTree = "<group>"; };
+		D3F83DAF184004E6004EC292 /* icon30@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon30@2x.png"; path = "Resources/Images/icon30@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -417,6 +421,8 @@
 		8BD9A2540FC195E5001E97D9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				D3F83DAE184004E6004EC292 /* icon30.png */,
+				D3F83DAF184004E6004EC292 /* icon30@2x.png */,
 				D353A9CD18341E0900EF856F /* backtomenu.png */,
 				D07C34CB125C03B40059632B /* audio-handle.png */,
 				D0FBED49125A532600621E9C /* audio-pause-down.png */,
@@ -750,6 +756,8 @@
 				CE2B162217C9681D00813B3E /* Settings.bundle in Resources */,
 				D30DC5E51815BC250000D1D4 /* MFAVideoPlayer.xib in Resources */,
 				D353A9CE18341E0900EF856F /* backtomenu.png in Resources */,
+				D3F83DB0184004E6004EC292 /* icon30.png in Resources */,
+				D3F83DB1184004E6004EC292 /* icon30@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

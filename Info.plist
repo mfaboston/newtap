@@ -16,8 +16,22 @@
 	<string>Icon.png</string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>Icon.png</string>
+		<string>icon30.png</string>
+		<string>icon3@2x.png</string>
+		<string>icon30@2x.png</string>
 	</array>
+	<key>CFBundleIcons</key>
+	<dict>
+		<key>CFBundlePrimaryIcon</key>
+		<dict>
+			<key>CFBundleIconFiles</key>
+			<array>
+				<string>icon30.png</string>
+				<string>icon3@2x.png</string>
+				<string>icon30@2x.png</string>
+			</array>
+		</dict>
+	</dict>
 	<key>CFBundleIdentifier</key>
 	<string>com.mwkrom.mfa.guide</string>
 	<key>CFBundleInfoDictionaryVersion</key>
