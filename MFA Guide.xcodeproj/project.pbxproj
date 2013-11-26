@@ -354,7 +354,6 @@
 		29B97314FDCFA39411CA2CEA /* Tap */ = {
 			isa = PBXGroup;
 			children = (
-				D30DC5DB1815A9090000D1D4 /* CoreMedia.framework */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -394,6 +393,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D30DC5DB1815A9090000D1D4 /* CoreMedia.framework */,
 				CE2B161F17C966B900813B3E /* CoreFoundation.framework */,
 				CE2B161D17C966A800813B3E /* Security.framework */,
 				8BD6398C0FDFEA1D00A3E1FC /* AudioToolbox.framework */,

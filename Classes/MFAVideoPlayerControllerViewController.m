@@ -548,8 +548,7 @@ UITapGestureRecognizer *tap;
       NSLog(@"TOGGEL");
     if (![self.mToolbar isHidden]){
         [UIView animateWithDuration:0.35f animations:
-         ^{
-             [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+         ^{            
              [self.mToolbar setTransform:CGAffineTransformMakeTranslation(0.f, -CGRectGetHeight([self.mToolbar bounds]))];
              [self.mSecondaryBox setTransform:CGAffineTransformMakeTranslation(0.f, CGRectGetHeight([self.mSecondaryBox bounds])+10.0)];
              [self.mToolbar setHidden:YES];
@@ -558,8 +557,7 @@ UITapGestureRecognizer *tap;
          }completion:^(BOOL finished){tap.enabled = YES;}];
     } else{
         [UIView animateWithDuration:0.35f animations:
-         ^{
-             [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+         ^{             
              [self.mToolbar setTransform:CGAffineTransformIdentity];
              [self.mSecondaryBox setTransform:CGAffineTransformIdentity];
              [self.mToolbar setHidden:NO];
@@ -700,6 +698,14 @@ UITapGestureRecognizer *tap;
     [_volumeView sizeToFit];
     [self.mVolumeBox addSubview:_volumeView];
     
+    for (id current in _volumeView.subviews) {
+        if ([current isKindOfClass:[UISlider class]]) {
+            UISlider *volumeSlider = (UISlider *)current;
+            volumeSlider.minimumTrackTintColor = [UIColor whiteColor];
+            volumeSlider.maximumTrackTintColor = [UIColor whiteColor];
+        }
+    }
+    
     self.mToolbar.items = [NSArray arrayWithObjects:self.mDoneButton, flexItem, scrubberItem, flexItem,  nil];
     
     self.mSecondaryToolbar.items = [NSArray arrayWithObjects:flexItem, flexItem, self.mRestart, flexItem, self.mPlayButton,  flexItem, self.mCCButton,flexItem, flexItem, nil];
@@ -715,9 +721,13 @@ UITapGestureRecognizer *tap;
     
     [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:5.0];
     self.mPlayer.closedCaptionDisplayEnabled  = [[self applicationDelegate] ccFromDefaults];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     [super viewDidLoad];
 }
 
+-(void)viewWillDisappear:(BOOL)animated  {
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+}
 
 - (void)didReceiveMemoryWarning
 {
