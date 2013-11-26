@@ -549,12 +549,11 @@ UITapGestureRecognizer *tap;
 }
 
 -(void) toggleToolbars{
-      NSLog(@"TOGGEL");
     if (![self.mToolbar isHidden]){
         [UIView animateWithDuration:0.35f animations:
          ^{            
              [self.mToolbar setTransform:CGAffineTransformMakeTranslation(0.f, -CGRectGetHeight([self.mToolbar bounds]))];
-             [self.mSecondaryBox setTransform:CGAffineTransformMakeTranslation(0.f, CGRectGetHeight([self.mSecondaryBox bounds])+10.0)];
+             [self.mSecondaryBox setTransform:CGAffineTransformMakeTranslation(0.f, CGRectGetHeight([self.mSecondaryBox bounds])+20.0)];
              [self.mToolbar setHidden:YES];
              [self.view addGestureRecognizer:tap];
              
@@ -717,6 +716,23 @@ UITapGestureRecognizer *tap;
     } else{
         self.mSecondaryToolbar.items = [NSArray arrayWithObjects:flexItem, flexItem, self.mRestart, flexItem, self.mPlayButton,  flexItem, flexItem,flexItem, flexItem, nil];
     }
+    
+    
+    [self.mSecondaryBox.layer setCornerRadius:10.0f];
+    // border
+    [self.mSecondaryBox.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    [self.mSecondaryBox.layer setBorderWidth:1.5f];
+    
+    [self.mSecondaryBox.layer setBorderWidth:1.5f];
+
+    self.mSecondaryBox.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.75f];
+    
+    [self.mSecondaryToolbar setBackgroundImage:[UIImage new]
+                  forToolbarPosition:UIToolbarPositionAny
+                          barMetrics:UIBarMetricsDefault];
+    
+    [self.mSecondaryToolbar setBackgroundColor:[UIColor clearColor]];
+    
     
     
 	[self initScrubberTimer];
