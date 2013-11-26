@@ -57,18 +57,23 @@
 	if (!videoPath) {
 		return NO;
 	}
+    
+    BOOL filenameIndicatesCC = ([[videoSrc lowercaseString] rangeOfString:@"-cc"].location != NSNotFound);
+    
 	NSURL *videoURL = [NSURL fileURLWithPath:videoPath];
 	
 	// Create new view controller
     
     BOOL useOriginalPlayer = YES;
     NSString * ext = [[videoSrc lastPathComponent] pathExtension];
-    useOriginalPlayer = (!(
-                            [ext isEqualToString:@"mov"] ||
-                            [ext isEqualToString:@"m4v"] ||
-                            [ext isEqualToString:@"MOV"] ||
-                            [ext isEqualToString:@"M4V"]
-                            ));
+    useOriginalPlayer = NO;
+    
+//    (!(
+//                            [ext isEqualToString:@"mov"] ||
+//                            [ext isEqualToString:@"m4v"] ||
+//                            [ext isEqualToString:@"MOV"] ||
+//                            [ext isEqualToString:@"M4V"]
+//                            ));
     
     if (useOriginalPlayer) {
         LandscapeMoviePlayerViewController *moviePlayerController = [[LandscapeMoviePlayerViewController alloc] initWithContentURL:videoURL];
@@ -85,6 +90,9 @@
         // New Player
         MFAVideoPlayerControllerViewController * mfaVidController = [[MFAVideoPlayerControllerViewController alloc] init];
         mfaVidController.fileUrl = videoURL;
+        
+        [mfaVidController setOfferCC:filenameIndicatesCC];
+        
         [mfaVidController loadAssetFromFile:NULL];
 
         [[(TapAppDelegate*)[[UIApplication sharedApplication] delegate] currentTourController] presentModalViewController:mfaVidController animated:NO];

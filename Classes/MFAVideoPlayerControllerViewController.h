@@ -22,10 +22,13 @@
 
     IBOutlet MFAVideoPlayerUIView *playerView;
     BOOL seekToZeroBeforePlay;
+    
+    NSNumber * offerCCNumber;
 }
 
 
 @property (nonatomic, retain) NSURL * fileUrl;
+@property (nonatomic, retain) NSNumber * offerCCNumber;
 
 @property (nonatomic, retain) AVPlayerItem * mPlayerItem;
 @property (readwrite, retain, setter=setPlayer:, getter=player) AVPlayer* mPlayer;
@@ -53,6 +56,9 @@
 - (IBAction)loadAssetFromFile:sender;
 - (IBAction)play:(id)sender;
 - (IBAction)pause:(id)sender;
+
+- (BOOL)offerCC;
+- (void)setOfferCC:(BOOL)x;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
                         change:(NSDictionary *)change context:(void *)context;

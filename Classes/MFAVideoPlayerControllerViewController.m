@@ -46,6 +46,7 @@ NSString * const kCurrentItemKey	= @"currentItem";
 @implementation MFAVideoPlayerControllerViewController
 
 @synthesize fileUrl, mPlayer, mPlayerItem, mPlaybackView, mToolbar, mSecondaryToolbar, mPlayButton, mStopButton, mCCButton, mScrubber, mDoneButton, mRestart;
+@synthesize offerCCNumber;
 
 
 static void *AVPlayerDemoPlaybackViewControllerRateObservationContext = &AVPlayerDemoPlaybackViewControllerRateObservationContext;
@@ -63,6 +64,14 @@ UITapGestureRecognizer *tap;
 	}
 	return NO;
 }
+
+- (BOOL)offerCC {
+    return [offerCCNumber boolValue];
+}
+- (void)setOfferCC:(BOOL)x {
+    self.offerCCNumber = [NSNumber numberWithBool:x];
+}
+
 
 
 #pragma mark Prepare to play asset, URL
