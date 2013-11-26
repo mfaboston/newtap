@@ -29,7 +29,15 @@
 - (void)setVideoFillMode:(NSString *)fillMode
 {
 	AVPlayerLayer *playerLayer = (AVPlayerLayer*)[self layer];
-	playerLayer.videoGravity = fillMode;
+	playerLayer.videoGravity =  AVLayerVideoGravityResizeAspect;
+}
+
+- (CGRect)getVideoContentFrame {
+    AVPlayerLayer *avLayer = (AVPlayerLayer *)[self layer];
+    // AVPlayerLayerContentLayer
+    CALayer *layer = (CALayer *)[[avLayer sublayers] objectAtIndex:0];
+    CGRect transformedBounds = CGRectApplyAffineTransform(layer.bounds, CATransform3DGetAffineTransform(layer.sublayerTransform));
+    return transformedBounds;
 }
 
 @end

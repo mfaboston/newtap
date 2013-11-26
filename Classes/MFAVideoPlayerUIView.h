@@ -17,5 +17,6 @@
 
 - (void)setPlayer:(AVPlayer*)player;
 - (void)setVideoFillMode:(NSString *)fillMode;
+- (CGRect)getVideoContentFrame;
 
 @end

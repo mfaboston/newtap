@@ -242,6 +242,10 @@ UITapGestureRecognizer *tap;
                 
                 [self enableScrubber];
                 [self enablePlayerButtons];
+
+                CGRect transformedBounds  = [self.mPlaybackView getVideoContentFrame];
+                self.mPlaybackView.frame = transformedBounds;
+                
                 [mPlayer play];
             }
                 break;
@@ -734,8 +738,6 @@ UITapGestureRecognizer *tap;
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-
 
 
 
