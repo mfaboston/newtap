@@ -712,7 +712,12 @@ UITapGestureRecognizer *tap;
     
     self.mToolbar.items = [NSArray arrayWithObjects:self.mDoneButton, flexItem, scrubberItem, flexItem,  nil];
     
-    self.mSecondaryToolbar.items = [NSArray arrayWithObjects:flexItem, flexItem, self.mRestart, flexItem, self.mPlayButton,  flexItem, self.mCCButton,flexItem, flexItem, nil];
+    if(self.offerCC){
+        self.mSecondaryToolbar.items = [NSArray arrayWithObjects:flexItem, flexItem, self.mRestart, flexItem, self.mPlayButton,  flexItem, self.mCCButton,flexItem, flexItem, nil];
+    } else{
+        self.mSecondaryToolbar.items = [NSArray arrayWithObjects:flexItem, flexItem, self.mRestart, flexItem, self.mPlayButton,  flexItem, flexItem,flexItem, flexItem, nil];
+    }
+    
     
 	[self initScrubberTimer];
 	[self syncPlayPauseButtons];
