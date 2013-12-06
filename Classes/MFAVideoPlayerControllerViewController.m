@@ -725,7 +725,7 @@ UITapGestureRecognizer *tap;
     
     [self.mSecondaryBox.layer setBorderWidth:1.5f];
 
-    self.mSecondaryBox.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.75f];
+    self.mSecondaryBox.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.60f];
     
     [self.mSecondaryToolbar setBackgroundImage:[UIImage new]
                   forToolbarPosition:UIToolbarPositionAny
