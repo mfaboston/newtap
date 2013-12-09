@@ -65,6 +65,13 @@ UITapGestureRecognizer *tap;
 	return NO;
 }
 
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation
+{
+    return UIInterfaceOrientationLandscapeLeft;
+}
+
+
 - (BOOL)offerCC {
     return [offerCCNumber boolValue];
 }
