@@ -47,6 +47,9 @@ enum {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize]; // pick up any changes
     NSString * hostname = [defaults stringForKey:@"hostname"];
+    if ((! hostname) || ([hostname isEqualToString:@""])) {
+        hostname = @"http://mfa-newmedia/tap-new";
+    }
     NSLog(@"Found Hostname: %@", hostname);
     return hostname;
     
