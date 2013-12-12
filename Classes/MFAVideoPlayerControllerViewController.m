@@ -45,7 +45,7 @@ NSString * const kCurrentItemKey	= @"currentItem";
 
 @implementation MFAVideoPlayerControllerViewController
 
-@synthesize fileUrl, mPlayer, mPlayerItem, mPlaybackView, mToolbar, mSecondaryToolbar, mPlayButton, mStopButton, mCCButton, mScrubber, mDoneButton, mRestart;
+@synthesize fileUrl, mPlayer, mPlayerItem, mPlaybackView, mToolbar, mSecondaryToolbar, mPlayButton, mStopButton, mCCButton, mScrubber, mDoneButton, mRestart, tapper;
 @synthesize offerCCNumber;
 
 
@@ -534,6 +534,7 @@ UITapGestureRecognizer *tap;
 - (TapAppDelegate *) applicationDelegate {
     return (TapAppDelegate*)[[UIApplication sharedApplication] delegate];
 }
+
 - (IBAction)toggleCC:(id)sender
 {
     BOOL new_enabled = (! mPlayer.isClosedCaptionDisplayEnabled);
@@ -551,9 +552,6 @@ UITapGestureRecognizer *tap;
     [self goAwayPlayer];
 }
 
-- (IBAction)tapMFAPlayer:(id)sender {
-    [self toggleToolbars];
-}
 
 -(void) toggleToolbars{
     if (![self.mToolbar isHidden]){
@@ -561,10 +559,8 @@ UITapGestureRecognizer *tap;
          ^{            
              [self.mToolbar setTransform:CGAffineTransformMakeTranslation(0.f, -CGRectGetHeight([self.mToolbar bounds]))];
              [self.mSecondaryBox setTransform:CGAffineTransformMakeTranslation(0.f, CGRectGetHeight([self.mSecondaryBox bounds])+20.0)];
-             [self.mToolbar setHidden:YES];
-             [self.view addGestureRecognizer:tap];
-             
-         }completion:^(BOOL finished){tap.enabled = YES;}];
+             [self.mToolbar setHidden:YES];             
+         }completion:^(BOOL finished){}];
     } else{
         [UIView animateWithDuration:0.35f animations:
          ^{             
@@ -572,11 +568,30 @@ UITapGestureRecognizer *tap;
              [self.mSecondaryBox setTransform:CGAffineTransformIdentity];
              [self.mToolbar setHidden:NO];
              [self.mSecondaryBox setHidden:NO];
-            
-              [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:5.0];
-             
-         } completion:^(BOOL finished){ tap.enabled = NO; }];
+//              [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:5.0];
+         } completion:^(BOOL finished){ }];
     }
+
+}
+
+
+-(IBAction)handleTapper:(UIPanGestureRecognizer *)recognizer {
+    
+//    CGPoint translation = [recognizer translationInView:self.view];
+//    recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x,
+//                                         recognizer.view.center.y + translation.y);
+//    [recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
+    [self toggleToolbars];
+    NSLog(@"Tapper");
+}
+
+
+- (BOOL) gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)tap
+{
+    if (CGRectContainsPoint(self.mSecondaryBox.bounds, [tap locationInView:self.mSecondaryBox]))
+        return NO;
+    
+    return YES;
 }
 
 
@@ -673,8 +688,6 @@ UITapGestureRecognizer *tap;
 
 
 
-
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
 	if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
@@ -740,22 +753,15 @@ UITapGestureRecognizer *tap;
     
     [self.mSecondaryToolbar setBackgroundColor:[UIColor clearColor]];
     
-    
-    
 	[self initScrubberTimer];
 	[self syncPlayPauseButtons];
 	[self syncScrubber];
     
-    
-   tap = [[UITapGestureRecognizer alloc]
-                                   initWithTarget:self
-                                   action:@selector(toggleToolbars)];
-    
-    [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:5.0];
     self.mPlayer.closedCaptionDisplayEnabled  = [[self applicationDelegate] ccFromDefaults];
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     [super viewDidLoad];
 }
+
 
 -(void)viewWillDisappear:(BOOL)animated  {
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
@@ -773,6 +779,7 @@ UITapGestureRecognizer *tap;
     [_mSecondary release];
     [_mVolumeBox release];
     [_mSecondaryBox release];
+    [tapper release];
     [super dealloc];
 }
 
@@ -786,6 +793,7 @@ UITapGestureRecognizer *tap;
     [self setMSecondary:nil];
     [self setMVolumeBox:nil];
     [self setMSecondaryBox:nil];
+    [self setTapper:nil];
     [super viewDidUnload];
 }
 @end

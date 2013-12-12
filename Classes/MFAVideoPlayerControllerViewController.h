@@ -15,7 +15,7 @@
 @class AVPlayer;
 @class MFAVideoPlayerUIView;
 
-@interface MFAVideoPlayerControllerViewController : UIViewController
+@interface MFAVideoPlayerControllerViewController : UIViewController <UIGestureRecognizerDelegate>
 {
     id mTimeObserver;
     float mRestoreAfterScrubbingRate;
@@ -48,9 +48,10 @@
 @property (retain, nonatomic) IBOutlet UIView *mSecondary;
 @property (retain, nonatomic) IBOutlet UIView *mVolumeBox;
 
+@property (retain, nonatomic) IBOutlet UITapGestureRecognizer *tapper;
+
 - (IBAction)toggleCC:(id)sender;
 - (IBAction)doneTap:(id)sender;
-- (IBAction)tapMFAPlayer:(id)sender;
 - (IBAction)restartVideo:(id)sender;
 
 - (IBAction)loadAssetFromFile:sender;
@@ -62,5 +63,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
                         change:(NSDictionary *)change context:(void *)context;
+
+- (IBAction)handleTapper:(UITapGestureRecognizer *)recognizer;
 
 @end
