@@ -103,7 +103,7 @@ UITapGestureRecognizer *tap;
 	}
     
     /* Use the AVAsset playable property to detect whether the asset can be played. */
-    if (!asset.playable)
+    if (FALSE && (!asset.playable))
     {
         /* Generate an error describing the failure. */
 		NSString *localizedDescription = NSLocalizedString(@"Item cannot be played", @"Item cannot be played description");
@@ -113,7 +113,7 @@ UITapGestureRecognizer *tap;
 								   localizedFailureReason, NSLocalizedFailureReasonErrorKey,
 								   nil];
 		NSError *assetCannotBePlayedError = [NSError errorWithDomain:@"StitchedStreamPlayer" code:0 userInfo:errorDict];
-        
+
         /* Display the error to the user. */
         [self assetFailedToPrepareForPlayback:assetCannotBePlayedError];
         return;
