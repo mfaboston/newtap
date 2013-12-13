@@ -559,6 +559,7 @@ UITapGestureRecognizer *tap;
          ^{            
              [self.mToolbar setTransform:CGAffineTransformMakeTranslation(0.f, -CGRectGetHeight([self.mToolbar bounds]))];
              [self.mSecondaryBox setTransform:CGAffineTransformMakeTranslation(0.f, CGRectGetHeight([self.mSecondaryBox bounds])+28.0)];
+             [NSObject cancelPreviousPerformRequestsWithTarget:self];
              [self.mToolbar setHidden:YES];             
          }completion:^(BOOL finished){}];
     } else{
@@ -568,7 +569,7 @@ UITapGestureRecognizer *tap;
              [self.mSecondaryBox setTransform:CGAffineTransformIdentity];
              [self.mToolbar setHidden:NO];
              [self.mSecondaryBox setHidden:NO];
-//              [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:5.0];
+             [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:5.0];
          } completion:^(BOOL finished){ }];
     }
 
@@ -725,12 +726,12 @@ UITapGestureRecognizer *tap;
     
     self.mToolbar.items = [NSArray arrayWithObjects:self.mDoneButton, flexItem, scrubberItem, flexItem,  nil];
     
-    if(self.offerCC){
+//    if(self.offerCC){
         self.mSecondaryToolbar.items = [NSArray arrayWithObjects: self.mRestart, flexItem, self.mPlayButton, flexItem, self.mCCButton, nil];
-    } else{
-        self.mSecondaryToolbar.items = [NSArray arrayWithObjects: self.mRestart, flexItem, self.mPlayButton, flexItem, flexItem, nil];
-    }
-    
+//    } else{
+//        self.mSecondaryToolbar.items = [NSArray arrayWithObjects: self.mRestart, flexItem, self.mPlayButton, flexItem, flexItem, nil];
+//    }
+//    
     [self.mSecondaryBox.layer setCornerRadius:10.0f];
     // border
     [self.mSecondaryBox.layer setBorderColor:[UIColor lightGrayColor].CGColor];
@@ -753,6 +754,8 @@ UITapGestureRecognizer *tap;
     self.mPlayer.closedCaptionDisplayEnabled  = [[self applicationDelegate] ccFromDefaults];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+    
+    [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:5.0];
     [super viewDidLoad];
 }
 
