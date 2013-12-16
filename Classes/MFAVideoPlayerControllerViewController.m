@@ -751,8 +751,13 @@ UITapGestureRecognizer *tap;
                                    initWithTarget:self
                                    action:@selector(toggleToolbars)];
     
+    
     [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:5.0];
-    self.mPlayer.closedCaptionDisplayEnabled  = [[self applicationDelegate] ccFromDefaults];
+    
+    BOOL shouldEnableCC = [[self applicationDelegate] ccFromDefaults];
+    NSLog(@" should enable CC %@", (shouldEnableCC ? @"YES" : @"NO"));
+    
+    self.mPlayer.closedCaptionDisplayEnabled  = shouldEnableCC;
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     [super viewDidLoad];
 }
