@@ -88,7 +88,9 @@
         [moviePlayerController release];
 	} else {
         // New Player
-        MFAVideoPlayerControllerViewController * mfaVidController = [[MFAVideoPlayerControllerViewController alloc] init];
+//        MFAVideoPlayerControllerViewController * mfaVidController = [[MFAVideoPlayerControllerViewController alloc] init];
+        TapAppDelegate * tad = (TapAppDelegate*) [[UIApplication sharedApplication] delegate];
+        MFAVideoPlayerControllerViewController * mfaVidController = [tad getSingleMainMfaVidController];
         mfaVidController.fileUrl = videoURL;
         
         [mfaVidController setOfferCC:filenameIndicatesCC];

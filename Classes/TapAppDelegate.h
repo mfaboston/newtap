@@ -14,6 +14,8 @@
 #import "MenuController.h"
 #import "TourController.h"
 
+#import "MFAVideoPlayerControllerViewController.h"
+
 #define UPDATE_INTERVAL 5
 #define UPDATE_GROUPS 120
 
@@ -32,8 +34,11 @@
     SystemSoundID clickFileObject;
 	CFURLRef errorFileURLRef;
     SystemSoundID errorFileObject;
+    
+    MFAVideoPlayerControllerViewController * singleMainMfaVidController;
 }
 
+@property (nonatomic, retain) MFAVideoPlayerControllerViewController * singleMainMfaVidController;
 @property (nonatomic, retain) IBOutlet MenuController *menuController;
 
 @property (nonatomic, retain) BackgroundUpdater *backgroundUpdater;
@@ -45,6 +50,7 @@
 @property (readwrite) CFURLRef errorFileURLRef;
 @property (readonly) SystemSoundID errorFileObject;
 
+- (MFAVideoPlayerControllerViewController *) getSingleMainMfaVidController;
 - (void)playClick;
 - (void)playError;
 

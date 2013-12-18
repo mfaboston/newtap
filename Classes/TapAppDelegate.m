@@ -26,6 +26,8 @@ enum {
 @synthesize errorFileURLRef;
 @synthesize errorFileObject;
 
+@synthesize singleMainMfaVidController;
+
 - (BackgroundUpdater *)backgroundUpdater
 {
 	if (!backgroundUpdater) {
@@ -101,6 +103,14 @@ enum {
 	
 	return YES;
 }
+
+- (MFAVideoPlayerControllerViewController *) getSingleMainMfaVidController {
+    if (! self.singleMainMfaVidController) {
+        self.singleMainMfaVidController = [[MFAVideoPlayerControllerViewController alloc] init];
+    }
+    return singleMainMfaVidController;
+}
+
 
 - (void)closeTour
 {

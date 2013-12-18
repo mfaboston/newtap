@@ -769,7 +769,24 @@ UITapGestureRecognizer *tap;
 
 
 -(void)viewWillDisappear:(BOOL)animated  {
+    NSLog(@"MfaVideo... viewWillDisappear");
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+    [self.mPlayerItem removeObserver:self forKeyPath:kStatusKey];
+    [self.player removeObserver:self forKeyPath:kCurrentItemKey];
+    [self.player removeObserver:self forKeyPath:kRateKey];
+
+    NSLog(@"R1");
+    [playerView release];
+    NSLog(@"R2");
+//    [self.mPlayer release];
+    NSLog(@"R3");
+//    [self.mPlayerItem release];
+    NSLog(@"R4");
+//    [self.player release];
+    NSLog(@"R5");
+    self.mPlayer = nil;
+    self.mPlayerItem = nil;
+    self.player = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -789,6 +806,7 @@ UITapGestureRecognizer *tap;
 }
 
 - (void)viewDidUnload {
+    NSLog(@"viewDidUnload");
     [playerView release];
     playerView = nil;;
     mPlayer=nil;
