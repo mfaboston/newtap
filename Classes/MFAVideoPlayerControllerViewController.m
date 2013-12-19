@@ -90,6 +90,7 @@ UITapGestureRecognizer *tap;
  */
 - (void)prepareToPlayAsset:(AVURLAsset *)asset withKeys:(NSArray *)requestedKeys
 {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     /* Make sure that the value of each key has loaded successfully. */
 	for (NSString *thisKey in requestedKeys)
 	{
@@ -698,13 +699,14 @@ UITapGestureRecognizer *tap;
 
 - (id)init
 {
+  
     return [self initWithNibName:@"MFAVideoPlayer" bundle:nil];
 }
 
 
 - (void)viewDidLoad
 {
-    
+    NSLog(@"Load MFAPLayer View");
     [self setPlayer:nil];
 
     UIBarButtonItem *scrubberItem = [[UIBarButtonItem alloc] initWithCustomView:self.mScrubber];
@@ -726,12 +728,12 @@ UITapGestureRecognizer *tap;
     
     self.mToolbar.items = [NSArray arrayWithObjects:self.mDoneButton, flexItem, scrubberItem, flexItem,  nil];
     
-//    if(self.offerCC){
+    if(self.offerCC){
         self.mSecondaryToolbar.items = [NSArray arrayWithObjects: self.mRestart, flexItem, self.mPlayButton, flexItem, self.mCCButton, nil];
-//    } else{
-//        self.mSecondaryToolbar.items = [NSArray arrayWithObjects: self.mRestart, flexItem, self.mPlayButton, flexItem, flexItem, nil];
-//    }
-//    
+    } else{
+        self.mSecondaryToolbar.items = [NSArray arrayWithObjects: self.mRestart, flexItem, self.mPlayButton, flexItem, flexItem, nil];
+    }
+    
     [self.mSecondaryBox.layer setCornerRadius:10.0f];
     // border
     [self.mSecondaryBox.layer setBorderColor:[UIColor lightGrayColor].CGColor];
@@ -753,16 +755,12 @@ UITapGestureRecognizer *tap;
     
     self.mPlayer.closedCaptionDisplayEnabled  = [[self applicationDelegate] ccFromDefaults];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-    
-    
     [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:5.0];
     
     BOOL shouldEnableCC = [[self applicationDelegate] ccFromDefaults];
     NSLog(@" should enable CC %@", (shouldEnableCC ? @"YES" : @"NO"));
     
     self.mPlayer.closedCaptionDisplayEnabled  = shouldEnableCC;
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
 
     [super viewDidLoad];
 }
