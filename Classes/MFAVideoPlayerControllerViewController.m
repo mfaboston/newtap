@@ -254,6 +254,8 @@ UITapGestureRecognizer *tap;
                 CGRect transformedBounds  = [self.mPlaybackView getVideoContentFrame];
                 self.mPlaybackView.frame = transformedBounds;
                 
+                [self initializeCCBasedOnAppDelegatePrefs];
+                
                 [mPlayer play];
             }
                 break;
@@ -538,15 +540,34 @@ UITapGestureRecognizer *tap;
 
 - (IBAction)toggleCC:(id)sender
 {
-    BOOL new_enabled = (! mPlayer.isClosedCaptionDisplayEnabled);
-    mPlayer.closedCaptionDisplayEnabled = new_enabled;
-    [[self applicationDelegate] setCCInDefaults:new_enabled];
+    if (mPlayer.isClosedCaptionDisplayEnabled) {
+        [self turnOffCC];
+    } else {
+        [self turnOnCC];
+    }
+}
+
+- (IBAction)turnOnCC {
+    [self setCCTint:true];
+    self.mPlayer.closedCaptionDisplayEnabled = true;
+    [[self applicationDelegate] setCCInDefaults:true];
     
-    if(new_enabled){
+}
+- (IBAction)turnOffCC {
+    [self setCCTint:false];
+    self.mPlayer.closedCaptionDisplayEnabled = false;
+    [[self applicationDelegate] setCCInDefaults:false];
+}
+
+-(void) setCCTint:(BOOL)engaged {
+    if (engaged) {
+        NSLog(@"Setting tint to BLUE");
         self.mCCButton.tintColor = [UIColor blueColor];
     } else {
+        NSLog(@"Setting tint to CLEAR");
         self.mCCButton.tintColor = [UIColor clearColor];
     }
+
 }
 
 - (IBAction)doneTap:(id)sender{
@@ -702,6 +723,9 @@ UITapGestureRecognizer *tap;
     return [self initWithNibName:@"MFAVideoPlayer" bundle:nil];
 }
 
+-(UIBarButtonItem *) getFlexItem {
+    return [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+}
 
 - (void)viewDidLoad
 {
@@ -709,8 +733,6 @@ UITapGestureRecognizer *tap;
     [self setPlayer:nil];
 
     UIBarButtonItem *scrubberItem = [[UIBarButtonItem alloc] initWithCustomView:self.mScrubber];
-    UIBarButtonItem *flexItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    
     MPVolumeView *_volumeView = [ [MPVolumeView alloc] initWithFrame: self.mVolumeBox.bounds];
     [_volumeView setShowsVolumeSlider:YES];
     [_volumeView setShowsRouteButton:NO];
@@ -724,14 +746,11 @@ UITapGestureRecognizer *tap;
             volumeSlider.maximumTrackTintColor = [UIColor whiteColor];
         }
     }
+    UIBarButtonItem * flexItem = [self getFlexItem];
+
     
     self.mToolbar.items = [NSArray arrayWithObjects:self.mDoneButton, flexItem, scrubberItem, flexItem,  nil];
     
-    if ([self offerCC]) {
-        self.mSecondaryToolbar.items = [NSArray arrayWithObjects: self.mRestart, flexItem, self.mPlayButton, flexItem, self.mCCButton, nil];
-    } else{
-        self.mSecondaryToolbar.items = [NSArray arrayWithObjects: self.mRestart, flexItem, self.mPlayButton, flexItem, flexItem, nil];
-    }
     
     [self.mSecondaryBox.layer setCornerRadius:10.0f];
     // border
@@ -747,25 +766,48 @@ UITapGestureRecognizer *tap;
                           barMetrics:UIBarMetricsDefault];
     
     [self.mSecondaryToolbar setBackgroundColor:[UIColor clearColor]];
+
+    
+
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+
+    [super viewDidLoad];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    UIBarButtonItem * flexItem = [self getFlexItem];
+    if ([self offerCC]) {
+        self.mSecondaryToolbar.items = [NSArray arrayWithObjects: self.mRestart, flexItem, self.mPlayButton, flexItem, self.mCCButton, nil];
+    } else{
+        self.mSecondaryToolbar.items = [NSArray arrayWithObjects: self.mRestart, flexItem, self.mPlayButton, flexItem, flexItem, nil];
+    }
     
 	[self initScrubberTimer];
 	[self syncPlayPauseButtons];
 	[self syncScrubber];
     
-    self.mPlayer.closedCaptionDisplayEnabled  = [[self applicationDelegate] ccFromDefaults];
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     
     
     [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:5.0];
     
-    BOOL shouldEnableCC = [[self applicationDelegate] ccFromDefaults];
-    NSLog(@" should enable CC %@", (shouldEnableCC ? @"YES" : @"NO"));
-    
-    self.mPlayer.closedCaptionDisplayEnabled  = shouldEnableCC;
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
 
-    [super viewDidLoad];
+    
+}
+
+-(void)initializeCCBasedOnAppDelegatePrefs {
+    BOOL shouldEnableCC = [[self applicationDelegate] ccFromDefaults];
+    NSLog(@" should enable CC with blueness: %@", (shouldEnableCC ? @"YES" : @"NO"));
+    
+    if (shouldEnableCC) {
+        [self turnOnCC];
+    } else {
+        [self turnOffCC];
+    }
+
 }
 
 
