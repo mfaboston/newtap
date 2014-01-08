@@ -77,6 +77,7 @@ UITapGestureRecognizer *tap;
 }
 - (void)setOfferCC:(BOOL)x {
     self.offerCCNumber = [NSNumber numberWithBool:x];
+    NSLog(@"Setting offerCCNumber to %@", self.offerCCNumber);
 }
 
 
@@ -726,12 +727,12 @@ UITapGestureRecognizer *tap;
     
     self.mToolbar.items = [NSArray arrayWithObjects:self.mDoneButton, flexItem, scrubberItem, flexItem,  nil];
     
-//    if(self.offerCC){
+    if ([self offerCC]) {
         self.mSecondaryToolbar.items = [NSArray arrayWithObjects: self.mRestart, flexItem, self.mPlayButton, flexItem, self.mCCButton, nil];
-//    } else{
-//        self.mSecondaryToolbar.items = [NSArray arrayWithObjects: self.mRestart, flexItem, self.mPlayButton, flexItem, flexItem, nil];
-//    }
-//    
+    } else{
+        self.mSecondaryToolbar.items = [NSArray arrayWithObjects: self.mRestart, flexItem, self.mPlayButton, flexItem, flexItem, nil];
+    }
+    
     [self.mSecondaryBox.layer setCornerRadius:10.0f];
     // border
     [self.mSecondaryBox.layer setBorderColor:[UIColor lightGrayColor].CGColor];
