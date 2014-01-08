@@ -91,6 +91,7 @@ UITapGestureRecognizer *tap;
  */
 - (void)prepareToPlayAsset:(AVURLAsset *)asset withKeys:(NSArray *)requestedKeys
 {
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     /* Make sure that the value of each key has loaded successfully. */
 	for (NSString *thisKey in requestedKeys)
 	{
@@ -720,6 +721,7 @@ UITapGestureRecognizer *tap;
 
 - (id)init
 {
+  
     return [self initWithNibName:@"MFAVideoPlayer" bundle:nil];
 }
 
@@ -729,7 +731,7 @@ UITapGestureRecognizer *tap;
 
 - (void)viewDidLoad
 {
-    
+    NSLog(@"Load MFAPLayer View");
     [self setPlayer:nil];
 
     UIBarButtonItem *scrubberItem = [[UIBarButtonItem alloc] initWithCustomView:self.mScrubber];
@@ -750,7 +752,6 @@ UITapGestureRecognizer *tap;
 
     
     self.mToolbar.items = [NSArray arrayWithObjects:self.mDoneButton, flexItem, scrubberItem, flexItem,  nil];
-    
     
     [self.mSecondaryBox.layer setCornerRadius:10.0f];
     // border
@@ -787,9 +788,6 @@ UITapGestureRecognizer *tap;
 	[self initScrubberTimer];
 	[self syncPlayPauseButtons];
 	[self syncScrubber];
-    
-    
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     
     
     [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:5.0];
