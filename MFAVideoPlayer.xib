@@ -66,7 +66,6 @@
 										<string key="NSFrame">{{23, 51}, {197, 24}}</string>
 										<reference key="NSSuperview" ref="111513042"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<object class="NSColor" key="IBUIBackgroundColor" id="420194857">
 											<int key="NSColorSpace">3</int>
@@ -150,13 +149,13 @@
 			</object>
 			<object class="IBUISlider" id="348651438">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">292</int>
-				<string key="NSFrameSize">{257, 23}</string>
+				<int key="NSvFlags">296</int>
+				<string key="NSFrameSize">{227, 23}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<bool key="IBUIOpaque">NO</bool>
+				<int key="IBUIContentMode">4</int>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<int key="IBUIContentHorizontalAlignment">0</int>
 				<int key="IBUIContentVerticalAlignment">0</int>
