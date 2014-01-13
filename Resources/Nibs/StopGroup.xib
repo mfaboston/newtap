@@ -287,9 +287,9 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<reference key="IBUIImage" ref="710868097"/>
 					</object>
-					<object class="IBUIView" id="42393177">
+					<object class="IBUIView" id="110839705">
 						<reference key="NSNextResponder" ref="191373211"/>
-						<int key="NSvFlags">292</int>
+						<int key="NSvFlags">-2147483356</int>
 						<string key="NSFrame">{{216, 280}, {61, 80}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
@@ -414,7 +414,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">scrollOverflowIndicator</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="42393177"/>
+						<reference key="destination" ref="110839705"/>
 					</object>
 					<int key="connectionID">88</int>
 				</object>
@@ -519,7 +519,7 @@
 							<reference ref="938012713"/>
 							<reference ref="361436016"/>
 							<reference ref="935565724"/>
-							<reference ref="42393177"/>
+							<reference ref="110839705"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -620,7 +620,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">87</int>
-						<reference key="object" ref="42393177"/>
+						<reference key="object" ref="110839705"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</object>
