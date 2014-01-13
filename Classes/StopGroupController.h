@@ -37,11 +37,14 @@
 	IBOutlet UITableView *stopTable;
 	TapDetectingImageView *imageView;
 	BOOL lastRowNeedsPadding;
+    
+    IBOutlet UIView * scrollOverflowIndicator;
 }
 
 @property (nonatomic, retain) IBOutlet UITableView *stopTable;
 @property (nonatomic, retain) StopGroup *stopGroup;
 @property (nonatomic, retain) MPMoviePlayerController *moviePlayerController;
+@property (nonatomic, retain) IBOutlet UIView * scrollOverflowIndicator;
 
 - (id)initWithStopGroup:(StopGroup*)stop;
 

@@ -35,6 +35,7 @@
 @implementation StopGroupController
 
 @synthesize stopTable, moviePlayerController, stopGroup;
+@synthesize scrollOverflowIndicator;
 
 - (id)initWithStopGroup:(StopGroup*)stop
 {
@@ -138,7 +139,13 @@
 		[scrollView setBackgroundColor:[UIColor blackColor]];
 		[scrollView setMinimumZoomScale:scale];
 		[scrollView setMaximumZoomScale:scale];
+        
+//        scale = 1.0f;
+        NSLog(@"Setting scale: %f", scale);
+
 		[scrollView setZoomScale:scale];
+        
+        NSLog(@"Setting content size %f %f", imageView.frame.size.width, imageView.frame.size.height);
 		[scrollView setContentSize:imageView.frame.size];
 		if (imageView.frame.size.height > scrollView.frame.size.height) {
 			[scrollView scrollRectToVisible:CGRectMake(0, (imageView.frame.size.height - scrollView.frame.size.height) / 2, scrollView.frame.size.width, scrollView.frame.size.height) animated:NO];
@@ -203,6 +210,7 @@
 	[stopTable deselectRowAtIndexPath:[stopTable indexPathForSelectedRow] animated:animated];
 	[self willRotateToInterfaceOrientation:[self interfaceOrientation] duration:0.0];
 	[super viewWillAppear:animated];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -214,6 +222,7 @@
 			[autoplayTimer invalidate];
 		}
 		autoplayTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(checkForAutoplay) userInfo:nil repeats:NO];
+        
 	}
 	
 	// Flash scroll bars
@@ -222,6 +231,34 @@
 	}
 	
 	[super viewDidAppear:animated];
+    [self initializeScrollOverflowIndicator];
+//    NSLog(@"stopTable CONTENT %f x %f", stopTable.contentSize.width, stopTable.contentSize.height);
+//    NSLog(@"stopTable WINDOW %f x %f", stopTable.frame.size.width, stopTable.frame.size.height);
+//    NSLog(@"stopTable %d aix-enrows; %f height", [stopTable numberOfRowsInSection:0], [stopTable rowHeight]);
+
+    
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)inScrollView {
+    [self hideScrollOverflow];
+}
+
+- (void) initializeScrollOverflowIndicator {
+    [scrollOverflowIndicator setAlpha:([self scrollContentOverflows] ? 1.0f : 0.0f)];
+    
+    [scrollOverflowIndicator setHidden:NO];
+}
+- (void) hideScrollOverflow {
+    [UIView transitionWithView:self.view duration:0.5 options:UIViewAnimationCurveEaseInOut animations:^{
+        [scrollOverflowIndicator setAlpha:0.0f];
+    } completion:nil];
+
+}
+
+- (BOOL) scrollContentOverflows {
+    float extra = (stopTable.contentSize.height - stopTable.frame.size.height);
+    return (extra > 0.0);
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated
