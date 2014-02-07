@@ -616,6 +616,9 @@ UITapGestureRecognizer *tap;
 
 - (void)goAwayPlayer {
     [mPlayer pause];
+    [mPlayer replaceCurrentItemWithPlayerItem:NULL]; // otherwise the next showing of a video shows previous asset
+    
+    
     [[self presentingViewController] dismissViewControllerAnimated:YES completion:NULL];
 }
 
