@@ -763,14 +763,7 @@ UITapGestureRecognizer *tap;
     [_volumeView setShowsRouteButton:NO];
     [_volumeView sizeToFit];
     [self.mVolumeBox addSubview:_volumeView];
-    
-    for (id current in _volumeView.subviews) {
-        if ([current isKindOfClass:[UISlider class]]) {
-            UISlider *volumeSlider = (UISlider *)current;
-            volumeSlider.minimumTrackTintColor = [UIColor whiteColor];
-            volumeSlider.maximumTrackTintColor = [UIColor whiteColor];
-        }
-    }
+
     UIBarButtonItem * flexItem = [self getFlexItem];
 
     
