@@ -162,8 +162,7 @@
 				<float key="IBUIValue">0.5</float>
 				<object class="NSColor" key="IBUIMinimumTrackTintColor">
 					<int key="NSColorSpace">1</int>
-					<bytes key="NSRGB">MC45Njg2Mjc0NTEgMC45Njg2Mjc0NTEgMC45Njg2Mjc0NTEAA</bytes>
-					<string key="IBUIColorCocoaTouchKeyPath">tableCellGroupedBackgroundColor</string>
+					<bytes key="NSRGB">MCAwLjQ3ODQzMTM3MjUgMQA</bytes>
 				</object>
 			</object>
 			<object class="IBUIBarButtonItem" id="402900443">
