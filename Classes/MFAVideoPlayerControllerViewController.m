@@ -46,6 +46,7 @@ NSString * const kCurrentItemKey	= @"currentItem";
 @implementation MFAVideoPlayerControllerViewController
 
 @synthesize fileUrl, mPlayer, mPlayerItem, mPlaybackView, mToolbar, mSecondaryToolbar, mPlayButton, mStopButton, mCCButton, mScrubber, mDoneButton, mRestart, tapper;
+@synthesize toolbarsHidden;
 @synthesize offerCCNumber;
 
 
@@ -550,12 +551,14 @@ UITapGestureRecognizer *tap;
 
 - (IBAction)turnOnCC {
     [self setCCTint:true];
+
     self.mPlayer.closedCaptionDisplayEnabled = true;
     [[self applicationDelegate] setCCInDefaults:true];
     
 }
 - (IBAction)turnOffCC {
     [self setCCTint:false];
+
     self.mPlayer.closedCaptionDisplayEnabled = false;
     [[self applicationDelegate] setCCInDefaults:false];
 }
@@ -576,26 +579,43 @@ UITapGestureRecognizer *tap;
 }
 
 
--(void) toggleToolbars{
+- (void) turnOnToolBars {
+//    if ([self.mToolbar isHidden]) {
+    [self setToolbarsHidden:[NSNumber numberWithBool:NO]];
+    NSLog(@"turn ON ToolBars");
+        [UIView animateWithDuration:0.35f animations:
+     ^{
+         [self.mToolbar setTransform:CGAffineTransformIdentity];
+         [self.mSecondaryBox setTransform:CGAffineTransformIdentity];
+         [self.mToolbar setHidden:NO];
+         [self.mSecondaryBox setHidden:NO];
+         [self performSelector:@selector(turnOffToolBars) withObject:nil afterDelay:5.0];
+     } completion:nil];
+//    }
+
+}
+- (void) turnOffToolBars {
+    NSLog(@"turn OFF ToolBars");
+    [self setToolbarsHidden:[NSNumber numberWithBool:YES]];
     if (![self.mToolbar isHidden]){
         [UIView animateWithDuration:0.35f animations:
-         ^{            
-             [self.mToolbar setTransform:CGAffineTransformMakeTranslation(0.f, -CGRectGetHeight([self.mToolbar bounds]))];
+         ^{
+             [self.mToolbar setTransform:CGAffineTransformMakeTranslation(0.f, -40.0f)];
              [self.mSecondaryBox setTransform:CGAffineTransformMakeTranslation(0.f, CGRectGetHeight([self.mSecondaryBox bounds])+28.0)];
              [NSObject cancelPreviousPerformRequestsWithTarget:self];
-             [self.mToolbar setHidden:YES];             
-         }completion:^(BOOL finished){}];
-    } else{
-        [UIView animateWithDuration:0.35f animations:
-         ^{             
-             [self.mToolbar setTransform:CGAffineTransformIdentity];
-             [self.mSecondaryBox setTransform:CGAffineTransformIdentity];
-             [self.mToolbar setHidden:NO];
-             [self.mSecondaryBox setHidden:NO];
-             [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:5.0];
-         } completion:^(BOOL finished){ }];
+//             [self.mToolbar setHidden:YES];
+         }completion:nil];
     }
+}
 
+-(void) toggleToolbars{
+    NSLog(@"Toggle ToolBars");
+    if ([self.toolbarsHidden boolValue]) {
+        [self turnOnToolBars];
+    } else {
+        [self turnOffToolBars];
+    }
+    
 }
 
 
@@ -617,7 +637,7 @@ UITapGestureRecognizer *tap;
 - (void)goAwayPlayer {
     [mPlayer pause];
     [mPlayer replaceCurrentItemWithPlayerItem:NULL]; // otherwise the next showing of a video shows previous asset
-    
+    [self turnOffToolBars];
     
     [[self presentingViewController] dismissViewControllerAnimated:YES completion:NULL];
 }
@@ -736,7 +756,7 @@ UITapGestureRecognizer *tap;
 {
     NSLog(@"Load MFAPLayer View");
     [self setPlayer:nil];
-
+    [self setToolbarsHidden:[NSNumber numberWithBool:NO]];
     UIBarButtonItem *scrubberItem = [[UIBarButtonItem alloc] initWithCustomView:self.mScrubber];
     MPVolumeView *_volumeView = [ [MPVolumeView alloc] initWithFrame: self.mVolumeBox.bounds];
     [_volumeView setShowsVolumeSlider:YES];
@@ -793,9 +813,9 @@ UITapGestureRecognizer *tap;
 	[self syncScrubber];
     
     
-    [self performSelector:@selector(toggleToolbars) withObject:nil afterDelay:5.0];
+//    [self performSelector:@selector(turnOnToolBars) withObject:nil afterDelay:5.0];
     
-
+    [self turnOnToolBars];
     
 }
 

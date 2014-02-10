@@ -23,11 +23,13 @@
     IBOutlet MFAVideoPlayerUIView *playerView;
     BOOL seekToZeroBeforePlay;
     
+    NSNumber * toolbarsHidden;
     NSNumber * offerCCNumber;
 }
 
 
 @property (nonatomic, retain) NSURL * fileUrl;
+@property (nonatomic, retain) NSNumber * toolbarsHidden;
 @property (nonatomic, retain) NSNumber * offerCCNumber;
 
 @property (nonatomic, retain) AVPlayerItem * mPlayerItem;

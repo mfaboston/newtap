@@ -249,7 +249,7 @@
     [scrollOverflowIndicator setHidden:NO];
 }
 - (void) hideScrollOverflow {
-    [UIView transitionWithView:self.view duration:0.5 options:UIViewAnimationCurveEaseInOut animations:^{
+    [UIView transitionWithView:self.view duration:0.35 options:UIViewAnimationCurveEaseInOut animations:^{
         [scrollOverflowIndicator setAlpha:0.0f];
     } completion:nil];
 
