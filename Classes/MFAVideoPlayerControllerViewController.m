@@ -254,7 +254,13 @@ UITapGestureRecognizer *tap;
                 [self enablePlayerButtons];
 
                 CGRect transformedBounds  = [self.mPlaybackView getVideoContentFrame];
-                self.mPlaybackView.frame = transformedBounds;
+//                NSLog(@"Setting mPlaybackView.frame to %f %f %f %f", transformedBounds.origin.x,
+//                      transformedBounds.origin.y,
+//                      transformedBounds.size.width, transformedBounds.size.height                     );
+                
+                CGRect fullScreenBounds = CGRectMake(0.0f, 0.0f, 480.f, 320.f);
+//                self.mPlaybackView.frame = transformedBounds;
+                self.mPlaybackView.frame = fullScreenBounds;
                 
                 [self initializeCCBasedOnAppDelegatePrefs];
                 
