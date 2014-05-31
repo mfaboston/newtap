@@ -78,7 +78,11 @@ UITapGestureRecognizer *tap;
 
 
 - (BOOL)offerCC {
-    return [offerCCNumber boolValue];
+    if (subtitlesInsteadOfCC) {
+        return [self subtitlesDetected];
+    } else {
+        return [offerCCNumber boolValue];
+    }
 }
 - (void)setOfferCC:(BOOL)x {
     self.offerCCNumber = [NSNumber numberWithBool:x];
@@ -242,7 +246,6 @@ UITapGestureRecognizer *tap;
 	/* AVPlayerItem "status" property value observer. */
 	if (context == AVPlayerDemoPlaybackViewControllerStatusObservationContext)
 	{
-		[self syncPlayPauseButtons];
         
         AVPlayerStatus status = [[change objectForKey:NSKeyValueChangeNewKey] integerValue];
         switch (status)
@@ -293,16 +296,29 @@ UITapGestureRecognizer *tap;
                 
                 NSLog(@"Has Subtitles: %@", [NSNumber numberWithBool:hasSubtitles]);
                 self.mfaSubtitleOptionsGroup = [self.assetForMediaTypes mediaSelectionGroupForMediaCharacteristic:AVMediaCharacteristicLegible];
-                self.mfaSubtitleOption = self.mfaSubtitleOptionsGroup.options[0];
-                self.mfaSubtitleDefaultOption = self.mfaSubtitleOptionsGroup.options[1];
+                for (AVMediaSelectionOption * o in self.mfaSubtitleOptionsGroup.options) {
+                    if ([o hasMediaCharacteristic:AVMediaCharacteristicContainsOnlyForcedSubtitles]) {
+                        // This is the "forced" subtitles: the default that should be used
+                        // when no subtitles are chosen. (Contains only essential text)
+                        self.mfaSubtitleDefaultOption = o;
+                    } else if ([o hasMediaCharacteristic:AVMediaCharacteristicLegible]) {
+                        // No language/locale checking; will take one at random if multiple present
+                        self.mfaSubtitleOption = o;
+                    }
+
+                }
+//                self.mfaSubtitleOption = self.mfaSubtitleOptionsGroup.options[0];
+//                self.mfaSubtitleDefaultOption = self.mfaSubtitleOptionsGroup.options[1];
                 self.playerItemForSubtitles = playerItem;
                 NSLog(@"subtitleOptions is %@", self.mfaSubtitleOptionsGroup);
+                NSLog(@"mfaSubtitleOptionsGroup.options is %@", self.mfaSubtitleOptionsGroup.options);
                 
-//                [playerItem selectMediaOption:<#(AVMediaSelectionOption *)#> inMediaSelectionGroup:<#(AVMediaSelectionGroup *)#>
+//                [playerItem selectMediaOption:(AVMediaSelectionOption *) inMediaSelectionGroup:<#(AVMediaSelectionGroup *)#>
                 
+                [self initializeCCButtonAsApplicable];
                 [self initializeCCBasedOnAppDelegatePrefs];
 
-                	[mPlayer play];
+              	[mPlayer play];
             }
                 break;
                 
@@ -361,19 +377,38 @@ UITapGestureRecognizer *tap;
 #pragma mark Play, Stop buttons
 
 /* Show the stop button in the movie player controller. */
+
+#define kCCButtonIndex 4
+-(void)initializeCCButtonAsApplicable {
+    NSMutableArray *toolbarItems = [NSMutableArray arrayWithArray:[self.mSecondaryToolbar items]];
+    if ([toolbarItems count] >= (kCCButtonIndex + 1)) {
+        if ([self subtitlesDetected]) {
+            [toolbarItems replaceObjectAtIndex:kCCButtonIndex withObject:self.mCCButton];
+        } else {
+            [toolbarItems replaceObjectAtIndex:kCCButtonIndex withObject:[self getFlexItem]];
+
+        }
+        self.mSecondaryToolbar.items = toolbarItems;
+    }
+    
+}
 -(void)showStopButton
 {
     NSMutableArray *toolbarItems = [NSMutableArray arrayWithArray:[self.mSecondaryToolbar items]];
-    [toolbarItems replaceObjectAtIndex:2 withObject:self.mStopButton];
-    self.mSecondaryToolbar.items = toolbarItems;
+    if ([toolbarItems count] > 3) {
+        [toolbarItems replaceObjectAtIndex:2 withObject:self.mStopButton];
+        self.mSecondaryToolbar.items = toolbarItems;
+    }
 }
 
 /* Show the play button in the movie player controller. */
 -(void)showPlayButton
 {
     NSMutableArray *toolbarItems = [NSMutableArray arrayWithArray:[self.mSecondaryToolbar items]];
-    [toolbarItems replaceObjectAtIndex:2 withObject:self.mPlayButton];
-    self.mSecondaryToolbar.items = toolbarItems;
+    if ([toolbarItems count] > 3) {
+        [toolbarItems replaceObjectAtIndex:2 withObject:self.mPlayButton];
+        self.mSecondaryToolbar.items = toolbarItems;
+    }
 }
 
 /* If the media is playing, show the stop button; otherwise, show the play button. */
@@ -593,12 +628,16 @@ UITapGestureRecognizer *tap;
     }
 }
 
+- (BOOL) subtitlesDetected {
+    return ((self.playerItemForSubtitles) && (self.mfaSubtitleOptionsGroup));
+
+}
 - (IBAction)turnOnCC {
     self.mfaIsCCEnabled = @1;
     [self setCCTint:true];
     
     if (subtitlesInsteadOfCC) {
-        if ((self.playerItemForSubtitles) && (self.mfaSubtitleOptionsGroup)) {
+        if ([self subtitlesDetected]) {
             [self.playerItemForSubtitles selectMediaOption:self.mfaSubtitleOption
                                      inMediaSelectionGroup:self.mfaSubtitleOptionsGroup];
         }
@@ -614,7 +653,7 @@ UITapGestureRecognizer *tap;
     [self setCCTint:false];
 
     if (subtitlesInsteadOfCC) {
-        if ((self.playerItemForSubtitles) && (self.mfaSubtitleOptionsGroup)) {
+        if ([self subtitlesDetected]) {
 //            if (self.mfaSubtitleOptionsGroup.allowsEmptySelection) {
               [self.playerItemForSubtitles selectMediaOption:self.mfaSubtitleDefaultOption inMediaSelectionGroup:self.mfaSubtitleOptionsGroup];
 //            } else {
@@ -856,24 +895,29 @@ UITapGestureRecognizer *tap;
     [super viewDidLoad];
 }
 
--(void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
+-(void)initializePlayerButtons {
     UIBarButtonItem * flexItem = [self getFlexItem];
     if ([self offerCC]) {
         self.mSecondaryToolbar.items = [NSArray arrayWithObjects: self.mRestart, flexItem, self.mPlayButton, flexItem, self.mCCButton, nil];
     } else{
         self.mSecondaryToolbar.items = [NSArray arrayWithObjects: self.mRestart, flexItem, self.mPlayButton, flexItem, flexItem, nil];
     }
-    
 	[self initScrubberTimer];
 	[self syncPlayPauseButtons];
 	[self syncScrubber];
+    [self turnOnToolBars];
+
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    
     
     
 //    [self performSelector:@selector(turnOnToolBars) withObject:nil afterDelay:5.0];
     
-    [self turnOnToolBars];
+    [self initializePlayerButtons];
     
 }
 
