@@ -64,10 +64,11 @@
 	
 	// Create new view controller
     
-    BOOL useOriginalPlayer = YES;
-    NSString * ext = [[videoSrc lastPathComponent] pathExtension];
-    useOriginalPlayer = NO;
-    
+    BOOL useOriginalPlayer = NO;
+
+    //    useOriginalPlayer = NO;
+//    NSString * ext = [[videoSrc lastPathComponent] pathExtension];
+ 
 //    (!(
 //                            [ext isEqualToString:@"mov"] ||
 //                            [ext isEqualToString:@"m4v"] ||

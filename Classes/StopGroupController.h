@@ -9,7 +9,7 @@
 
 @interface StopGroupController : UIViewController <TapDetectingImageViewDelegate, TapDetectingViewDelegate, AVAudioPlayerDelegate, UITableViewDelegate, UITableViewDataSource> {
 	
-	StopGroup *stopGroup;
+    StopGroup *stopGroup;
 	BOOL firstRun;
 	
 	IBOutlet BevelView *progressView;

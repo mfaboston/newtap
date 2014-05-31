@@ -10,6 +10,8 @@
 #import "MFAVideoPlayerUIView.h"
 #import "TapAppDelegate.h"
 
+
+
 NSString * const kTracksKey         = @"tracks";
 NSString * const kPlayableKey		= @"playable";
 /* PlayerItem keys */
@@ -49,6 +51,8 @@ NSString * const kCurrentItemKey	= @"currentItem";
 @synthesize toolbarsHidden;
 @synthesize offerCCNumber;
 
+@synthesize assetForMediaTypes, mfaSubtitleOptionsGroup, mfaSubtitleOption, playerItemForSubtitles, mfaSubtitleDefaultOption;
+BOOL subtitlesInsteadOfCC = YES;
 
 static void *AVPlayerDemoPlaybackViewControllerRateObservationContext = &AVPlayerDemoPlaybackViewControllerRateObservationContext;
 static void *AVPlayerDemoPlaybackViewControllerStatusObservationContext = &AVPlayerDemoPlaybackViewControllerStatusObservationContext;
@@ -190,7 +194,20 @@ UITapGestureRecognizer *tap;
 
 
 - (IBAction)loadAssetFromFile:sender {
-    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:fileUrl options:nil];
+    NSLog(@"fileUrl is %@", fileUrl);
+    BOOL subtitleHardCodedSampleVideo = NO;
+    
+    AVURLAsset *asset;
+
+    if (subtitleHardCodedSampleVideo) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"subtitles" ofType:@"m4v"];
+        NSURL *trialUrl = [NSURL fileURLWithPath:path];
+        asset = [AVURLAsset URLAssetWithURL:trialUrl options:nil];
+    } else {
+        asset = [AVURLAsset URLAssetWithURL:fileUrl options:nil];
+    }
+    
+    self.assetForMediaTypes = asset;
     NSArray *requestedKeys = @[kTracksKey, kPlayableKey];
     NSLog(@"!!!!!!! Asset URL is %@", fileUrl);
     [asset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:
@@ -262,9 +279,30 @@ UITapGestureRecognizer *tap;
 //                self.mPlaybackView.frame = transformedBounds;
                 self.mPlaybackView.frame = fullScreenBounds;
                 
-                [self initializeCCBasedOnAppDelegatePrefs];
                 
-                [mPlayer play];
+                
+                AVPlayerItem *playerItem = (AVPlayerItem *)object;
+                NSArray * mediaOptions = self.assetForMediaTypes.availableMediaCharacteristicsWithMediaSelectionOptions;
+                NSLog(@"Mediaoptions are %@", mediaOptions);
+                BOOL hasSubtitles = NO;
+                for (NSString * str in mediaOptions) {
+                    if ([str isEqualToString:AVMediaCharacteristicLegible]) {
+                        hasSubtitles = YES;
+                    }
+                }
+                
+                NSLog(@"Has Subtitles: %@", [NSNumber numberWithBool:hasSubtitles]);
+                self.mfaSubtitleOptionsGroup = [self.assetForMediaTypes mediaSelectionGroupForMediaCharacteristic:AVMediaCharacteristicLegible];
+                self.mfaSubtitleOption = self.mfaSubtitleOptionsGroup.options[0];
+                self.mfaSubtitleDefaultOption = self.mfaSubtitleOptionsGroup.options[1];
+                self.playerItemForSubtitles = playerItem;
+                NSLog(@"subtitleOptions is %@", self.mfaSubtitleOptionsGroup);
+                
+//                [playerItem selectMediaOption:<#(AVMediaSelectionOption *)#> inMediaSelectionGroup:<#(AVMediaSelectionGroup *)#>
+                
+                [self initializeCCBasedOnAppDelegatePrefs];
+
+                	[mPlayer play];
             }
                 break;
                 
@@ -548,7 +586,7 @@ UITapGestureRecognizer *tap;
 
 - (IBAction)toggleCC:(id)sender
 {
-    if (mPlayer.isClosedCaptionDisplayEnabled) {
+    if ([self.mfaIsCCEnabled isEqualToNumber:@1]) {
         [self turnOffCC];
     } else {
         [self turnOnCC];
@@ -556,16 +594,37 @@ UITapGestureRecognizer *tap;
 }
 
 - (IBAction)turnOnCC {
+    self.mfaIsCCEnabled = @1;
     [self setCCTint:true];
+    
+    if (subtitlesInsteadOfCC) {
+        if ((self.playerItemForSubtitles) && (self.mfaSubtitleOptionsGroup)) {
+            [self.playerItemForSubtitles selectMediaOption:self.mfaSubtitleOption
+                                     inMediaSelectionGroup:self.mfaSubtitleOptionsGroup];
+        }
 
-    self.mPlayer.closedCaptionDisplayEnabled = true;
+    } else {
+        self.mPlayer.closedCaptionDisplayEnabled = true;
+    }
     [[self applicationDelegate] setCCInDefaults:true];
     
 }
 - (IBAction)turnOffCC {
+    self.mfaIsCCEnabled = @0;
     [self setCCTint:false];
 
-    self.mPlayer.closedCaptionDisplayEnabled = false;
+    if (subtitlesInsteadOfCC) {
+        if ((self.playerItemForSubtitles) && (self.mfaSubtitleOptionsGroup)) {
+//            if (self.mfaSubtitleOptionsGroup.allowsEmptySelection) {
+              [self.playerItemForSubtitles selectMediaOption:self.mfaSubtitleDefaultOption inMediaSelectionGroup:self.mfaSubtitleOptionsGroup];
+//            } else {
+//                NSLog(@"Group does not allow empty selection");
+//            }
+        }
+        
+    } else {
+        self.mPlayer.closedCaptionDisplayEnabled = false;
+    }
     [[self applicationDelegate] setCCInDefaults:false];
 }
 

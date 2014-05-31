@@ -52,6 +52,15 @@
 
 @property (retain, nonatomic) IBOutlet UITapGestureRecognizer *tapper;
 
+
+@property (retain, nonatomic) AVURLAsset * assetForMediaTypes;
+@property (retain, nonatomic) AVMediaSelectionGroup * mfaSubtitleOptionsGroup;
+@property (retain, nonatomic) AVMediaSelectionOption * mfaSubtitleOption;
+@property (retain, nonatomic) AVMediaSelectionOption * mfaSubtitleDefaultOption;
+@property (retain, nonatomic) AVPlayerItem * playerItemForSubtitles;
+@property (retain, nonatomic) NSNumber * mfaIsCCEnabled;
+
+
 - (IBAction)toggleCC:(id)sender;
 - (IBAction)doneTap:(id)sender;
 - (IBAction)restartVideo:(id)sender;

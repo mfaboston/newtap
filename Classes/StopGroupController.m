@@ -37,6 +37,8 @@
 @synthesize stopTable, moviePlayerController, stopGroup;
 @synthesize scrollOverflowIndicator;
 
+MPMoviePlayerController * permanentMoviePlayerController;
+
 - (id)initWithStopGroup:(StopGroup*)stop
 {
 	if ((self = [super initWithNibName:@"StopGroup" bundle:[NSBundle mainBundle]])) {
@@ -46,9 +48,15 @@
 	}
 	return self;
 }
+- (void)viewDidUnload {  /* Not needed in iOS6+ */
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSLog(@"SGC: viewDidUnload did removeObserver");
+}
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    NSLog(@"SGC: dealloc did removeObserver");
 	[controlsTimer release];
 	[audioPlayer release];
 	[autoplayTimer release];
@@ -74,8 +82,19 @@
 #pragma mark -
 #pragma mark UIViewController
 
+NSTimeInterval mkLogInt;
+
+-(void)mkLogInit {
+    mkLogInt = [NSDate timeIntervalSinceReferenceDate];
+}
+-(void)mkLog:(NSString*)string {
+    NSLog(@"%f SGV %@", [NSDate timeIntervalSinceReferenceDate] - mkLogInt, string);
+}
+
 - (void)viewDidLoad
 {
+    [self mkLogInit];
+    [self mkLog:@"SGV ViewDidLoad start"];
 
     self.navigationItem.backBarButtonItem =
     [[[UIBarButtonItem alloc] initWithTitle:@"Back"
@@ -87,7 +106,7 @@
 	// Calculate table height
 	UIImage *background = [UIImage imageNamed:@"table-cell-bg.png"];
 	NSInteger numberOfStops = [[self stopGroup] numberOfStops];
-    NSLog(@"NumberofStops is %d", numberOfStops);
+    // NSLog(@"NumberofStops is %d", numberOfStops);
 	CGFloat tableHeight = numberOfStops	* background.size.height;
 	
 	// Set up header image, try portrait image first but get landscape image if portrait isn't available
@@ -100,30 +119,34 @@
 		// Set up image
 		NSBundle *tourBundle = [((TourController*)[self navigationController]) tourBundle];
         
-        NSLog(@"%@ ::: %@ / %@ / %@", headerImageSrc, [headerImageSrc lastPathComponent], [[headerImageSrc lastPathComponent] stringByDeletingPathExtension], [headerImageSrc stringByDeletingLastPathComponent]
-              );
+//        NSLog(@"%@ ::: %@ / %@ / %@", headerImageSrc, [headerImageSrc lastPathComponent], [[headerImageSrc lastPathComponent] stringByDeletingPathExtension], [headerImageSrc stringByDeletingLastPathComponent]
+//              );
         
 		NSString *imagePath = [tourBundle pathForResource:[[headerImageSrc lastPathComponent] stringByDeletingPathExtension]
 												   ofType:[[headerImageSrc lastPathComponent] pathExtension]
 											  inDirectory:[headerImageSrc stringByDeletingLastPathComponent]];
-        NSLog(@"Loading image at %@", imagePath);
+      //  NSLog(@"Loading image at %@", imagePath);
 		imageView = [[TapDetectingImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:imagePath]];
 		[imageView setDelegate:self];
 		
 		// Calculate image scale
-		CGFloat scale = scrollView.frame.size.width / imageView.image.size.width;
+		CGFloat scale;
         
 
         
         BOOL experimental = YES;
         if (experimental) {
             scale = 1.0f;
+        } else {
+            scale = scrollView.frame.size.width / imageView.image.size.width;
         }
         
 
+        [self mkLog:@"scale point 0"];
+
         
-        NSLog(@"Scale from %f / %f", scrollView.frame.size.width, imageView.image.size.width);
-        NSLog(@"Scale is %f", scale);
+        //NSLog(@"Scale from %f / %f", scrollView.frame.size.width, imageView.image.size.width);
+//        NSLog(@"Scale is %f", scale);
 		// Setup scroll view
 		if (self.view.frame.size.height - imageView.image.size.height * scale >= tableHeight) {
 			[scrollView setFrame:CGRectMake(0, 0, scrollView.frame.size.width, imageView.image.size.height * scale)];
@@ -139,13 +162,14 @@
 		[scrollView setBackgroundColor:[UIColor blackColor]];
 		[scrollView setMinimumZoomScale:scale];
 		[scrollView setMaximumZoomScale:scale];
-        
+        [self mkLog:@"scale point 1"];
+
 //        scale = 1.0f;
-        NSLog(@"Setting scale: %f", scale);
+       // NSLog(@"Setting scale: %f", scale);
 
 		[scrollView setZoomScale:scale];
         
-        NSLog(@"Setting content size %f %f", imageView.frame.size.width, imageView.frame.size.height);
+//        NSLog(@"Setting content size %f %f", imageView.frame.size.width, imageView.frame.size.height);
 		[scrollView setContentSize:imageView.frame.size];
 		if (imageView.frame.size.height > scrollView.frame.size.height) {
 			[scrollView scrollRectToVisible:CGRectMake(0, (imageView.frame.size.height - scrollView.frame.size.height) / 2, scrollView.frame.size.width, scrollView.frame.size.height) animated:NO];
@@ -157,8 +181,11 @@
 		// Hide scroll view
 		[scrollView setFrame:CGRectMake(0, 0, self.view.frame.size.width, 0)];
 		[scrollView setHidden:YES];
+        [self mkLog:@"scale point 2"];
+
 	}
-	
+    [self mkLog:@"scale point 3"];
+
 	// Setup table
 	[stopTable setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"table-bg.png"]]];
 	[stopTable setRowHeight:[background size].height];
@@ -170,13 +197,16 @@
 	// Setup shadow
 	[stopTableShadow setFrame:CGRectMake(stopTable.frame.origin.x, stopTable.frame.origin.y, stopTableShadow.frame.size.width, stopTableShadow.frame.size.height)];
 	[[self view] insertSubview:stopTableShadow aboveSubview:stopTable];
-	
+
+    [self mkLog:@"stopTable x"];
+
 	// Setup audio controls
 	[progressView setFlipped:YES];
 	[progressBar setMaximumTrackImage:[UIImage imageNamed:@"audio-slider-minimum.png"] forState:UIControlStateNormal];
 	[progressBar setMinimumTrackImage:[UIImage imageNamed:@"audio-slider-maximum.png"] forState:UIControlStateNormal];
 	[progressBar setThumbImage:[UIImage imageNamed:@"audio-handle.png"] forState:UIControlStateNormal];
 	[volumeView setFrame:CGRectMake(0, scrollView.frame.size.height - volumeView.frame.size.height, volumeView.frame.size.width, volumeView.frame.size.height)];
+    [self mkLog:@"progressBar x"];
 
 	// Replace volume slider with MPVolumeView so it's tied to the system audio
 	MPVolumeView *systemVolumeSlider = [[MPVolumeView alloc] initWithFrame:[volumeSlider frame]];
@@ -184,24 +214,57 @@
 	[volumeSlider removeFromSuperview];
 	[volumeSlider release];
 	[systemVolumeSlider release];
-	
+    [self mkLog:@"volumeSlider x"];
+
 	// Setup up movie player
-	moviePlayerHolder = [[UIView alloc] initWithFrame:[scrollView frame]];
-	moviePlayerController = [[MPMoviePlayerController alloc] init];
-	[[moviePlayerController view] setFrame:[scrollView frame]];
-	[moviePlayerController setShouldAutoplay:YES];
-	[moviePlayerController setControlStyle:MPMovieControlStyleNone];
-//	[moviePlayerController setScalingMode:MPMovieScalingModeAspectFill];
-	[moviePlayerController setContentURL:nil];
+    BOOL experimentalMP = YES;
+    if (experimentalMP) {
+        [self mkLog:@"altMP 5.0"];
+        moviePlayerHolder = [[UIView alloc] initWithFrame:[scrollView frame]];
+        [self mkLog:@"altMP 5.1"];
+        if (! permanentMoviePlayerController) {
+            [self mkLog:@"altMP 5.1b"];
+            permanentMoviePlayerController =  [[MPMoviePlayerController alloc] init];
+            [permanentMoviePlayerController setShouldAutoplay:YES];
+            [permanentMoviePlayerController setControlStyle:MPMovieControlStyleNone];
+            [self mkLog:@"altMP 5.1c"];
+        }
+        moviePlayerController = permanentMoviePlayerController;
+        [self mkLog:@"altMP 5.2"];
+        [[moviePlayerController view] setFrame:[scrollView frame]];
+        [self mkLog:@"altMP 5.3"];
+        [moviePlayerController setContentURL:nil];
+    } else {
+        // standard/early
+        moviePlayerHolder = [[UIView alloc] initWithFrame:[scrollView frame]];
+        [self mkLog:@"moviePlayerController 0.1"];
+        moviePlayerController = [[MPMoviePlayerController alloc] init];
+        [self mkLog:@"moviePlayerController 0.2"];
+        [[moviePlayerController view] setFrame:[scrollView frame]];
+        [self mkLog:@"moviePlayerController 0.3"];
+        [moviePlayerController setShouldAutoplay:YES];
+        [self mkLog:@"moviePlayerController 0.4"];
+        [moviePlayerController setControlStyle:MPMovieControlStyleNone];
+        //	[moviePlayerController setScalingMode:MPMovieScalingModeAspectFill];
+        [self mkLog:@"moviePlayerController 0.5"];
+        [moviePlayerController setContentURL:nil];
+        [self mkLog:@"moviePlayerController 0.x"];
+    }
+    
+    NSLog(@"MoviePlayerHolder %@", [scrollView frame]);
+
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayerNaturalSizeAvailable:) name:MPMovieNaturalSizeAvailableNotification object:moviePlayerController];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayerDurationAvailable:) name:MPMovieDurationAvailableNotification object:moviePlayerController];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayerPlaybackStateDidChange:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:moviePlayerController];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoPlayerPlaybackDidFinish:) name:MPMoviePlayerPlaybackDidFinishNotification object:moviePlayerController];
+    [self mkLog:@"moviePlayerController 1"];
 	[moviePlayerHolder addSubview:[moviePlayerController view]];
 	moviePlayerTapDetector = [[TapDetectingView alloc] initWithFrame:[scrollView bounds]];
 	[moviePlayerTapDetector setDelegate:self];
 	[moviePlayerHolder addSubview:moviePlayerTapDetector];
 	[moviePlayerHolder setAlpha:0.0f];
+    [self mkLog:@"moviePlayerController x"];
+    [self mkLog:@"SGV ViewDidLoad Done"];
 }
 
 - (void)viewWillAppear:(BOOL)animated
