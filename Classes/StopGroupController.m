@@ -277,15 +277,20 @@ NSTimeInterval mkLogInt;
 }
 
 - (void)viewDidAppear:(BOOL)animated
-{	
+{
+    
+    BOOL shouldAutoplay = NO;
+    // June 2014: turning off autoplay per MFA
+    
 	// Check for intro
 	if (firstRun) {
 		firstRun = NO;
 		if (autoplayTimer) {
 			[autoplayTimer invalidate];
 		}
-		autoplayTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(checkForAutoplay) userInfo:nil repeats:NO];
-        
+        if (shouldAutoplay) {
+            autoplayTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(checkForAutoplay) userInfo:nil repeats:NO];
+        }
 	}
 	
 	// Flash scroll bars
