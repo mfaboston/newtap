@@ -5,10 +5,12 @@
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
-			<key>Title</key>
-			<string>Group</string>
 			<key>Type</key>
-			<string>PSGroupSpecifier</string>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Latest Run Version</string>
+			<key>Key</key>
+			<string>version_display</string>
 		</dict>
 		<dict>
 			<key>Type</key>

@@ -164,6 +164,13 @@ enum {
 	// Start updates
 	[self scheduleBackgroundUpdates];
 	
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    
+    NSUserDefaults * def = [NSUserDefaults standardUserDefaults];
+    [def setObject:version forKey:@"version_display"];
+    [def synchronize];
+
+    
     [window makeKeyAndVisible];
 }
 
