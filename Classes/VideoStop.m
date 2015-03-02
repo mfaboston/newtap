@@ -124,8 +124,11 @@
     
 	
 	// Retain self to stay around for moviePlayBackDidFinish
-	[self retain];
+	//FF - Commented out
+    //[self retain];
 	
+    
+    
 	return YES;
 }
 
@@ -161,7 +164,8 @@
 	[Analytics trackAction:@"movie-stop" forStop:[self getStopId]];
 	
 	// Release self now that moviePlayBackDidFinish is done
-	[self release];
+    //FF - Commented out
+	//[self release];
 }
 
 @end

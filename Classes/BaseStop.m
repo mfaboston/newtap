@@ -14,6 +14,12 @@
 	return self;
 }
 
+//FF Added
+- (void)dealloc
+{
+    [super dealloc];
+}
+
 - (NSString *)getStopId
 {
 	char *propId = (char*)xmlGetProp(stopNode, (xmlChar*)"id");

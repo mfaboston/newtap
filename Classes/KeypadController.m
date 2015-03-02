@@ -54,11 +54,17 @@
 {
     [self clearCode];
 	[self willRotateToInterfaceOrientation:[self interfaceOrientation] duration:0.0];
+    
+    //FF Added
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
 //	[[self navigationController] setNavigationBarHidden:NO animated:NO];
+    
+    //FF Added
+    [super viewDidAppear:animated];
 }
 
 - (void)dealloc
@@ -78,8 +84,11 @@
 //
 //	[theNavigationItem setBackBarButtonItem:backButton];
 
-	UIBarButtonItem *homeButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"keypad-home-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(returnToMenu)] autorelease];
-	homeButton = [[[UIBarButtonItem alloc] initWithTitle:@"Back"
+    //FF Commented out
+//	UIBarButtonItem *homeButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"keypad-home-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(returnToMenu)] autorelease];
+    
+    //FF modified to remove dead store
+	UIBarButtonItem *homeButton = [[[UIBarButtonItem alloc] initWithTitle:@"Back"
                                                                     style:UIBarButtonItemStyleBordered
                                                                    target:self
                                                                    action:@selector(returnToMenu)] autorelease];

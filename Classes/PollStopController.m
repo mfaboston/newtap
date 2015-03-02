@@ -176,6 +176,9 @@
 	[pickerView setFrame:CGRectMake(0.0f, 110.0f, 320.0f, 216.0f)];
 	[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg-poll-portrait.png"]]];
 	[self.view setNeedsLayout];
+    
+    //FF Added
+    [super viewDidLoad];
 }
 
 #pragma mark UIPickerViewDataSource

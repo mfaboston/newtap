@@ -273,7 +273,8 @@ UITapGestureRecognizer *tap;
                 [self enableScrubber];
                 [self enablePlayerButtons];
 
-                CGRect transformedBounds  = [self.mPlaybackView getVideoContentFrame];
+                //FF commented out transformedBounds to silence analyer error
+//                CGRect transformedBounds  = [self.mPlaybackView getVideoContentFrame];
 //                NSLog(@"Setting mPlaybackView.frame to %f %f %f %f", transformedBounds.origin.x,
 //                      transformedBounds.origin.y,
 //                      transformedBounds.size.width, transformedBounds.size.height                     );
@@ -385,7 +386,8 @@ UITapGestureRecognizer *tap;
         if ([self subtitlesDetected]) {
             [toolbarItems replaceObjectAtIndex:kCCButtonIndex withObject:self.mCCButton];
         } else {
-            [toolbarItems replaceObjectAtIndex:kCCButtonIndex withObject:[self getFlexItem]];
+            //FF added autorelease
+            [toolbarItems replaceObjectAtIndex:kCCButtonIndex withObject:[[self newFlexItem] autorelease]];
 
         }
         self.mSecondaryToolbar.items = toolbarItems;
@@ -852,7 +854,8 @@ UITapGestureRecognizer *tap;
     return [self initWithNibName:@"MFAVideoPlayer" bundle:nil];
 }
 
--(UIBarButtonItem *) getFlexItem {
+//FF refectored from getFlexItem to newFlexItem
+-(UIBarButtonItem *) newFlexItem {
     return [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 }
 
@@ -867,11 +870,18 @@ UITapGestureRecognizer *tap;
     [_volumeView setShowsRouteButton:NO];
     [_volumeView sizeToFit];
     [self.mVolumeBox addSubview:_volumeView];
+    
+    //FF Added
+    [_volumeView release];
 
-    UIBarButtonItem * flexItem = [self getFlexItem];
+    UIBarButtonItem * flexItem = [self newFlexItem];
 
     
     self.mToolbar.items = [NSArray arrayWithObjects:self.mDoneButton, flexItem, scrubberItem, flexItem,  nil];
+    
+    //FF
+    [flexItem release];
+    [scrubberItem release];
     
     [self.mSecondaryBox.layer setCornerRadius:10.0f];
     // border
@@ -882,9 +892,10 @@ UITapGestureRecognizer *tap;
 
     self.mSecondaryBox.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.60f];
     
-    [self.mSecondaryToolbar setBackgroundImage:[UIImage new]
-                  forToolbarPosition:UIToolbarPositionAny
-                          barMetrics:UIBarMetricsDefault];
+    //FF Commented out
+//    [self.mSecondaryToolbar setBackgroundImage:[UIImage new]
+                 // forToolbarPosition:UIToolbarPositionAny
+                         // barMetrics:UIBarMetricsDefault];
     
     [self.mSecondaryToolbar setBackgroundColor:[UIColor clearColor]];
 
@@ -896,7 +907,8 @@ UITapGestureRecognizer *tap;
 }
 
 -(void)initializePlayerButtons {
-    UIBarButtonItem * flexItem = [self getFlexItem];
+    //FF Added autorelease
+    UIBarButtonItem * flexItem = [[self newFlexItem] autorelease];
     if ([self offerCC]) {
         self.mSecondaryToolbar.items = [NSArray arrayWithObjects: self.mRestart, flexItem, self.mPlayButton, flexItem, self.mCCButton, nil];
     } else{
@@ -953,6 +965,9 @@ UITapGestureRecognizer *tap;
     self.mPlayer = nil;
     self.mPlayerItem = nil;
     self.player = nil;
+    
+    //FF added
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning

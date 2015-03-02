@@ -61,6 +61,9 @@
 	UpdaterController *updaterController = [[UpdaterController alloc] init];
 	[updaterController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
 	[self presentModalViewController:updaterController animated:YES];
+    
+    //FF Added
+    [updaterController release];
 }
 
 - (void)updateButtonSelected:(id)sender

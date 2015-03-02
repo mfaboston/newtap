@@ -106,7 +106,8 @@ enum {
 
 - (MFAVideoPlayerControllerViewController *) getSingleMainMfaVidController {
     if (! self.singleMainMfaVidController) {
-        self.singleMainMfaVidController = [[MFAVideoPlayerControllerViewController alloc] init];
+        //FF Added autorelease
+        self.singleMainMfaVidController = [[[MFAVideoPlayerControllerViewController alloc] init] autorelease];
     }
     return singleMainMfaVidController;
 }

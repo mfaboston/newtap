@@ -131,7 +131,8 @@
 {
 	[Analytics trackAction:@"view" forStop:[stop getStopId]];
 	if ([stop providesViewController]) {
-		[self pushViewController:[stop newViewController] animated:animated];
+        //FF Added autorelease
+		[self pushViewController:[[stop newViewController] autorelease] animated:animated];
 		return YES; // success
 	}
 	else {

@@ -51,6 +51,10 @@ MPMoviePlayerController * permanentMoviePlayerController;
 - (void)viewDidUnload {  /* Not needed in iOS6+ */
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     NSLog(@"SGC: viewDidUnload did removeObserver");
+    
+    //FF
+    [super viewDidUnload];
+    
 }
 
 - (void)dealloc

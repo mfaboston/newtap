@@ -34,6 +34,9 @@
 
 	NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL fileURLWithPath:pagePath]];
 	[webView loadRequest:request];
+    
+    //FF Added
+    [super viewDidLoad];
 }
 
 @end
