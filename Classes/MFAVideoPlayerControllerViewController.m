@@ -52,6 +52,7 @@ NSString * const kCurrentItemKey	= @"currentItem";
 @synthesize offerCCNumber;
 
 @synthesize assetForMediaTypes, mfaSubtitleOptionsGroup, mfaSubtitleOption, playerItemForSubtitles, mfaSubtitleDefaultOption;
+
 BOOL subtitlesInsteadOfCC = YES;
 
 static void *AVPlayerDemoPlaybackViewControllerRateObservationContext = &AVPlayerDemoPlaybackViewControllerRateObservationContext;
@@ -892,15 +893,17 @@ UITapGestureRecognizer *tap;
 
     self.mSecondaryBox.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.60f];
     
+    [self.mSecondaryBox clipsToBounds];
+    
     //FF Commented out
 //    [self.mSecondaryToolbar setBackgroundImage:[UIImage new]
                  // forToolbarPosition:UIToolbarPositionAny
                          // barMetrics:UIBarMetricsDefault];
     
     [self.mSecondaryToolbar setBackgroundColor:[UIColor clearColor]];
-
+    [self.mSecondaryToolbar setBackgroundImage:[UIImage alloc] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
     
-
+   
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
 
     [super viewDidLoad];
