@@ -177,7 +177,6 @@
 	[self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"bg-poll-portrait.png"]]];
 	[self.view setNeedsLayout];
     
-    //FF Added
     [super viewDidLoad];
 }
 

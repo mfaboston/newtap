@@ -48,13 +48,14 @@ MPMoviePlayerController * permanentMoviePlayerController;
 	}
 	return self;
 }
-- (void)viewDidUnload {  /* Not needed in iOS6+ */
+
+- (void)viewDidUnload
+{
+    /* Not needed in iOS6+ */
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     NSLog(@"SGC: viewDidUnload did removeObserver");
     
-    //FF
     [super viewDidUnload];
-    
 }
 
 - (void)dealloc
@@ -269,6 +270,8 @@ NSTimeInterval mkLogInt;
 	[moviePlayerHolder setAlpha:0.0f];
     [self mkLog:@"moviePlayerController x"];
     [self mkLog:@"SGV ViewDidLoad Done"];
+    
+    [super viewDidLoad];
 }
 
 - (void)viewWillAppear:(BOOL)animated

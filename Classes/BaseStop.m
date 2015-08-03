@@ -14,7 +14,6 @@
 	return self;
 }
 
-//FF Added
 - (void)dealloc
 {
     [super dealloc];

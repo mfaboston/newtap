@@ -55,15 +55,11 @@
     [self clearCode];
 	[self willRotateToInterfaceOrientation:[self interfaceOrientation] duration:0.0];
     
-    //FF Added
     [super viewWillAppear:animated];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-//	[[self navigationController] setNavigationBarHidden:NO animated:NO];
-    
-    //FF Added
     [super viewDidAppear:animated];
 }
 
@@ -76,25 +72,12 @@
 {	
 	UINavigationItem *theNavigationItem = [[[UINavigationItem alloc] initWithTitle:[self title]] autorelease];
 
-//	UIBarButtonItem *backButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"keypad-back-icon.png"] style:UIBarButtonItemStylePlain target:nil action:nil] autorelease];
-//    backButton = [[[UIBarButtonItem alloc] initWithTitle:@"Back3"
-//                                      style:UIBarButtonItemStylePlain
-//                                     target:self
-//                                     action:@selector(returnToMenu)] autorelease];
-//
-//	[theNavigationItem setBackBarButtonItem:backButton];
-
-    //FF Commented out
-//	UIBarButtonItem *homeButton = [[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"keypad-home-icon.png"] style:UIBarButtonItemStylePlain target:self action:@selector(returnToMenu)] autorelease];
-    
-    //FF modified to remove dead store
 	UIBarButtonItem *homeButton = [[[UIBarButtonItem alloc] initWithTitle:@"Back"
                                                                     style:UIBarButtonItemStyleBordered
                                                                    target:self
                                                                    action:@selector(returnToMenu)] autorelease];
     [theNavigationItem setLeftBarButtonItem:homeButton];
     
-//   [theNavigationItem setBackBarButtonItem:homeButton];
 	return theNavigationItem;
 }
 

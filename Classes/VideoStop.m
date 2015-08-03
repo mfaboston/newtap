@@ -89,7 +89,6 @@
         [moviePlayerController release];
 	} else {
         // New Player
-//        MFAVideoPlayerControllerViewController * mfaVidController = [[MFAVideoPlayerControllerViewController alloc] init];
         TapAppDelegate * tad = (TapAppDelegate*) [[UIApplication sharedApplication] delegate];
         MFAVideoPlayerControllerViewController * mfaVidController = [tad getSingleMainMfaVidController];
         mfaVidController.fileUrl = videoURL;
@@ -100,34 +99,7 @@
 
         [[(TapAppDelegate*)[[UIApplication sharedApplication] delegate] currentTourController] presentModalViewController:mfaVidController animated:NO];
 
-        
-//        UIViewController * topController = [(TapAppDelegate*)[[UIApplication sharedApplication] delegate] currentTourController];
-//        UIView * topView = topController.view;
-//        [topView setWantsLayer:YES];
-
-//        [topView addSubview:mfaVidController.view];
-//        [topView addSubview:mfaVidController.view];
-
     }
-    
-    
-	// Present the controller modally since MPMoviePlayerController doesn't auto-takeover anymore
-//	TourController *tourController = [(TapAppDelegate*)[[UIApplication sharedApplication] delegate] currentTourController];
-//	if ([tourController parentViewController]) {
-//		[tourController presentMoviePlayerViewControllerAnimated:moviePlayerController];
-//	}
-//	else {
-//		SplashController *splashController = (SplashController *)[[(TapAppDelegate *)[[UIApplication sharedApplication] delegate] menuController] modalViewController];
-//		[splashController presentMoviePlayerViewControllerAnimated:moviePlayerController];
-//	}
-    
-    
-	
-	// Retain self to stay around for moviePlayBackDidFinish
-	//FF - Commented out
-    //[self retain];
-	
-    
     
 	return YES;
 }

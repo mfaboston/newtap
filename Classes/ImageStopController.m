@@ -15,9 +15,6 @@
 {
 	if (self = [super initWithNibName:@"ImageStop" bundle:[NSBundle mainBundle]]) {
 		[self setImageStop:stop];
-		
-        //FF Commented out
-//		[self autorelease];
 	}
 
 	return self;
@@ -25,9 +22,8 @@
 
 - (void)dealloc
 {
-	[scrollView release];
-	[imageView release];
-	[imageStop release];
+    [scrollView release];
+    [imageStop release];
 	[super dealloc];
 }
 
@@ -60,6 +56,7 @@
 	
     //FF added autorelease
     [self setImageView:[[[TapDetectingImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:imagePath]] autorelease]];
+
 	[imageView setDelegate:self];
 
 	[imageView setFrame:scrollView.bounds];
@@ -74,10 +71,8 @@
 	[scrollView setMaximumZoomScale: [imageView image].size.width/[imageView frame].size.width];
 	[scrollView addSubview:imageView];
     
-    //FF Added
     [imageView release];
-    
-    //FF
+
     [super viewDidLoad];
 }
 
@@ -86,7 +81,7 @@
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-	return imageView;
+    return imageView;
 }
 
 #pragma mark -

@@ -172,9 +172,6 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-//	[[self navigationController] setNavigationBarHidden:YES animated:NO];
-    
-    //FF Added
     [super viewWillAppear:animated];
 }
 
@@ -184,7 +181,6 @@
 		[player stop];
 	}
     
-    //FF Added
     [super viewWillDisappear:animated];
 }
 

@@ -273,18 +273,9 @@ UITapGestureRecognizer *tap;
                 
                 [self enableScrubber];
                 [self enablePlayerButtons];
-
-                //FF commented out transformedBounds to silence analyer error
-//                CGRect transformedBounds  = [self.mPlaybackView getVideoContentFrame];
-//                NSLog(@"Setting mPlaybackView.frame to %f %f %f %f", transformedBounds.origin.x,
-//                      transformedBounds.origin.y,
-//                      transformedBounds.size.width, transformedBounds.size.height                     );
                 
                 CGRect fullScreenBounds = CGRectMake(0.0f, 0.0f, 480.f, 320.f);
-//                self.mPlaybackView.frame = transformedBounds;
                 self.mPlaybackView.frame = fullScreenBounds;
-                
-                
                 
                 AVPlayerItem *playerItem = (AVPlayerItem *)object;
                 NSArray * mediaOptions = self.assetForMediaTypes.availableMediaCharacteristicsWithMediaSelectionOptions;
@@ -387,9 +378,7 @@ UITapGestureRecognizer *tap;
         if ([self subtitlesDetected]) {
             [toolbarItems replaceObjectAtIndex:kCCButtonIndex withObject:self.mCCButton];
         } else {
-            //FF added autorelease
             [toolbarItems replaceObjectAtIndex:kCCButtonIndex withObject:[[self newFlexItem] autorelease]];
-
         }
         self.mSecondaryToolbar.items = toolbarItems;
     }
@@ -851,18 +840,15 @@ UITapGestureRecognizer *tap;
 
 - (id)init
 {
-  
     return [self initWithNibName:@"MFAVideoPlayer" bundle:nil];
 }
 
-//FF refectored from getFlexItem to newFlexItem
--(UIBarButtonItem *) newFlexItem {
+- (UIBarButtonItem *) newFlexItem {
     return [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 }
 
 - (void)viewDidLoad
 {
-    NSLog(@"Load MFAPLayer View");
     [self setPlayer:nil];
     [self setToolbarsHidden:[NSNumber numberWithBool:NO]];
     UIBarButtonItem *scrubberItem = [[UIBarButtonItem alloc] initWithCustomView:self.mScrubber];
@@ -872,15 +858,12 @@ UITapGestureRecognizer *tap;
     [_volumeView sizeToFit];
     [self.mVolumeBox addSubview:_volumeView];
     
-    //FF Added
     [_volumeView release];
 
     UIBarButtonItem * flexItem = [self newFlexItem];
 
-    
     self.mToolbar.items = [NSArray arrayWithObjects:self.mDoneButton, flexItem, scrubberItem, flexItem,  nil];
     
-    //FF
     [flexItem release];
     [scrubberItem release];
     
@@ -895,11 +878,6 @@ UITapGestureRecognizer *tap;
     
     [self.mSecondaryBox clipsToBounds];
     
-    //FF Commented out
-//    [self.mSecondaryToolbar setBackgroundImage:[UIImage new]
-                 // forToolbarPosition:UIToolbarPositionAny
-                         // barMetrics:UIBarMetricsDefault];
-    
     [self.mSecondaryToolbar setBackgroundColor:[UIColor clearColor]];
     [self.mSecondaryToolbar setBackgroundImage:[UIImage alloc] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
     
@@ -909,8 +887,8 @@ UITapGestureRecognizer *tap;
     [super viewDidLoad];
 }
 
--(void)initializePlayerButtons {
-    //FF Added autorelease
+- (void)initializePlayerButtons {
+
     UIBarButtonItem * flexItem = [[self newFlexItem] autorelease];
     if ([self offerCC]) {
         self.mSecondaryToolbar.items = [NSArray arrayWithObjects: self.mRestart, flexItem, self.mPlayButton, flexItem, self.mCCButton, nil];
@@ -924,21 +902,14 @@ UITapGestureRecognizer *tap;
 
 }
 
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    
-    
-    
-//    [self performSelector:@selector(turnOnToolBars) withObject:nil afterDelay:5.0];
-    
     [self initializePlayerButtons];
-    
 }
 
--(void)initializeCCBasedOnAppDelegatePrefs {
+- (void)initializeCCBasedOnAppDelegatePrefs {
     BOOL shouldEnableCC = [[self applicationDelegate] ccFromDefaults];
-    NSLog(@" should enable CC with blueness: %@", (shouldEnableCC ? @"YES" : @"NO"));
     
     if (shouldEnableCC) {
         [self turnOnCC];
@@ -950,26 +921,18 @@ UITapGestureRecognizer *tap;
 
 
 -(void)viewWillDisappear:(BOOL)animated  {
-    NSLog(@"MfaVideo... viewWillDisappear");
+   
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
     [self.mPlayerItem removeObserver:self forKeyPath:kStatusKey];
     [self.player removeObserver:self forKeyPath:kCurrentItemKey];
     [self.player removeObserver:self forKeyPath:kRateKey];
-
-    NSLog(@"R1");
+ 
     [playerView release];
-    NSLog(@"R2");
-//    [self.mPlayer release];
-    NSLog(@"R3");
-//    [self.mPlayerItem release];
-    NSLog(@"R4");
-//    [self.player release];
-    NSLog(@"R5");
+
     self.mPlayer = nil;
     self.mPlayerItem = nil;
     self.player = nil;
     
-    //FF added
     [super viewWillDisappear:animated];
 }
 
@@ -990,7 +953,7 @@ UITapGestureRecognizer *tap;
 }
 
 - (void)viewDidUnload {
-    NSLog(@"viewDidUnload");
+
     [playerView release];
     playerView = nil;;
     mPlayer=nil;
