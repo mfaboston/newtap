@@ -54,7 +54,6 @@
 											   ofType:[[imageSrc lastPathComponent] pathExtension]
 										  inDirectory:[imageSrc stringByDeletingLastPathComponent]];
 	
-    //FF added autorelease
     [self setImageView:[[[TapDetectingImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:imagePath]] autorelease]];
 
 	[imageView setDelegate:self];

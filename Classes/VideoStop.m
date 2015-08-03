@@ -135,9 +135,6 @@
 	// Track in analytics
 	[Analytics trackAction:@"movie-stop" forStop:[self getStopId]];
 	
-	// Release self now that moviePlayBackDidFinish is done
-    //FF - Commented out
-	//[self release];
 }
 
 @end

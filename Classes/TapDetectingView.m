@@ -69,7 +69,6 @@
         // case 1: this is the end of both touches at once 
         if ([touches count] == 2 && allTouchesEnded) {
             int i = 0; 
-            // FF Added default values to supress static analyzer warning
             int tapCounts[2] = {0,0};
             CGPoint tapLocations[2];
             for (UITouch *touch in touches) {
